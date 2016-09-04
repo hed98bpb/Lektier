@@ -1,0 +1,72 @@
+\documentclass[paper=a4, fontsize=11pt]{scrartcl} % A4 paper and 11pt font size
+\usepackage[utf8]{inputenc}
+
+\usepackage[T1]{fontenc} % Use 8-bit encoding that has 256 glyphs
+\usepackage{fourier} % Use the Adobe Utopia font for the document - comment this line to return to the LaTeX default
+\usepackage[english]{babel} % English language/hyphenation
+\usepackage{amsmath,amsfonts,amsthm} % Math packages
+
+\usepackage{lipsum} % Used for inserting dummy 'Lorem ipsum' text into the template
+
+\usepackage{sectsty} % Allows customizing section commands
+\allsectionsfont{\centering \normalfont\scshape} % Make all sections centered, the default font and small caps
+
+\usepackage{fancyhdr} % Custom headers and footers
+\pagestyle{fancyplain} % Makes all pages in the document conform to the custom headers and footers
+\fancyhead{} % No page header - if you want one, create it in the same way as the footers below
+\fancyfoot[L]{} % Empty left footer
+\fancyfoot[C]{} % Empty center footer
+\fancyfoot[R]{\thepage} % Page numbering for right footer
+\renewcommand{\headrulewidth}{0pt} % Remove header underlines
+\renewcommand{\footrulewidth}{0pt} % Remove footer underlines
+\setlength{\headheight}{13.6pt} % Customize the height of the header
+
+\numberwithin{equation}{section} % Number equations within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+\numberwithin{figure}{section} % Number figures within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+\numberwithin{table}{section} % Number tables within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+
+\setlength\parindent{0pt} % Removes all indentation from paragraphs - comment this line for an assignment with lots of text
+
+%----------------------------------------------------------------------------------------
+%	TITLE SECTION
+%----------------------------------------------------------------------------------------
+
+\newcommand{\horrule}[1]{\rule{\linewidth}{#1}} % Create horizontal rule command with 1 argument of height
+
+\title{	
+	\normalfont \normalsize 
+	\textsc{university, school or department name} \\ [25pt] % Your university, school and/or department name(s)
+	\horrule{0.5pt} \\[0.4cm] % Thin top horizontal rule
+	\huge Kombinatorisk Søgning \\ % The assignment title
+	\horrule{2pt} \\[0.5cm] % Thick bottom horizontal rule
+}
+
+\author{Peter Burgaard - 201209175} % Your name
+
+\date{\normalsize\today} % Today's date or a custom date
+
+\begin{document}
+	
+	\maketitle % Print the title
+	
+	\section{Aflevering 2}
+	
+	\subsection{Vis 3-coloring er NP}
+	
+	Givet en graf $G(V,E)$ er sproget $L_{3C}$ de $x$ som er encoded grafer G, som er wellformed, og hvor der findes en proper coloring af x. For at vise $L_{3C}\in \textbf{NP}$, verificer vi $x$ med en coloring(vidne) $c$ i $O(n^2)$ om hvorvidt $c$ er en korrekt coloring. Dette sker ved at checke om alle edge E har forskellige colors for hver af deres to indgang(hver note de er sat sammen med). Lad $x$ være en encoded matrix over de edges som er i vores graf, og lad y være en vector som inderholder coloring af de forskellige edges, så har vi 
+	\begin{align*}
+	x\in L_{3C} \iff \left[ \exists c\in \left\lbrace 0,1\right\rbrace ^*:|c|\leq |x|^2 \land \langle x,c \rangle \in L' \right] 
+	\end{align*}
+	hvor $L'$ er sproget over coloring af grafer som G.
+	
+	\subsection{Konstrueer en polynomiel reduction fra 3-coloring til SAT uden brug af Cooks Theorem} 
+	
+	SAT er the satisfiability problem, hvor man givet en CNF ligning, kan afgører om der findes en assignment således at ligning er sand. Hvis vi derfor kan lave en reduction fra en graf til en CNF har vi vist reductionen.
+	
+	Måden vi checker på i polynomieltid, om et $x$ har en coloring $c$, er ved at løbe dets edges igennem, og checke for deres colors, at de ikke har samme color i hver af deres indgange. Vores CNF ligning $f$ har altså en variable for hver edge e i G. Altså må vi have for edge $e_n$ med $n=1,2,..,|E|$ som har indgange $u_i$ og $v_i$ med index $i=1,2,3$ for hver farve vi arbejder med at;  
+	\begin{align*}
+	e_n \iff (\lnot u_1\lor\lnot v_1)\land(\lnot u_2\lor\lnot v_2)\land(\lnot u_3\lor\lnot v_3)
+	\end{align*}
+	hvor vores $f$ er konjuktionen af de clauses som er knyttet til hvert $e_n$. Reductionen kan højst udføres over $\frac{n(n-1)}{2}$ edges, hvor er $n=|V|$ altså har det en kørselstid på $O(n^2)$, da omskrivningen sker i $O(1)$. Atlså har vi en reduction i polynomiel tid, fra 3-coloring til SAT, og $3-coloring \leq SAT$.
+
+\end{document}

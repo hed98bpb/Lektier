@@ -1,0 +1,112 @@
+\documentclass[paper=a4, fontsize=11pt]{scrartcl} % A4 paper and 11pt font size
+\usepackage[utf8]{inputenc}
+
+\usepackage[T1]{fontenc} % Use 8-bit encoding that has 256 glyphs
+\usepackage{fourier} % Use the Adobe Utopia font for the document - comment this line to return to the LaTeX default
+\usepackage[english]{babel} % English language/hyphenation
+\usepackage{amsmath,amsfonts,amsthm} % Math packages
+
+\usepackage{lipsum} % Used for inserting dummy 'Lorem ipsum' text into the template
+
+\usepackage{sectsty} % Allows customizing section commands
+\allsectionsfont{\centering \normalfont\scshape} % Make all sections centered, the default font and small caps
+
+\usepackage{fancyhdr} % Custom headers and footers
+\pagestyle{fancyplain} % Makes all pages in the document conform to the custom headers and footers
+\fancyhead{} % No page header - if you want one, create it in the same way as the footers below
+\fancyfoot[L]{} % Empty left footer
+\fancyfoot[C]{} % Empty center footer
+\fancyfoot[R]{\thepage} % Page numbering for right footer
+\renewcommand{\headrulewidth}{0pt} % Remove header underlines
+\renewcommand{\footrulewidth}{0pt} % Remove footer underlines
+\setlength{\headheight}{13.6pt} % Customize the height of the header
+
+\numberwithin{equation}{section} % Number equations within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+\numberwithin{figure}{section} % Number figures within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+\numberwithin{table}{section} % Number tables within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+
+\setlength\parindent{0pt} % Removes all indentation from paragraphs - comment this line for an assignment with lots of text
+
+%----------------------------------------------------------------------------------------
+%	TITLE SECTION
+%----------------------------------------------------------------------------------------
+
+\newcommand{\horrule}[1]{\rule{\linewidth}{#1}} % Create horizontal rule command with 1 argument of height
+
+\title{	
+	\normalfont \normalsize 
+	\textsc{Aarhus University, computer science} \\ [25pt] % Your university, school and/or department name(s)
+	\horrule{0.5pt} \\[0.4cm] % Thin top horizontal rule
+	\huge Cryptology - handin 1 \\ % The assignment title
+	\horrule{2pt} \\[0.5cm] % Thick bottom horizontal rule
+}
+
+\author{Peter Burgaard - 201209175} % Your name
+
+\date{\normalsize\today} % Today's date or a custom date
+
+\begin{document}
+	
+	\maketitle % Print the title
+	
+	\section{Stinson 1.21.c}
+	
+	We are given the following cipher text: 
+	
+	\begin{quote}
+			\centering {KQEREJEBCPPCJCRKIEACUZBKRVPKRBCIBQCARBJCVFCUPKRIOFKPACUZQEPB\\
+			KRXPEIIEABDKPBCPFCDCCAFIEABDKPBCPFEQPKAZBKRHAIBKAPCCIBURCCD\\
+			KDCCJCIDFUIXPAFFERBICZDFKABICBBENEFCUPJCVKABPCYDCCDPKBCOCPE\\
+			RKIVKSCPICBRKIJPKABI} \\
+	\end{quote}  
+						
+	and the knowledge that, it has been encrypted using the affine cipher. We have also been told that the plain text is in french, but we can not know for sure. \\
+	
+	The first thing we do in order to crack the encryption is to gather some statistics about the text. By using a letter counting website \footnote{https://www.mtholyoke.edu/courses/quenell/s2003/ma139/js/count.html}, i gathered the following:
+	
+	\begin{center}
+		\begin{tabular}{c|c|c|c|c|c|c|c|c|c|c|c}
+			A & B & C & D & E & F & G & H & I & J & K & L\\ \hline
+			13 & 21 & 32 & 9 & 13 & 10 & 0 & 1 & 16 & 6 & 20 & 0 
+		\end{tabular} 
+	\end{center}
+	
+	\begin{center}
+		\begin{tabular}{c|c|c|c|c|c|c|c|c|c|c|c|c|c|c}
+			M & N & O & P & Q & R & S & T & U & V & W & X & Y & Z  \\ \hline
+			0 & 1 & 2 & 20 & 4 & 12 & 1 & 0 & 6 & 4 & 0 & 2 & 1 & 4
+		\end{tabular}
+	\end{center}
+	
+	next i found the letter frequency in french \footnote{http://www.sttmedia.com/characterfrequency-french}:
+	
+	\begin{center}
+		\begin{tabular}{c|c|c|c|c|c|c|c}
+			A & B & C & D & E & F & G & H \\ \hline
+			8.13 \% & 0.93 \% & 3.15 \% & 3.55 \% & 15.10 \% & 0.96 \% & 0.97 \% & 1.08 \% 
+		\end{tabular} 
+	\end{center}
+	
+	\begin{center}
+		\begin{tabular}{c|c|c|c|c|c|c|c}
+			I & J & K & L & M & N & O & P \\ \hline
+			6.94 \% & 0.71 \% & 0.16 \% & 5.68 \% & 3.23 \% & 6.42 \% & 5.27 \% & 3.03 \% 
+		\end{tabular}
+	\end{center}
+	
+	\begin{center}
+		\begin{tabular}{c|c|c|c|c|c|c|c|c|c}
+			 Q & R & S & T & U & V & W & X & Y & Z  \\ \hline
+			 0.89 \% & 6.43 \% & 7.91 \% & 7.11 \% & 6.05 \% & 1.83 \% & 0.04 \% & 0.42 \% & 0.19 \% & 0.21 \%
+		\end{tabular}
+	\end{center}
+	
+	From this we get, the most two used letter in our cipertext is C with 32 apperences and B with 21 apperences. The two most common letters in french are E with 15.10 \% and A with 8.13 \%. Assuming Stinson only have been using the letters which are available in the english alphabet we assume $\mathcal{C}=\mathcal{P}=\mathbb{Z}_{26}$. At this point we will also assume that, A have been given the numerical value 1, and B given 2 etc. in the plain text.
+	\\ \\
+	As a first guess, we might hypothesize that E encrypts to C and A encrypts to B, which implies $e_k(5)=3$ and $e_k(1)=2$, where $k\in\mathcal{K}$ being a key from the keyset and $e_k(\cdot)$ being the encryption function, using key $k$. This yields two linear equiations with two unknows:
+	\begin{align*}
+	5*a+b=3 \\
+	1*a+b=2
+	\end{align*}
+
+\end{document}

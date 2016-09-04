@@ -1,0 +1,27 @@
+Indledning
+Procedurer 
+Implementatio af RPC
+Sync / async
+Java RMI
+
+Procedure:
+foo (int i, Object o)
+- call-by-value
+- call-by-reference
+
+RPC:
+Client:							Server:
+Ny procedure (funktion)			Modtager information
+Pakker arg ned (marshalling)	Udpakker argumenter (marshalling)
+Sender Request					Udfører funktion
+Retuner svar					Sender svar
+
+evat kom ind over Edniannes
+Primitive / ikke primitive typer
+
+Sync / async:
+Tegn
+
+Java RMI:
+Snak om remote object
+og overordnede ting

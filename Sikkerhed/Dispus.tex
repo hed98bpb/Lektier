@@ -1,0 +1,144 @@
+\documentclass[paper=a4, fontsize=11pt]{scrartcl} % A4 paper and 11pt font size
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc} % Use 8-bit encoding that has 256 glyphs
+\usepackage{fourier} % Use the Adobe Utopia font for the document - comment this line to return to the LaTeX default
+\usepackage[english]{babel} % English language/hyphenation
+\usepackage{amsmath,amsfonts,amsthm} % Math packages
+
+\usepackage{lipsum} % Used for inserting dummy 'Lorem ipsum' text into the template
+
+\usepackage{sectsty} % Allows customizing section commands
+\allsectionsfont{\centering \normalfont\scshape} % Make all sections centered, the default font and small caps
+
+\usepackage{fancyhdr} % Custom headers and footers
+\pagestyle{fancyplain} % Makes all pages in the document conform to the custom headers and footers
+\fancyhead{} % No page header - if you want one, create it in the same way as the footers below
+\fancyfoot[L]{} % Empty left footer
+\fancyfoot[C]{} % Empty center footer
+\fancyfoot[R]{\thepage} % Page numbering for right footer
+\renewcommand{\headrulewidth}{0pt} % Remove header underlines
+\renewcommand{\footrulewidth}{0pt} % Remove footer underlines
+\setlength{\headheight}{13.6pt} % Customize the height of the header
+
+\numberwithin{equation}{section} % Number equations within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+\numberwithin{figure}{section} % Number figures within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+\numberwithin{table}{section} % Number tables within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+
+\setlength\parindent{0pt} % Removes all indentation from paragraphs - comment this line for an assignment with lots of text
+
+%----------------------------------------------------------------------------------------
+%	TITLE SECTION
+%----------------------------------------------------------------------------------------
+
+
+\begin{document}
+	
+	\section{Cryptografi, confidentiality}
+	
+	\begin{itemize}
+		\item Introduction
+		\item Unconditionally and computationally secure
+		\item Practical systems - exchaustive key search
+		\begin{itemize}
+			\item $c = E_K(m,n)$
+		\end{itemize}
+		\item Secret key - Stream Cipher / block cipher
+		\begin{itemize}
+			\item SNOW, SALSA20
+			\item OFC, Counter, CBC
+		\end{itemize}
+		\item Public key - RSA / OAEP
+	\end{itemize}
+	
+	\section{Cryptography, authentication}
+	
+	\begin{itemize}
+		\item Intruduction
+		\item Unconditional and computational secure
+		\item Practical systems - exchaustive key search
+		\item Secret key
+		\begin{itemize}
+			\item CBC MAC
+			\item HMAC
+			\begin{itemize}
+				\item SHA1(m||K)
+			\end{itemize}
+		\end{itemize}
+		\item Public key systems
+		\begin{itemize}
+			\item RSA
+		\end{itemize}
+		\item Forskelle på secret og public key systems
+		\item Hashing
+		\begin{itemize}
+			\item 4 egenskaber
+		\end{itemize}
+		\item Replay
+	\end{itemize}
+	
+	\section{Key management and Infrastructures}
+	
+	\begin{itemize}
+		\item Two party communication
+		\item Key Distribution center KDC
+		\item Certificate Authoraties CA
+		\begin{itemize}
+			\item Hvad er CA? Forskel fra KDC? Chaining? x.509
+		\end{itemize}
+		\item Password
+		\begin{itemize}
+			\item 4 slags angreb vi skal beskytte os imod
+		\end{itemize}
+		\item Hardware
+		\begin{itemize}
+			\item Tamper evident / two factor authentication
+			\item Tamper resistent hardware
+		\end{itemize}
+		\item Biometric
+		\item Preventing bypassing of the system
+		\begin{itemize}
+			\item h(pw)=SHA1(SHA1(SHA1...(pw) ...) 
+		\end{itemize}
+	\end{itemize}
+	
+	\section{Network Security}
+	
+	\begin{itemize}
+		\item Introduction
+		\item Authenticated public key exchange
+		\item SSL
+		\begin{itemize}
+			\item Mellem application og TCP/IP level
+			\item Client, Server
+			\item Onesided
+		\end{itemize}
+		\item SSL Protocol
+		\begin{itemize}
+			\item Record protcol
+			\item Handshake protocol
+			\item Cipher spec change protocal, Alert Protocol
+		\end{itemize}
+		\item SSL key exchange
+		\begin{itemize}
+			\item ikke perfectly forward shafe som deffie hellman
+		\end{itemize}
+		\item Password-authenticated key exchange
+		\begin{itemize}
+			\item Ikke alle har certificate
+			\item One-way SSL plus passwrod
+			\item password er elendig til formålet
+			\item SRP
+		\end{itemize}
+		\item IPSec
+		\begin{itemize}
+			\item TCP/IP plan
+		\end{itemize}
+		\item Deffie Hellman Key exchange
+		\item Sammenligning af SSL og IPSec
+		\begin{itemize}
+			\item IPSec, crypteres det for alle på TCP/IP plan, men kan ikke styres når det data når det først er pakket ud på modtager computeren
+			\item SSL, kræver applicationer der understøtter det, så besværligt, men kan styre data'en indtil den er pakket ud på applications plan
+		\end{itemize}
+	\end{itemize}
+
+\end{document}

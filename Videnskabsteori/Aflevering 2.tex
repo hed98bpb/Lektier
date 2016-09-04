@@ -1,0 +1,120 @@
+\documentclass[paper=a4, fontsize=11pt]{scrartcl} % A4 paper and 11pt font size
+
+\usepackage[T1]{fontenc} % Use 8-bit encoding that has 256 glyphs
+\usepackage{fourier} % Use the Adobe Utopia font for the document - comment this line to return to the LaTeX default
+\usepackage[english]{babel} % English language/hyphenation
+\usepackage{amsmath,amsfonts,amsthm} % Math packages
+
+\usepackage{lipsum} % Used for inserting dummy 'Lorem ipsum' text into the template
+
+\usepackage{sectsty} % Allows customizing section commands
+\allsectionsfont{\centering \normalfont\scshape} % Make all sections centered, the default font and small caps
+
+\usepackage{fancyhdr} % Custom headers and footers
+\pagestyle{fancyplain} % Makes all pages in the document conform to the custom headers and footers
+\fancyhead{} % No page header - if you want one, create it in the same way as the footers below
+\fancyfoot[L]{} % Empty left footer
+\fancyfoot[C]{} % Empty center footer
+\fancyfoot[R]{\thepage} % Page numbering for right footer
+\renewcommand{\headrulewidth}{0pt} % Remove header underlines
+\renewcommand{\footrulewidth}{0pt} % Remove footer underlines
+\setlength{\headheight}{13.6pt} % Customize the height of the header
+
+\numberwithin{equation}{section} % Number equations within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+\numberwithin{figure}{section} % Number figures within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+\numberwithin{table}{section} % Number tables within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+
+\setlength\parindent{0pt} % Removes all indentation from paragraphs - comment this line for an assignment with lots of text
+
+%----------------------------------------------------------------------------------------
+%	TITLE SECTION
+%----------------------------------------------------------------------------------------
+
+\newcommand{\horrule}[1]{\rule{\linewidth}{#1}} % Create horizontal rule command with 1 argument of height
+
+\title{	
+	\normalfont \normalsize 
+	\textsc{Aarhus University - computer science} \\ [25pt] % Your university, school and/or department name(s)
+	\horrule{0.5pt} \\[0.4cm] % Thin top horizontal rule
+	\huge Science Studies - Handin 2 \\ % The assignment title
+	\horrule{2pt} \\[0.5cm] % Thick bottom horizontal rule
+}
+
+\author{Peter Burgaard - 201209175} % Your name
+
+\date{\normalsize\today} % Today's date or a custom date
+
+\begin{document}
+	
+	\maketitle % Print the title
+	
+	\section{What is 'hacker ethic'?}
+	
+	Hacker ethic is a term attributed to Journalist Teven Levy as described in his 1984 book titled "Hackers: Heroes of the Computer Revolution"\cite{HEM}. Levy deals with the tearm hacking, as it originated in an MIT group in the late 1950's who snuck into the deparments Electronic Accounting Machinery room after hours, in attempt of programming the rooms IBM 704 computer. The group defined hacking "as a project undertaken or a product built to fulfill some constructive goal, but also with some wild pleasure taken in mere involvement"\cite{HEM}. The term has since its origination often been used wrongly and quoted out of context, with the term hacking refering to the act of breaking into computers, giving the idea of hacker ethics "describing the ideals of white-hat hackers"\cite{HEM}.  \\ 
+	
+	In the preface of Levy[1984] , he summerizes generel tenets of hacker ethic, including\cite{HE1}: 
+	\begin{itemize}
+		\setlength\itemsep{-0.6em}
+		\item Sharing
+		\item Openness
+		\item Decentralization
+		\item Free access to computers
+		\item World Improvement.
+	\end{itemize}
+	
+	Levy continues in chaper two i Levy[1984] to specify some of the hacker ethics and beliefs\cite{HE1}. Some of the main points being: \\ 
+	
+	\textbf{Unlimited and total access:} "acceess [to information and technology] aids the expansion of technology"\cite{HE1}. Having limitation to information whether it being bureaucracy(corporate, government of university), or in the form of restriction to source code or computers, is only limiting for the further development of technological improvement\cite{HE1}. \\ 
+	
+	Wikipedia gives an anekdote, starring some MIT computer users and hackers, who would post different hacks on boards near the schools computers, if deemed particularly good. Other users could then, build upon these posts, and expand the hack, for other users to enjoy and tweak them selfs\cite{HE11}.  This idea of having such resources 'up for grabs' is a strong root, in the sharing of the hacker community. This does not only apply to the sharing of information and intellectual propperty but also physical machines and hardware. For example, in 1973 a groupe called community memory, setup the first community computer, with free public access.\cite{HE11}\cite{CM}\\  
+	
+	\textbf{Equality and life improvement:} "Criteria such as age, sex, race, position, and qualification are deemed irrelevant within the hacker community"\cite{HE1}. The hacker community, who complies with the hacker ethic, have strong beliefs in equality, and that, by joining it's community, other people will experience the same enrichment of their lifes, as they themselves are. This is some of the reasons why a hacker should only be judged by their hacks and nothing els\cite{HE1}. \\ 
+	
+	Later in chapter two Levy[1984], Levy goes to define his 'hand-on imperative': "Hackers believe that essential lessons can be learned about the systems - about the world - from taking things apart, seeing how they work, and using this knowledge to create new and more interesting things."\cite{HE12}. Due to the fact that the Hands-On imperative requires free access to information and knowledge, wikipedia claims, if a true hacker is meet with restrictions, then the ends justifies the means, "so that improvements can be made"\cite{HE12}. But, "this behavior [is] not malicious in nature ... (the behavior of a hacker by Levy definition) deeply contrasts with the modern, media-encouraged image of hackers who crack secure systems in order to steal information or complete an act of cybervandalism"\cite{HE12}.  
+	
+	\section{Discussion - The danish hacker community's confrontations with the danish authorities}
+	
+	In Elnif[2014] we're introduced to Christian Panton, who's very much following the Laye definition of being a true hacker. Panton has developed an alternativ to the govern inforced NemID, which's a national login portal for bank and government websites\footnote{https://www.nemid.nu/dk-da/om\_nemid/hvad\_er\_nemid/, last accessed 21/02/15}, so one could bypass the use of Java\cite{info}. When an approche was made by Panton to Nets(the owner of the DanID, the developers of the nemID technology\footnote{https://www.nemid.nu/dk-da/om\_nemid/ofte\_stillede\_spoergsmaal/\#hvem\_staar\_bag\_nemid, section "hvem staar bag NemID", last accessed 21/02/15}\footnote{http://www.nets.eu/dk-da/Produkter/Sikkerhed/medarbejdersignatur/Pages/default.aspx, last accessed 21/02/15}), Panton was met with warnings of being sued if any or his code was to be leaked, due to the claim of his code abussing nemID security breaches. \\
+	
+	This fear of hackers hands-on imperative, might be a reason for what Tim Jordan, professor in digital culture, at King's College, London, calls the demonisation of hackers, which he argues have ufairly made hacking a synonym for data theft and criminal activity\cite{info}. Jordan explains this confusion, by pointing out the tools that the different groups of hackers are using are the same. This, he argues, leaves only the individual moral code of each hacker to differentiat them from each other\cite{info}. This goes somewhat against Layes argumentation of the moral code being "silently agreed upon"\cite{HEM}. But since the stigmatisation Jordan describes, happend in the 90's, roughly 10 years after Levy[1984], it could be argued, that it's a case of misused termminology, used on perhaps a new generation of cyber criminals, that came with the personal computer being more and more accessable, and the rapid growth of the internet.\\
+	
+	In Elnif[2014] Panton describes himself as an internet-activist and hacker, for whom data theft or security impairment is of no interest\cite{info}. Jordan defines Panton as being a 'hacktivist, whose reality as a citizen, is a need to help fixing, what he sees as errors in government technology to help better it\cite{info}. This is further backed up by Michael Friis, self proclaimed internet activist, who describes 'total-solutions'(government programs, made to be a standard for all citizen use, thereby having monopoly on the given area) as being alot more vulnerable, than if there were more players on the market(having no government monopoly). This is answered by Lars Frelle-Petersen, manager of the danish board of digitalization, who isn't repellant of future cooperation with minor companies or hackers, but explains that the danish public administration act and procurement rules makes it hard for these thirdparties to make an offer on such public assignments. \\
+	
+	Petersen argues that he sees no problem in thirdparties pitching in on lower, less complex systems, whose safty level isn't on national level\cite{info}. But this isn't the kind of examples we have seen from Panton and later in Elnif[2014] from Casper Bang, who made an app due to frustrations with the danish "rejsekort". Both hackers who works, with software development as a primary profession. From Levy's perspective it can be argued that this is no coincidence. Seen that Levy's hackers are against bureaucracy, and have no respect for qualifications, they will in this situation always see them selfs as equals to these big companies. This somewhat follows Petersen argumentation, being that making small parts of a system might be within their grasp as individuals, but maybe when then project reaches a certain size, even these hackers, who seems to have all the right answers might get run into some troubles. Working under deadlines a having to conseptually create the whole product from scratch, which is done by companies, are services the hackers recieve, for free, so they have the luxury of tweaking already existing code and pointing out flaws. When faced with troubles the alternativ it might seem compelling, but the hackers have yet to, have many hundred thousand people test their product daily. So until these parties are faced with an equal starting point, we really can't say anything for sure.
+	
+
+\begin{thebibliography}{9}
+	
+	\bibitem{HEM}
+	Wikipedia - Hacker Ethic / Intro.
+	"http://en.wikipedia.org/wiki/Hacker\_ethic" \\
+	last accessed 21/02/15
+	
+	\bibitem{HE1}
+	Wikipedia - Hacker Ethic / 1 - The hacker ethics.
+	"http://en.wikipedia.org/wiki/Hacker\_ethic" \\
+	last accessed 21/02/15
+	
+	\bibitem{HE11}
+	Wikipedia - Hacker Ethic / 1.1 - Sharing
+	"http://en.wikipedia.org/wiki/Hacker\_ethic" \\
+	last accessed 21/02/15
+	
+	\bibitem{CM}
+	Wikipedia - Community Memory - intro
+	"http://en.wikipedia.org/wiki/Community\_Memory" \\
+	last accessed 21/02/15
+	
+	\bibitem{HE12}
+	Wikipedia - Hacker Ethic / 1.2 - Hands-On Imperative
+	"http://en.wikipedia.org/wiki/Hacker\_ethic" \\
+	last accessed 21/02/15
+	
+	\bibitem{info}
+	Elnif, Didde 'Hackere i den gode sags tjeneste', information.dk, 2014 
+	"http://www.information.dk/494592" \\
+	last accessed 21/02/15
+	
+\end{thebibliography}
+
+\end{document}

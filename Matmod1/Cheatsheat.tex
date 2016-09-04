@@ -1,0 +1,131 @@
+\documentclass[paper=a4, fontsize=11pt]{scrartcl} % A4 paper and 11pt font size
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc} % Use 8-bit encoding that has 256 glyphs
+\usepackage{fourier} % Use the Adobe Utopia font for the document - comment this line to return to the LaTeX default
+\usepackage[english]{babel} % English language/hyphenation
+\usepackage{amsmath,amsfonts,amsthm} % Math packages
+
+\usepackage{lipsum} % Used for inserting dummy 'Lorem ipsum' text into the template
+
+\usepackage{sectsty} % Allows customizing section commands
+\allsectionsfont{\centering \normalfont\scshape} % Make all sections centered, the default font and small caps
+
+\usepackage{fancyhdr} % Custom headers and footers
+\pagestyle{fancyplain} % Makes all pages in the document conform to the custom headers and footers
+\fancyhead{} % No page header - if you want one, create it in the same way as the footers below
+\fancyfoot[L]{} % Empty left footer
+\fancyfoot[C]{} % Empty center footer
+\fancyfoot[R]{\thepage} % Page numbering for right footer
+\renewcommand{\headrulewidth}{0pt} % Remove header underlines
+\renewcommand{\footrulewidth}{0pt} % Remove footer underlines
+\setlength{\headheight}{13.6pt} % Customize the height of the header
+
+\numberwithin{equation}{section} % Number equations within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+\numberwithin{figure}{section} % Number figures within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+\numberwithin{table}{section} % Number tables within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+
+\setlength\parindent{0pt} % Removes all indentation from paragraphs - comment this line for an assignment with lots of text
+
+%----------------------------------------------------------------------------------------
+%	TITLE SECTION
+%----------------------------------------------------------------------------------------
+
+\newcommand{\horrule}[1]{\rule{\linewidth}{#1}} % Create horizontal rule command with 1 argument of height
+
+\title{	
+	\normalfont \normalsize 
+	\textsc{university, school or department name} \\ [25pt] % Your university, school and/or department name(s)
+	\horrule{0.5pt} \\[0.4cm] % Thin top horizontal rule
+	\huge Assignment Title \\ % The assignment title
+	\horrule{2pt} \\[0.5cm] % Thick bottom horizontal rule
+}
+
+\author{John Smith} % Your name
+
+\date{\normalsize\today} % Today's date or a custom date
+
+\begin{document}
+	
+	Fordelinger:
+	\begin{align*}
+	&\mu\leftarrow \bar{x.}=\frac{1}{n}\sum_{i=1}^{n}x_i\sim\sim N(\mu,\frac{\sigma^2}{n}) \\
+	&\mu_i\leftarrow \bar{x_{i.}}\sim\sim N(\mu_i1,\frac{\sigma^2}{n}) \\
+	&\mu\leftarrow \bar{x..}=\frac{S.}{n.}\sim\sim N(\mu,\frac{\sigma^2}{n.}) \\
+	&\sigma^2\leftarrow s^2=\frac{1}{n-1}\sum_{i=1}^{n}(x_i-\bar{x.})^2=\frac{1}{n-1}SSD=\frac{1}{n-1}(USS-\frac{S^2}{n})\sim\sim\sigma^2\chi^2(f)/f \\
+	&\sigma^2_i\leftarrow s^2_{(i)}=\frac{1}{n_i-1}\sum_{j=1}^{n_i}(x_{ij}-\bar{x_i.})^2\sim\sim\sigma^2_i\chi^2(f_{(i)})/f_{(i)}=(n_i-1)/n_i-1 \\
+	&\sigma^2_{02}\sim\sim N(\alpha(\frac{1}{n})+\frac{t_0^{-n}}{SSD_t}\sigma^2) \\
+	& t\sim\sim t(f_1)=t(n-1) \\
+	& -2lnQ(x)=f_1ln(s_1^2)-\sum_{i=1}^{k}f_{(i)}lns^2_{(i)}\sim\sim\chi^2(k-1) \\
+	& Ba=\frac{-2lnQ(x)}{C}\sim\sim\chi^2(k-1) \\
+	& \alpha\leftarrow\hat{\alpha}=\bar{x.}-\bar{\beta}\bar{t.}\sim\sim N(\alpha,\sigma^2(\frac{1}{n}+\frac{\bar{t^2.}}{SSD_t}) \\
+	& \alpha_i\leftarrow\hat{\alpha}_i=\bar{x.}-\bar{\beta}\bar{t.}\sim\sim N(\alpha_i,\sigma^2_i(\frac{1}{n_i}+\frac{\bar{t^2.}_i}{SSD_{ti}}) \\
+	& \beta\leftarrow\hat{\beta}=\frac{SPD_xt}{SSD_t}\sim\sim N(\beta,\frac{\sigma^2}{SSD_t}) \\
+	& \beta_i\leftarrow\hat{\beta}_i=\frac{SPD_{xt}}{SSD_t}\sim\sim N(\beta_i,\frac{\sigma^2_i}{SSD_{ti}}) \\
+	& \hat{\alpha}+\hat{\beta}t \sim\sim N(\alpha+\beta t,\sigma^2(\frac{1}{n}+\frac{(t-\bar{t.}^2)}{SSD_t}))
+	\end{align*}
+	
+	
+	\newpage
+	
+	
+	Formler
+	\begin{align*}
+	& S_x=\sum_{i=1}^{n}x_i \\
+	& S_t=\sum_{i=1}^{n}t_i\\
+	& USS_x=\sum_{i=1}^{n}x_i^2 \\
+	& USS_t=\sum_{i=1}^{n}t_i^2 \\
+	& SSD_x=\sum_{i=1}^{n}(x_i-\bar{x.})^2 \\
+	& SSD_t=\sum_{i=1}^{n}(t_i-\bar{t.})^2 \\
+	& SP_{xt}=\sum_{i=1}^{n}x_it_i \\
+	& SPD_{xt}=\sum_{i=1}^{n}(x_i-\bar{x.})(t_i-\bar{t.}) \\
+	&\hat{\sigma}^2=\frac{1}{n-2}\sum_{i=1}^{n}\left\lbrace x_i-(\hat{\alpha}+\hat{\beta}t_i)\right\rbrace ^2\\
+	& C=1+\frac{1}{3(k-1)}\left[ (\sum_{i=1}^{k}\frac{1}{f_{(i)}})-\frac{1}{f_1}\right] \\ 
+	& SSD_2 =SSD_{02}-SSD_1
+	\end{align*}
+	
+	
+	\newpage
+	
+	
+	Konfidensintervaller:
+	\\
+	Binomialfordelinger
+	Hvis: $M_b: X\sim b(n,\pi)$, er 95\% konfidensintervallet for $\pi$
+	\begin{align*}
+	& \pi_-=\frac{1}{n+1.96^2}\left[ x+\frac{1.96^2}{2}-1.96\sqrt{\frac{x(n-x)}{n}+\frac{1.96^2}{4}} \right] \intertext{og}
+	& \pi_+=\frac{1}{n+1.96^2}\left[ x+\frac{1.96^2}{2}+1.96\sqrt{\frac{x(n-x)}{n}+\frac{1.96^2}{4}} \right]
+	\end{align*}
+	$C_{0.95}(x)=\left\lbrace\pi_0 | H_0:\pi=\pi_0 \text{ forkastes ikke med niveau } 0.05 \text{ test}\right\lbrace=\left[ \pi_-,\pi_+\right] $
+	\\ \\
+	Normalfordelt observationrække med ukendt varians:
+	95\% for $\sigma^2$
+	\begin{align*}
+	\left[ \frac{(n-1)s^2}{\chi^2_{1-\frac{\alpha}{2}}(n-1},\frac{(n-1s^2)}{\chi^2_{\frac{\alpha}{2}}(n-1)}\right] 
+	\end{align*}
+	
+	\newpage
+	
+	
+	Pobs test 
+	\\ \\
+	Binomialfordeling: \\
+	Test for $H_{0\pi}:=\pi_1=...=\pi_n=x$
+	\begin{align*}
+	& -2lnQ(x)=2\sum_{i=1}^{n}x_iln(\frac{x_i}{e_1})\sim\sim\chi^2(k-1-d), \text{ k er observationsrækker, d er frie variabler}
+	\intertext{$p_{obs}$ test}
+	& p_{obs}=1-F_{\chi^2(k-1-d)}(-2lnQ(x))
+	\end{align*}
+	\\ \\
+	En normalt fordelte observationsrækker \\
+	Test af ens varians:
+	\begin{align*}
+	& F=\frac{s^2_{tæller}}{s^2_{nævner}} \\
+	& p_{obs}=\left\{
+	\begin{array}{lr}
+	2F_{F(f_{(tæller)},f_{(nævner)})}(\frac{s^2_{(tæller)}}{s^2_{(nævner)}}) & \text{hvis }\frac{s^2_{(tæller)}}{s^2_{(nævner)}} <1 \\
+	2\left[ 1-F_{F(f_{(tæller)},f_{nævner})}(\frac{s^2_{(tæller)}}{s^2_{nævner}})\right] & \text{ hvis }\frac{s^2_{tæller}}{s^2_{nævner}} >1 
+	\end{array}
+	\right.
+	\end{align*}
+	
+\end{document}

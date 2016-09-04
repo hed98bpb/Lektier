@@ -1,0 +1,149 @@
+\documentclass[paper=a4, fontsize=11pt]{scrartcl} % A4 paper and 11pt font size
+\usepackage[utf8]{inputenc}
+\usepackage{gensymb}
+\usepackage[T1]{fontenc} % Use 8-bit encoding that has 256 glyphs
+\usepackage{fourier} % Use the Adobe Utopia font for the document - comment this line to return to the LaTeX default
+\usepackage[english]{babel} % English language/hyphenation
+\usepackage{amsmath,amsfonts,amsthm} % Math packages
+
+\usepackage{lipsum} % Used for inserting dummy 'Lorem ipsum' text into the template
+
+\usepackage{sectsty} % Allows customizing section commands
+\allsectionsfont{\centering \normalfont\scshape} % Make all sections centered, the default font and small caps
+
+\usepackage{fancyhdr} % Custom headers and footers
+\pagestyle{fancyplain} % Makes all pages in the document conform to the custom headers and footers
+\fancyhead{} % No page header - if you want one, create it in the same way as the footers below
+\fancyfoot[L]{} % Empty left footer
+\fancyfoot[C]{} % Empty center footer
+\fancyfoot[R]{\thepage} % Page numbering for right footer
+\renewcommand{\headrulewidth}{0pt} % Remove header underlines
+\renewcommand{\footrulewidth}{0pt} % Remove footer underlines
+\setlength{\headheight}{13.6pt} % Customize the height of the header
+
+\numberwithin{equation}{section} % Number equations within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+\numberwithin{figure}{section} % Number figures within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+\numberwithin{table}{section} % Number tables within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+
+\setlength\parindent{0pt} % Removes all indentation from paragraphs - comment this line for an assignment with lots of text
+
+%----------------------------------------------------------------------------------------
+%	TITLE SECTION
+%----------------------------------------------------------------------------------------
+
+\newcommand{\horrule}[1]{\rule{\linewidth}{#1}} % Create horizontal rule command with 1 argument of height
+
+\title{	
+	\normalfont \normalsize 
+	\textsc{Aarhus Universitet} \\ [25pt] % Your university, school and/or department name(s)
+	\horrule{0.5pt} \\[0.4cm] % Thin top horizontal rule
+	\huge Obligatorisk Matematisk Modellering Aflevering \\ % The assignment title
+	\horrule{2pt} \\[0.5cm] % Thick bottom horizontal rule
+}
+
+\author{Peter Burgaard - 201209175} % Your name
+
+\date{\normalsize\today} % Today's date or a custom date
+
+\begin{document}
+	
+	\maketitle % Print the title
+	
+	\begin{enumerate}
+		\item Vis, at det kan antages, at variansen er den samme for de syv observationsrækker
+	\end{enumerate}
+	\begin{align*}
+	& M_0: X_{ij} \sim\sim N(\mu_i,\sigma_i^2) \hspace{1cm},\hspace{1cm} i=1, ... , 7\hspace{1cm},\hspace{1cm} j=1,2,3	\\ \\
+	& H_0: \sigma_1^2=\sigma_2^2= ... =\sigma_7^2=\sigma^2	\hspace{1cm},\hspace{1cm} \sigma_1^2\leftarrow s^2_{(i)} \sim\sim\sigma_i^2\chi^2(f_{(i)})/f_{(i)} 
+	\end{align*}
+	Vi laver en bartletts test: \\ 
+	Beregning af $-2lnQ(x)$
+	\begin{align*}
+	 -2lnQ(x) &=f_1lns^2_1-\sum_{i=1}^{k}f_{(i)}lns^2_{(i)}=7*2ln(62.14286)-\sum_{i=1}^{7}f_(i)ln()s^2_{(i)}) \\
+	 &=57.8121-56.3413=1.4708\sim\sim\chi^2(k-1) \\
+	\end{align*}
+	Beregning af c:
+	\begin{align*}
+	c=1+\frac{1}{3(k-1)}((\sum_{i=1}^{k}\frac{1}{f_{(i)}})-\frac{1}{f_1})=1+\frac{1}{3(7-1)}((\sum_{1}^{7}1/2)-\frac{1}{14})=\frac{25}{21}
+	\end{align*}
+	Beregning af $Ba$:
+	\begin{align*}
+	Ba=\frac{-2ln(Q(x))}{c}=\frac{1.4708}{(\frac{25}{21})}=1.235472\sim\sim\chi(k-1)
+	\end{align*}
+	Beregning af testsandsynlighed
+	\begin{align*}
+	P_{obs}(x)=1-F_{\chi^2(k-1)}(Ba)=1-\overbrace{\left[ 1\%-2.5\% \right] }^\text{ved opslag}=\left[97.5,99\right]>5\%
+	\end{align*}
+	Vi forkaster der ikke hypotesen! \\
+	Der opstilles ny model
+	\begin{align*}
+	M_1:X_{ij}\sim\sim N(\mu_i,\sigma2) \hspace{1cm},\hspace{1cm} i=1, ... , 7\hspace{1cm},\hspace{1cm} j=1,2,3
+	\end{align*}
+	
+	\begin{enumerate}
+		\item[2.] Indtegn sammenhørende værdier af temperatur og impuls frekvens i et koordinatsystem og vurder ud fra tegningen rimeligheden af en lineær regression af impuls frekvens på temperatur.
+	\end{enumerate}
+	
+	Det optegnede koordinatsystem kan ses i sas-udskriften der er vedlagt som billag, under afsnitet "2) og 3) Optegning af graf og estimation af alpha og beta" \\ 
+	
+	Der vurderes at punkterne florere omkring en ret linje, og har et bånd af nogenlunde konstant bredde.
+	
+	
+	\begin{enumerate}
+		\item[3.] Estimer parametrene i den lineære regression af impuls frekvens på temperatur, indtegn den estimerede regressionslinje i tegningen fra 2 og vis, at det kan antages, at middelværdien af impuls frekvensen afhænger lineært af temperaturen.
+	\end{enumerate}
+	Vi estimere $\alpha$ og $\beta$
+	\begin{align*}
+	& SPD_{xt}=SP_{xt}-\frac{S_x*S_t}{n}=153773-\frac{6068*525}{21}=2073 \\
+	& SSD_t=USS_t-\frac{S^2_t}{n}=13353-\frac{525^2}{21}=228 \\
+	\beta \leftarrow & \hat{\beta}=\frac{SPD_{xt}}{SSD_t}=\frac{2078}{228}=9.0921\sim\sim N(\beta,\frac{\sigma^2}{SSD_t}) \\
+	\alpha \leftarrow & \hat{\alpha}=\bar{x.}-\hat{\beta}\bar{t.}=\frac{1}{n}(S_x-\hat{\beta}S_t)=61.6497\sim\sim N(\alpha,\sigma^2(\frac{1}{n})+\frac{\bar{t.}^2}{SSD_t})
+	\end{align*}
+	Vi opstiller en ny hypotese:
+	\begin{align*}
+	H_1: &\mu_i=\alpha+\beta t_i
+	\end{align*}
+	Vi tester.
+	Beregning af forskellige værdier til F:
+	\begin{align*}
+	SSD_{02}&=SSD_x-\frac{SPD_{xt}^2}{SSD_t}&&=1089.02 \\
+	SSD_1&=SSD_x?SSD_t&&=870 \\
+	SSD_x&=USS_x-\frac{S^2_x}{n}&&=19937 \\
+	SSD_t&=USS_t-\frac{S_t^2}{n}&&=228 \\
+	SPD_{xt}^2&=SSP_{xt}-\frac{S_x*S_t}{n}=2073^2&&=4298329 \\
+	f_{02}&=n-2=7-2&&=5 \\
+	f_1&=\sum_{i=1}^{7}n_i-1=7*(3-1)&&=14 \\
+	s^2_1&=\frac{\sum_{i=1}^{7}SSD_{(i)}}{\sum_{i=1}^{7}f_{(i)}}=\frac{870}{14}&&=62.142857
+	1
+	\end{align*}
+	Beregning af teststørrelsen F:
+	\begin{align*}
+	F=\frac{\frac{SSD_{02}-SSD_1}{f_{02}-f_1}}{s^2_1}=\frac{\frac{1089.02-870}{19-14}}{62.1429}=0.704891
+	\end{align*}
+	Beregning af testsandsynlighed
+	\begin{align*}
+	P_{obs}=1-F_{F(5,14)}(0.704891)<1-\overbrace{\left[ 0\%-50\% \right] }^\text{ved opslag}>5\%
+	\end{align*}
+	$H_1$ forkastes ikke, og vi opstiller derfor ny model:
+	\begin{align*}
+	M_2:X_i\sim\sim N(\alpha+\beta t_i,\sigma^2)\hspace{1cm},\hspace{1cm}i=1, ... ,7
+	\end{align*}
+	
+	\begin{enumerate}
+		\item[4.]Undersøg, om det kan antages, at middelværdien af impuls frekvensen forøges med 10, når temperaturen forøges med 1 \degree C.
+	\end{enumerate}
+	Vi opstiller en ny hypotese:
+	\begin{align*}
+	H_2:\beta=\beta_0=10& \\ \\t(\underline{x})&=\frac{\hat{\beta}-\beta_0}{\sqrt{\frac{s^2_{02}}{SSD_t}}}=\frac{9.0921-10}{\sqrt{\frac{57.31684}{228}}}=-1.81077\sim\sim t(n-2) \\
+	s^2_{02}&=\frac{1}{f_{02}}SSD_{02}=\frac{1}{19}1089.02=57.31684\sim\sim \sigma\chi^2(f_{02})/f_{02}
+	\end{align*}
+	Beregning af testsandsynligheden:
+	\begin{align*}
+	P_{obs}(\underline{x})=2\left[1-F_{t(n-2)}(|t(\underline{x})|)\right]=2\left[1-\overbrace{\left[ 95\%-97.5\% \right] }^\text{ved opslag}\right]=\left[5\%,10\%\right]>5\%
+	\end{align*}
+	Vi forkaster derfor ikke hypotesen, og vi kan opstille en ny model
+	\begin{align*}
+	& M_3:X_i\sim\sim N(\alpha+\beta_0t_i,\sigma^2)
+	\end{align*}
+	
+\end{document}

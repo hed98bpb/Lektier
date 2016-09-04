@@ -1,0 +1,64 @@
+\documentclass[paper=a4, fontsize=11pt]{scrartcl} % A4 paper and 11pt font size
+\usepackage[utf8]{inputenc}
+
+\usepackage[T1]{fontenc} % Use 8-bit encoding that has 256 glyphs
+\usepackage{fourier} % Use the Adobe Utopia font for the document - comment this line to return to the LaTeX default
+\usepackage[english]{babel} % English language/hyphenation
+\usepackage{amsmath,amsfonts,amsthm} % Math packages
+
+\usepackage{lipsum} % Used for inserting dummy 'Lorem ipsum' text into the template
+
+\usepackage{sectsty} % Allows customizing section commands
+\allsectionsfont{\centering \normalfont\scshape} % Make all sections centered, the default font and small caps
+
+\usepackage{fancyhdr} % Custom headers and footers
+\pagestyle{fancyplain} % Makes all pages in the document conform to the custom headers and footers
+\fancyhead{} % No page header - if you want one, create it in the same way as the footers below
+\fancyfoot[L]{} % Empty left footer
+\fancyfoot[C]{} % Empty center footer
+\fancyfoot[R]{\thepage} % Page numbering for right footer
+\renewcommand{\headrulewidth}{0pt} % Remove header underlines
+\renewcommand{\footrulewidth}{0pt} % Remove footer underlines
+\setlength{\headheight}{13.6pt} % Customize the height of the header
+
+
+\setlength\parindent{0pt} % Removes all indentation from paragraphs - comment this line for an assignment with lots of text
+
+%----------------------------------------------------------------------------------------
+%	TITLE SECTION
+%----------------------------------------------------------------------------------------
+
+\newcommand{\horrule}[1]{\rule{\linewidth}{#1}} % Create horizontal rule command with 1 argument of height
+
+\title{	
+	\normalfont \normalsize 
+	\textsc{Aarhus University - Computer Science} \\ [25pt] % Your university, school and/or department name(s)
+	\horrule{0.5pt} \\[0.4cm] % Thin top horizontal rule
+	\huge Security - Handin 2 \\ % The assignment title
+	\horrule{2pt} \\[0.5cm] % Thick bottom horizontal rule
+}
+
+\author{Peter Burgaard - 201209175} % Your name
+
+\date{\normalsize\today} % Today's date or a custom date
+
+\begin{document}
+	
+	\maketitle % Print the title
+	
+	We are given two methods of safe database communication which should comply with the firms security policy:
+	\begin{enumerate}
+		\item When a request for information arrives, D should be able to determine which user sent the request.
+		\item A user should not be able to get information about which data other users asked for.
+	\end{enumerate}
+	The two methods are as follows:
+	\begin{align}
+	& E_{pk_D}(R),S_{sk_A}(E_{pkd}(R)),A \\
+	& E_{pk_d}(R,S_{sk_A}),A
+	\end{align}
+	Then we're asked if; "One of these solutions fails to satisfy the security policy". If an malicious employee wanted to get information about which data other users were asking for and, the company had installed protocol (1), all they had to do was retrieve the request they wanted information from, and encrypt the $E_{pk_D}(R)$ with their own $S_{sk_a}$, and send a request with the encrypted request, the newly self-signed encrypted request, and their information A, and they'd receive the requested information from the database. This is against the security policy article 2 about, users not being able to get information about data other users have received from the database. \\ \\
+	It's also obvious that if the malicious employee just wanted to mess with the system, they could just put their own information A in a random intercepted request, which would break the security policy article 1 about the database being deterministic in the identification of the data requesting user, since A and the signing $S_{sk_A}$ isn't matching anymore, the data D doesn't know which user is asking for data. \\ \\
+	If the data requesting method (2) is used, we're still able to to breake security policy article 1, but now we can't make a fake request, and get the other users that. \\ \\
+	Generaly we can say method (2) is the better in the way that it provides more secure authenticity, since the database can be safely assume if it recieves a correct request, where the signing and A matches, it is indeed the correct user asking for data. If A and $S_{sk_A}$ doesn't match the database could deny a such request, and the system would be safe with respect to article 1, but it still wouldn't be safe with respect to 1. \\ \\
+	Conclussion if, you're going to send composite information, encrypt it all at once with the same key, not in parts.
+\end{document}

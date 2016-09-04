@@ -1,0 +1,229 @@
+\documentclass[paper=a4, fontsize=11pt]{scrartcl} % A4 paper and 11pt font size
+\usepackage[utf8]{inputenc}
+
+\usepackage{blkarray}
+\usepackage{listings}
+
+\usepackage[T1]{fontenc} % Use 8-bit encoding that has 256 glyphs
+\usepackage{fourier} % Use the Adobe Utopia font for the document - comment this line to return to the LaTeX default
+\usepackage[english]{babel} % English language/hyphenation
+\usepackage{amsmath,amsfonts,amsthm} % Math packages
+
+\usepackage{lipsum} % Used for inserting dummy 'Lorem ipsum' text into the template
+
+\usepackage{sectsty} % Allows customizing section commands
+\allsectionsfont{\centering \normalfont\scshape} % Make all sections centered, the default font and small caps
+
+\usepackage{fancyhdr} % Custom headers and footers
+\pagestyle{fancyplain} % Makes all pages in the document conform to the custom headers and footers
+\fancyhead{} % No page header - if you want one, create it in the same way as the footers below
+\fancyfoot[L]{} % Empty left footer
+\fancyfoot[C]{} % Empty center footer
+\fancyfoot[R]{\thepage} % Page numbering for right footer
+\renewcommand{\headrulewidth}{0pt} % Remove header underlines
+\renewcommand{\footrulewidth}{0pt} % Remove footer underlines
+\setlength{\headheight}{13.6pt} % Customize the height of the header
+
+\numberwithin{equation}{section} % Number equations within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+\numberwithin{figure}{section} % Number figures within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+\numberwithin{table}{section} % Number tables within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+
+\setlength\parindent{0pt} % Removes all indentation from paragraphs - comment this line for an assignment with lots of text
+
+%----------------------------------------------------------------------------------------
+%	TITLE SECTION
+%----------------------------------------------------------------------------------------
+
+\newcommand{\horrule}[1]{\rule{\linewidth}{#1}} % Create horizontal rule command with 1 argument of height
+
+\title{	
+	\normalfont \normalsize 
+	\textsc{Aarhus University, Science, Computer Science} \\ [25pt] % Your university, school and/or department name(s)
+	\horrule{0.5pt} \\[0.4cm] % Thin top horizontal rule
+	\huge Compulsary assignment 2 - optimization \\ % The assignment title
+	\horrule{2pt} \\[0.5cm] % Thick bottom horizontal rule
+}
+
+\author{Peter Burgaard - 201209175 \\ 
+	\large Lavet i samarbejde med Kresten Maigaard Axelsen, 201303529, og Niels Bross, 201304189} % Your name
+
+\date{\normalsize\today} % Today's date or a custom date
+
+\begin{document}
+	
+	\maketitle % Print the title
+	
+	\section{Problem C}
+	Alice and Bob plays the following game, micro-Meyer:  Alice flips a fair coin.  Bob cannot see the result (heads or tails) but Alice can.  Tails is also called micro-Meyer.  Now Alice has two options:  She can declare micro-Meyer or concede.  If she concedes, she has to pay Bob 1 DKK. If she declares micro-Meyer,  Bob now has two options.  He can either concede or challenge.  If he concedes, he has to pay Alice 1 DKK. If he challenges, then Alice's coin is revealed.  If it is tails (i.e., micro-Meyer), Bob pays Alice 2 DKK. If it is heads, Alice pays Bob 2 DKK
+	
+	\begin{itemize}
+		\item Show how to model this game as a matrix game with Alice being the maximizer and Bob being the minimizer.
+	\end{itemize}
+	
+	Vi vælger Alice som row player, og Bob som column play
+	\begin{align*}
+	A &= \text{Alice} \\
+	B &= \text{Bob} \\
+	\text{ch} &= \text{challenge} \\
+	\text{co} &= \text{conside} \\
+	H &= \text{heads} \\
+	T &=\text{tails} \\
+	\text{mM} &=\text{micro-Meyer}
+	\end{align*}
+	
+	B har 2 strategier: 
+	\begin{enumerate}
+		\item ch
+		\item co 
+	\end{enumerate}
+	
+	Mens A har 4 strategier: 
+	\begin{enumerate}
+		\item deklarer mM lige meget om H eller T 
+		\item co lige meget om H eller T
+		\item deklarer mM hvis T, og co hvis H 
+		\item deklarer mM hvis H, og co hvis T
+	\end{enumerate}  
+	
+	Vi skaber et overblik og ser, at nogle af strategier kan ikke fungere i et spil, fx kan B ikke ch hvis A co, og nogle er ulogiske som, A co på T, så disse kan sorteres fra
+   
+   	\begin{table}[h]
+   		\begin{tabular} {l | l | l | l | c}
+   			A   &  B  & Mønt & A og B's udfald & Betaling fra A til B \\ \hline
+   			(1) & (1) & T &  A mM, B ch & -2 \\ \hline
+   			(1)(4) & (1) & H &  A mM, B ch & +2 \\ \hline
+   			(3) & (1) & T & A mM, B ch & -2 \\ \hline
+   			(1) & (2) & T & A mM, B co & -1\\ \hline
+   			(1)(4) & (2) & H & A mM, B co & -1\\ \hline
+   			(3) & (2) & T & A mM, B co & -1\\ \hline
+   			(3) & (1)(2) & H & A co & +1 \\ \hline
+   		\end{tabular}
+   	\end{table}
+	
+	Vi ser at strategi 4 smelter sammen med strategi 1 for A. Vi redefinere A's strategier så, 1 og 4 bliver til 1, og 3 bliver til 2. I det nederste tilfælde er det underordnet hvad B gør da A har co. Udfra d
+	
+	\begin{align*}
+		&\text{A(1),B(1): } \frac{2-2}{2} = 0 \\ 
+		&\text{A(1),B(2): }\frac{-1-1}{2} = -1 \\ 
+		&\text{A(2),B(1): }\frac{2-1}{2} = -0.5 \\ 
+		&\text{A(2),B(2): }\frac{1-1}{2} = 0
+	\end{align*}
+	
+	og får følgende payoff matrix
+	
+	\begin{align*}
+		&\begin{blockarray}{ccc}
+				& B(1)& B(2)  \\
+				\begin{block}{c[cc]}
+				A(1) & 0 & -1  \\
+				A(2) & -0.5 & 0  \\
+			\end{block}
+		\end{blockarray}
+	\end{align*}
+	
+	\begin{itemize}
+		\item What is the value of the game?
+	\end{itemize}
+	
+	For at løse matrix gamet, skal det opstilles som et lineært program i standard form. Vi starte med, at arbejde videre med vores matrix overfor og indsætter vores $v$ variable.
+	
+	\begin{align*}
+	&\text{maximize } v\\
+	&\text{s.t.} \begin{bmatrix}
+	0 & -1  & 1\\
+	-0.5 &0 & 1 \\
+	1 & 1 & 0
+	\end{bmatrix} \begin{bmatrix}
+	x_1 \\ x_2 \\ v
+	\end{bmatrix} \begin{matrix}
+	\leq \\ \leq \\ = 
+	\end{matrix} \begin{bmatrix}
+	0 \\ 0 \\ 1
+	\end{bmatrix}\\
+	&x_1,x_2 \geq 0\\
+	&v \text{ free}
+	\end{align*}
+	
+    Dette kan sættes på en ikke matrix form 
+	
+	\begin{align*}
+	&\text{maximize } v\\
+	&\text{s.t.} \\
+	& -x_2 + v \leq 0 \\
+	& -\frac{1}{2}x_1 + v \leq 0\\
+	& x_1 + x_2 = 1 \\
+	&x_1,x_2 \geq 0
+	\end{align*}
+	
+	
+	Vi ser her, at vi har en lighed i vores constraints, som skal ændres til en ulighed. Vælger blot, at løse det efter $x_1$, altså 
+	
+	\[x_1 = 1 - x_2\]
+	
+	og fjerne den fra vores lineære program, hvormed vi har følgende
+	
+	\begin{align*}
+	&\text{maximize } v \\
+	&\text{s.t.} \\
+	& -x_2 + v \leq 0\\
+	& \frac{1}{2}x_2 + v \leq \frac{1}{2}\\
+	&x_2 \leq 1\\
+	&x_2 \geq 0
+	\end{align*}
+	
+	Dette giver os følgende starting dictionary
+	
+	\begin{align*}
+	&\zeta = v \\
+	& x_3 = x_2 - v\\
+	& x_4 = \frac{1}{2}-\frac{1}{2}x_2 - v \\
+	& x_5 = 1 - x_2
+	\end{align*}
+	
+	ved at udføre ($v$, $x_3$), får vi
+	
+	\begin{align*}
+	&\zeta = x_2 - x_3\\
+	&v = x_2 - x_3 \\
+	&x_4 = \frac{1}{2} - \frac{3}{2}x_2+x_3\\
+	&x_5 = 1 - x_2
+	\end{align*}
+	
+	
+	Her ser vi, at $v$ er præcis defineret som vores $\zeta$, og kan derfor fjernes, hvilket giver
+	
+	\begin{align*}
+	&\zeta = x_2 - x_3\\
+	&x_4 = \frac{1}{2} - \frac{3}{2}x_2 + x_3\\
+	&x_5 = 1 - x_2
+	\end{align*}
+	
+	Ved at løse denne, med det udleverede software, altså ved brug af simplex method, har vi den optimale dictionary
+	
+	\begin{align*}
+	&\zeta = \frac{1}{3} - \frac{2}{3}x_4 - \frac{1}{3}x_3\\
+	&x_2 = \frac{1}{3} - \frac{2}{3}x_4 + \frac{2}{3}x_3\\
+	&x_5 = \frac{2}{3} + \frac{2}{3}x_4 - \frac{2}{3}x_3
+	\end{align*}
+	
+	Hvormed vi har
+	
+	\[y^* = \left[\frac{1}{3}, \frac{2}{3}\right]^T\]
+	\[x^* = \left[\frac{1}{3}, \frac{2}{3}\right]^T\]
+	
+	og ser, at vores game value er $\frac{1}{3}$, hvilket betyder en indtægt for A på $\frac{1}{3}$ DKK.
+	
+	\begin{itemize}
+		\item What is an optimal randomized strategy for Alice?
+	\end{itemize}
+	
+	En fordeling mellem strategi 1 og 2 i en propotition 2 til 1.
+	
+	\begin{itemize}
+		\item What is an optimal randomized strategy for Bob?
+	\end{itemize}
+	
+	En fordeling mellem strategi 1 og 2 i en propotition 1 til 2.
+	
+	
+\end{document}

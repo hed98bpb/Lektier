@@ -1,0 +1,3246 @@
+\documentclass[paper=a4, fontsize=11pt]{scrartcl} % A4 paper and 11pt font size
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc} % Use 8-bit encoding that has 256 glyphs
+%\usepackage{fourier} % Use the Adobe Utopia font for the document - comment this line to return to the LaTeX default
+\usepackage{amsmath,amsfonts,amsthm} % Math packages
+\usepackage{stmaryrd}
+
+\usepackage{lipsum} % Used for inserting dummy 'Lorem ipsum' text into the template
+
+\usepackage{sectsty} % Allows customizing section commands
+\allsectionsfont{\centering \normalfont\scshape} % Make all sections centered, the default font and small caps
+
+\usepackage{fancyhdr} % Custom headers and footers
+\pagestyle{fancyplain} % Makes all pages in the document conform to the custom headers and footers
+\fancyhead{} % No page header - if you want one, create it in the same way as the footers below
+\fancyfoot[L]{} % Empty left footer
+\fancyfoot[C]{} % Empty center footer
+\fancyfoot[R]{\thepage} % Page numbering for right footer
+\renewcommand{\headrulewidth}{0pt} % Remove header underlines
+\renewcommand{\footrulewidth}{0pt} % Remove footer underlines
+\setlength{\headheight}{13.6pt} % Customize the height of the header
+
+\setlength\parindent{0pt} % Removes all indentation from paragraphs - comment this line for an assignment with lots of text
+
+\renewcommand{\proofname}{Bevis:}
+\usepackage{csquotes}
+
+%----------------------------------------------------------------------------------------
+%	TITLE SECTION
+%----------------------------------------------------------------------------------------
+
+\newcommand{\horrule}[1]{\rule{\linewidth}{#1}} % Create horizontal rule command with 1 argument of height
+
+
+
+\newtheorem*{theorem}{Sætning}
+\newtheorem*{korollar}{Korollar}
+\newtheorem*{lemma}{Lemma}
+\newtheorem*{definition}{Definition}
+\newtheorem*{proposition}{Proposition}
+
+\newenvironment{cstmproposition}[1]{\begin{proposition} {\normalfont\textbf{#1}}}{\end{proposition}}
+\newenvironment{cstmtheorem}[1]{\begin{theorem} {\normalfont\textbf{#1}}}{\end{theorem}}
+\newenvironment{cstmkorollar}[1]{\begin{korollar} {\normalfont\textbf{#1}}}{\end{korollar}}
+\newenvironment{cstmlemma}[1]{\begin{lemma} {\normalfont\textbf{#1}}}{\end{lemma}}
+\newenvironment{cstmdefinition}[1]{\begin{definition} {\normalfont\textbf{#1}}}{\end{definition}}
+
+\title{	
+	\normalfont \normalsize 
+	\textsc{university, school or department name} \\ [25pt] % Your university, school and/or department name(s)
+	\horrule{0.5pt} \\[0.4cm] % Thin top horizontal rule
+	\huge Assignment Title \\ % The assignment title
+	\horrule{2pt} \\[0.5cm] % Thick bottom horizontal rule
+}
+
+\author{John Smith} % Your name
+
+\date{\normalsize\today} % Today's date or a custom date
+
+\begin{document}
+	
+	\section{Løsninger og mindste kvadraters løsninger af lineære ligningssystemer}
+	
+	
+	\subsection{Disposition}
+	
+	\begin{itemize}
+		\item \textbf{Definition af Lineære ligningssystemer}
+		\item \textbf{RREF/Rækkeækvivalens (Korollar 2.5)}
+		\item \textbf{Lemma 4.3}
+		\item \textbf{Proposition 10.33, m. bevis}
+		\item \textbf{Lemma 10.35, m. bevis}
+		\item \textbf{Proposition 10.36, m. bevis}
+	\end{itemize}
+	
+	\subsection{Udspecificering}
+	
+	\begin{cstmdefinition}{Lineære Ligningssystemer}
+		
+		Når vi siger vi har et lineært ligningssystem af $m$ ligninger med $n$ ubekendte $x_1,\cdots,x_n$ menes følgende ordnede samling 
+		
+		\begin{align*}
+		\begin{array}{c c c c c c c c c c}
+		l_1: & a_{11}x_1 & + & a_{12}x_2 & + & \cdots & + & a_{1n}x_n  & = & b_1 \\
+		l_2: & a_{21}x_1 & + & a_{22}x_2 & + & \cdots & + & a_{12n}x_n  & = & b_2 \\
+		& \vdots & & \vdots & & & &  \vdots & & \vdots \\
+		l_m: & a_{m1}x_1 & + & a_{m2}x_2 & + & \cdots & + & a_{mn}x_n  & = & b_m
+		\end{array}
+		\end{align*}
+		
+		Vi skynder os at definere \textbf{koefficientmatricen} 
+		
+		\begin{align*}
+		&A = \begin{pmatrix}
+		a_{11} & a_{12} & \cdots & a_{1n} \\
+		a_{21} & a_{22} & \cdots & a_{2n} \\
+		\cdots & \vdots & \ddots & \vdots \\
+		a_{m1} & a_{m2} & \cdots & a_{mn}
+		\end{pmatrix} \in Mat_{m,n}(\mathbb{F})
+		\intertext{samt}
+		&b = \begin{pmatrix}
+		b_1 \\ b_2 \\ \vdots \\ b_n
+		\end{pmatrix} \in \mathbb{F}^m
+		\intertext{det ovenstående lineære ligningssystem kan nu skrives om til}
+		&A\cdot \textbf{x} = \textbf{b}
+		\end{align*}
+		
+	\end{cstmdefinition}
+	
+	\begin{cstmdefinition}{Elementære Rækkeoperationer (ERO)}
+		
+		En ERO er en af følgende
+		\begin{itemize}
+			\item [(I)] For $i \not = j$, ombyt den i'te og den j'te række i $A$
+			\item [(II)] Multiplicer alle elementer i den $i$'te række i $A$ med den samme skalar $\alpha \in \mathbb{F} \backslash \{0\}$
+			\item [(III)] Multiplicer alle elementer i den $i$'te række i $A$ med den samme skalar $\alpha \in \mathbb{F}$ og adder resultatet til de tilsvarende elementer $i$ den $j$'te række $(i \not = j)$
+		\end{itemize}
+		
+	\end{cstmdefinition}
+	
+	\begin{cstmdefinition}{2.2 (Række-echelongform (REF))}
+		
+		En matrix $A \in Mat_{m,n}(\mathbb{F})$ siges at være på række-echelonform (REF) såfremt der findes en voksende følge af naturlige tal 
+		
+		\[1 \leq d_1 < d_2 < \cdots < d_r \leq n\]
+		
+		hvor
+		
+		\begin{itemize}
+			\item $a_{ij} = 0 \mbox{ for } i \leq r \mbox{ og } j < d_i$
+			\item $a_{id_i} \not = 0 \mbox{ for } i \leq r$
+			\item $a_{ij} = 0 \mbox{ for } i > r$
+		\end{itemize}
+		
+	\end{cstmdefinition}
+	
+	\begin{cstmdefinition}{2.3 (Reduceret række-echelonform (RREF))}
+		
+		Som ved REF har vi en matrix $A \in Mat_{m,n}(\mathbb{F})$ som siges at være på RREF hvis vi har en følge af voksende naturlige tal 
+		
+		\[1 \leq d_1 < d_2 < \cdots < d_r \leq n\]
+		
+		hvor 
+		
+		\begin{itemize}
+			\item $a_{ij} = 0 \mbox{ for } i \leq r \mbox{ og } j < d_i$
+			\item $a_{id_i} = 1 \mbox{ for } i \leq r$
+			\item $a_{jd_i} = 0 \mbox{ for } i \leq r \mbox{ og } j \not = i$
+			\item $a_{ij} = 0 \mbox{ for } i > r$
+		\end{itemize}
+		
+	\end{cstmdefinition}
+	
+	En vigtig følge af de ovenstående definitioner er følgende definition
+	
+	\begin{cstmdefinition}{2.4 (Rækkeækvivalente matricer)}
+		To matricer $A,B \in Mat_{m,n}(\mathbb{F})$ siges at være rækkeækvivalente, hvis man kan opnå $B$ fra $A$ vha. en successive følge af elementære rækkeoperationer. I givet fald skriver vi $A \sim B$.
+	\end{cstmdefinition}
+	
+	Hvoraf det følger at
+	
+	\begin{cstmkorollar}{2.5}
+		
+		Enhver matrix $A \in Mat_{m,n}(\mathbb{F})$ er rækkeækvivalent til en matrix $H$ på RREF
+		
+	\end{cstmkorollar}
+	
+	Udfra alt dette kan vi nu snakke om løsninger til lineære ligningssystemer igen
+	
+	\begin{cstmlemma}{4.3}
+		
+		$A \in Mat_n(\mathbb{F})$ og lad $H$ betegne en matrix på $RREF$ der er rækkeækvivalent til $A$. Så har vi følgende ækvivalenser
+		
+		\begin{align*}
+		&(1) \; \mbox{For ethvert } b \in \mathbb{F}^n \mbox{ der har det lineære ligningssystem } A \cdot x = b \mbox{ præcis én løsning}\\
+		&(2) \; \mbox{Det homogene lineære lignigssystem } A \cdot x = 0 \mbox{ har alene løsningen } 0\\
+		&(3) \; \mbox{Antallet af frie ubekendte for det homogene fuldstændigt reducerede ligningssystem } H \cdot x = 0 \mbox{ 0}\\
+		&(4) \; H = I_n
+		\end{align*}
+		
+		
+		
+	\end{cstmlemma}
+	
+	
+	En vigtig pointe for lineære ligningssystemer er at hvis vi for et ligningssystem $A \cdot \textbf{x} = \textbf{b}$ ikke kan finde en entydig løsning i $R(A)$ taler vi om at $\textbf{z}$ er en mindste kvadraters løsning (MKL) til det lineære ligningssystem ovenfor såfremt vi har at $A \cdot \textbf{z} \in R(A)$ er tættest på $\textbf{b}$. Vi forstår tættest som at $||\textbf{b} - A \cdot \textbf{z}||$ skal være minimal. 
+	
+	\begin{cstmproposition}{10.33}
+		
+		Det lineære ligningsysstem $A \cdot \textbf{x} = \textbf{b}$ har (mindst) en MKL. MKL bestemmes som løsningsmængden til det lineære ligningssystem
+		
+		\[A \cdot \textbf{x} = \textbf{p}\]
+		
+		hvor $\textbf{p} \in \mathbb{R}^m$ betegner den ortogonale projektion af \textbf{b} på søjlerummet $R(A)$ og lighedstegn når $A \cdot \textbf{z} = \textbf{p}$.
+	\end{cstmproposition}
+	
+	\begin{proof}
+		
+		\textbf{p} $\in R(A)$ pr. definition. $\textbf{z} \in \mathbb{R}^n \Rightarrow A \cdot \textbf{z} \in R(A)$
+		
+		\[\Rightarrow ||\boldsymbol{b} - A \cdot \boldsymbol{z}|| \geq ||\boldsymbol{b} - \boldsymbol{p}|| \tag{Prop. 10.32}\]
+		
+	\end{proof}
+	
+	\begin{cstmlemma}{10.35}
+		
+		$R(A)^{\bot} \in $ indre produktrum $\mathbb{R}^m$ er identisk med $N(A)^T$
+		
+	\end{cstmlemma}
+	
+	\begin{proof}
+		
+		$R(A) = \{v \in \mathbb{R}^n \, | \, A \cdot \textbf{v}\}$
+		
+		\begin{align*}
+		z \in R(A)^{\bot}& \mbox{ er ækvivalent med}\\
+		&\langle \boldsymbol{z}, A \cdot \boldsymbol{v} \rangle = 0, \forall \boldsymbol{v} \in \mathbb{R}^n \tag{10.29}\\
+		&\langle \boldsymbol{z}, A \cdot \boldsymbol{v} \rangle = (A \cdot \boldsymbol{v})^T \cdot \boldsymbol{z} = \boldsymbol{v}^T \cdot (A^T \cdot \boldsymbol{z}) = \langle A^T\cdot \boldsymbol{z},\boldsymbol{v} \rangle \tag{10.30}
+		\intertext{(10.29) er da ækvivalent med}
+		&\langle A^T\cdot \boldsymbol{z},\boldsymbol{v} \rangle, \forall \boldsymbol{v} \in \mathbb{R}^n
+		\end{align*}
+		
+		(10.30) er da ækvivalent med at $A^T \cdot \boldsymbol{z} \in (\mathbb{R}^n)^{\perp}$, dvs. $A^T \cdot \boldsymbol{z} = 0 \Rightarrow \boldsymbol{z} \in N(A^T)$
+		
+	\end{proof}
+	
+	\begin{cstmproposition}{10.36}
+		MKL'er til $A \cdot \boldsymbol{x} = \boldsymbol{b}$ bestemmes som løsningerne til
+		
+		\[(A^T A) \cdot \boldsymbol{x} = A^T \cdot \boldsymbol{b}\]
+		
+	\end{cstmproposition}
+	
+	\begin{proof}
+		
+		Lad $\boldsymbol{p}$ betegne den ortogonale projektion af $\boldsymbol{b}$ på $R(A)$. Pr. def. af $\boldsymbol{p}$ dermed det entydige element i $R(A)$ der opfylder
+		
+		\[\textbf{b} - \textbf{p} \in R(A)^{\bot} = N(A^T) \tag{10.31}\]
+		
+		hvor det sidste lighedstegn netop følger af $\textbf{Lemma 10.35}$. For $\boldsymbol{z} \in \mathbb{R}^n$ vil $A \cdot \boldsymbol{z} \in R(A)$, og $A\cdot \boldsymbol{z} = \boldsymbol{p}$ præcist når 
+		
+		\[A^T(\textbf{b} - A \cdot \textbf{z}) = \textbf{0} \tag{10.32}\]
+		
+		Men at $\boldsymbol{z}$ opfylder (10.32), er oplagt ækvivalent til at $\boldsymbol{z}$ er en løsning til (10.31)
+		
+	\end{proof}
+	
+	\newpage
+	
+	\section{Vektorrum og underrum}
+	
+	\subsection{Disposition}
+	
+	\begin{itemize}
+		\item \textbf{Def. 5.1}
+		\item \textbf{Proposition 5.2, m. bevis}
+		\item \textbf{Korollar 5.3, m. bevis}
+		\item \textbf{Def. 5.7}
+		\item \textbf{Def. 5.9 (Linear kombination)}
+		\item \textbf{Def. 5.11}
+		\item \textbf{Lemma 5.12, m. bevis}
+	\end{itemize}
+	
+	\subsection{Udspecificering}
+	
+	\paragraph{Def. 5.1} $\mathbb{F}$-vektorrum består af en mængde V, samt to afbildninger af addition$(+)$ og skalarmultilplikation $(*)$, der opfylder:
+	\begin{align}
+	\nonumber & &&\forall u,v,w\in V \text{ og } \alpha,\beta\in \mathbb{F} \\
+	&\text{Kommutative lov: }&& u+v=v+u \\
+	&\text{Associative lov: }&& (u+v)+w=u+(v+w) \\
+	&\text{Neutral element: }&& \exists\mathbf{0}\in V, u+\mathbf{0}=u \text{ og } 1*v = v\\
+	&\text{Inverse element: }&& \exists-u\in V, u-u=\mathbf{0}\\
+	&\text{Distributiv lov: }&& \alpha*(u+v)=(\alpha*u)+(\alpha*v) \\
+	&\text{Distributiv lov: }&& (\alpha*\beta)*v=(\alpha*v)+(\beta*v)\\
+	&\text{Associative lov:}&& \alpha*(\beta*v)=(\alpha\beta)*v \\
+	&\text{Neutral element: }&& 1*v=v
+	\end{align}
+	
+	\paragraph{Proposition 5.2} Lad V betegne et vektorrum, $\forall v \in V$ glæder:
+	\setcounter{equation}{0}
+	\begin{align}
+	&\text{Hvis 0 betegner nulelementet i }\mathbb{F} \text{ så: }&& 0*u=0,  \\
+	&\forall\alpha\in \mathbb{F} \text{ så: }&& \alpha*0=0 \\
+	& && (-1)*u=-u
+	\end{align}
+	
+	Bevis for Prop 5.2(1.
+	\begin{align*}
+	&\text{Lad $v = 0*u$. grundet distributiv lov så: }&& v=(0+0)u=0*u+0*u=v+v &&&\\
+	&\text{Dermed}&& \mathbf{0}=v+(-v)=(v+v)+(-v) &&&\text{via, valg af v} \\
+	& && =v+(v+(-v)) &&& \text{associative lov}\\
+	& &&  =v+\mathbf{0} &&& \text{inverse element} \\
+	& && =v &&& \text{neutrale element}
+	\end{align*}
+	
+	Der ud over har vi
+	\paragraph{Korollar 5.3} Elementerne $\mathbf{0}$ og $-v$ i def. 5.1 er entydige bestemte. \\
+	Bevis for $\mathbf{0}$ er entydig bestemt:
+	\begin{gather*}
+	\text{Antag at $\mathbf{0}_1, \mathbf{0}_2\in V$ opfylder krav for at være neutrale elementer:} \\
+	\mathbf{0}_1=0*\mathbf{0}_1=\mathbf{0_2}
+	\end{gather*}
+	
+	\paragraph{Def 5.7} Et underrum af et $\mathbb{F}$-vektorrum V er  $S \subseteq V$, der indeholder $\mathbf{0}$ og som er stabil overfor addition og skalarmultiplikation. Dette betyder at:
+	\setcounter{equation}{0}
+	\begin{align}
+	& &&\mathbf{0}\in S  \\
+	&\forall u,v \in S \text{ så } &&u+v\in S \\
+	&\forall v \in S \land \forall\alpha\in\mathbb{F} \text{ så } &&\alpha*u\in S
+	\end{align}
+	et eksempel på et underrum er $N(A)=\{x|Ax=0\}$, dette vises ved:
+	\begin{gather*}
+	\text{For } \alpha, \beta\in\mathbb{F} \text{, og }x\in N(A) \iff Ax=0 \land y\in N(A) \iff Ay=0 \\
+	A(\alpha*x+\beta*y)=A(\alpha*x)+A(\beta*y)=\alpha*Ax+\beta*Ay=\alpha*0+\beta*0=0\in N(A)	
+	\end{gather*}
+	
+	\paragraph{Def 5.9} Et element v i vektorrummet V kaldes en \textbf{linearkombination} af $v_1,v_2,...,v_n$ hvis der eksistere skalarer $\alpha_1,\alpha_2,...,\alpha_n\in\mathbb{F}$, så
+	\begin{align*}
+	v=\alpha_1*v_1+\alpha_2*v_2+...+\alpha_n*v_n=\sum_{i=1}^{n}\alpha_i*v_i \in V
+	\end{align*}
+	
+	Mængden af alle sådanne kombinationer kaldes for spannet
+	
+	\paragraph{Def. 5.11} mængden af alle linearkombination af $v_1,v_2,...,v_n$ kaldes for spannet af elementerne $v_1,v_2,...,v_n$:
+	\begin{align*}
+	Span(v_1,v_2,...,v_n)
+	\end{align*}
+	
+	Det minimale antal $v_i$ der skal til for at udspænde V udgøre dimensionen
+	
+	
+	\paragraph{Lemma 5.12}
+	
+	Mængden $Span(v_1,v_2,\cdots,v_n)$ idgør et underrum i $V$ indeholdende alle elementerne $v_i, i = 1,2,\cdots,n$. Ethvert underrum af $V$ indeholdende $v_i, i = 1,2,\cdots,n$ vil indeholde $Span(v_1,v_2,\cdots,v_n)$ som delmængde.
+	
+	
+	\begin{proof}
+		
+		Jf. \textbf{Proposition 5.2(1)}, så er
+		
+		\[0 \cdot v_1 + 0 \cdot v_2 + \cdots + 0 \cdot v_n\]
+		
+		neutralelementet $\textbf{0} \in V$. Specielt $\textbf{0} \in Span(v_1,v_2,\cdots,v_n)$. Desuden gælder
+		
+		\[\sum_{i=1}^n \alpha_i v_i + \sum_{i=1}^n \beta_i v_i = \sum_{i=1}^n (\alpha_i + \beta_i) v_i \in Span(v_1,v_2,\cdots,v_n)\]
+		
+		og
+		
+		\[\alpha \cdot \sum_{i=1}^n \alpha_i v_i = \sum_{i=1}^n(\alpha \alpha_i)v_i \in Span(v_1,v_2,\cdots,v_n)\]
+		
+		jf. regnereglerne i \textbf{Def. 5.1}. Der konkluderes hermed jf. \textbf{Def. 5.7}, at  $Span(v_1,v_2,\cdots,v_n)$ er et underrum i $V$. At $v_i \in Span(v_1,v_2,\cdots,v_n), i = 1,2,\cdots,n$ følger af
+		
+		\[v_i = 0 \cdot v_1 + \cdots + 0 \cdot v_{i-1} + 1 \cdot v_i + 0 \cdot v_{i+1} + \cdots + 0 \cdot v_n\]
+		
+		Vi lader nu $S$ betegne et underrum af $V$, som indeholder alle $v_i, i = 1,2,\cdots,n$. $S$ indeholder ethvert element på formen $\alpha_i v_i$ for $\alpha_i \in \mathbb{F}$, og specielt indeholder $S$ da alle endelige summer af elementer af denne form. Alle linearkombinationer af $v_i$'erne er dermed indeholdt i $S$, og $Span(v_1,v_2,\cdots,v_n) \subseteq S$. 
+		
+	\end{proof}
+	
+	\paragraph{Ekstra Note}
+	
+	\paragraph{Def 5.14} Lad V betegne et $\mathbb{F}$-vektorrum. Vi definere da:
+	\begin{itemize}
+		\item Hvis $V=\{0\}$, så siger vi at V har dimension 0.
+		\item Hvis V er forskellige fra $\{0\}$ og kan udspændes af n elementer, men ikke færre end n elementer, så siger vi, at dimensionen af v er lig n. 
+		\item Hvis v ikke kan udspændes af en endelig mængde, så siges V at have uendelig dimension. 
+	\end{itemize}
+	
+	\newpage
+	
+	\section{Basis for Vektorrum}
+	
+	\subsection{Disposition}
+	
+	\begin{itemize}
+		\item \textbf{Def. 7.1}
+		\item \textbf{Proposition 7.4}
+		\item \textbf{Lemma 7.6, m. bevis}
+		\item \textbf{Sætninger 7.9, m. bevis}
+	\end{itemize}
+	
+	\subsection{Udspecificering}
+	
+	\paragraph{Def 7.1} For en samling $\mathcal{V}=(\mathbf{v}_1,\mathbf{v}_2,...,\mathbf{v}_n)$ af elementer i et $\mathbb{F}$-vektorrum V defineres:
+	\begin{enumerate}
+		\setlength\itemsep{-0.5em}
+		\item Sanlingen af elementer $\mathbb{V}$ siges at \textbf{udspænde} V, hvis den lineære afbildning $L_\mathcal{V}$ er surjektiv; dvs. hvis ethvert element i V er lig en linearkombination af $\mathbf{v}_1,\mathbf{v}_2,...,\mathbf{v}_n$
+		\item Samlingen af elementer $\mathcal{V}$ kaldes \textbf{lineært uafhængig}, hvis den lienære afbildning $L_\mathcal{V}$ er injektiv; dvs. hvis ethvert element i V maksimalt kan skrives på én måde som en linearkombination af $\mathbf{v}_1,\mathbf{v}_2,...,\mathbf{v}_n$. I modsat fald kaldes samlingen af elementer i $\mathbb{V}$ for \textbf{lineært afhængig}.
+		\item Samlingen af elementer $\mathcal{V}$ kaldes en \textbf{basis}, hvis den lineære afbildning $L_\mathcal{V}$ er invertibel; dvs. hvis ethvert element i V på netop én måde kan skrives som en linearkombination af $\mathbf{v}_1,\mathbf{v}_2,...,\mathbf{v}_n$
+	\end{enumerate}
+	
+	Vi ligger mærke til den egenskab at
+	
+	\paragraph{Proposition 7.4} Lad $\mathcal{V}=(\mathbf{v}_1,\mathbf{v}_2,...,\mathbf{v}_n)$ betegne en basis for et vektorrum V. Så er 
+	\begin{align*}
+	dim(V)=n
+	\end{align*}
+	Hvis $\mathcal{W}=(\mathbf{w}_1,\mathbf{w}_2,...,\mathbf{w}_n)$ betegner yderligere en basis for V, så er $n=m$.\\
+	
+	Nu hvor vi har defineret en basis for et vektorrum, vil vi bevise 
+	
+	\paragraph{Lemma 7.6} Lad $\mathcal{W}=(\mathbf{v}_1,\mathbf{v}_2,...,\mathbf{v}_m)$ betegne en samling af elementer der udspænder et vektorrum $V\neq \{0\}$. Så kan $\mathcal{W}$ udtyndes til en basis for V; dvs. der eksisterer et heltal $k>0$ og en følge af tal
+	\begin{align*}
+	1\leq i_1 < 1_2 < ... < i_k \leq m,
+	\end{align*}
+	så $\mathcal{V}=(\mathbf{v}_{i_1},\mathbf{v}_{i_2},...,\mathbf{v}_{i_k})$ er en basis for V.
+	\begin{proof}
+		Udsagnet vises via induktion i m. I tilfælder hvor $m=1$, så er lineært afhænging hvis $v_1=0$, gundet at så vil $1*\mathbf{v}_1=\mathbf{0}$ være en ikke-triviel lineær relation, og $\mathcal{V}=(\mathbf{v}_1)$ er derfor lineært afhængig. Specielt vil $V=Span(\mathcal{W})=\{\mathbf{0}\}$, hvilket er en modstrid. Derfor er $\mathcal{W}$ lineært uafhængig og dermed en basis. Dette viser udsagnet i tilfæld $m=1$.	
+		
+		Antag at $m>1$, og at udsagnet er vist i tilfældet, hvor $\mathcal{W}$ består af $m-1$ elementer. Hvis $\mathcal{W}$ er lineært uafhængig, så er $\mathcal{W}$ selv en basis, og udsagnet er vist. Antag derfor at $\mathcal{W}$ er lineært afhængig. Så findes der, grundet lemma 7.5(1) et i, så $V=Span(\mathcal{W}')$ hvor
+		\begin{align*}
+		\mathcal{W}'=(\mathbf{v}_1,...,\mathbf{v}_{i-1},\mathbf{v}_{i+1},...,\mathbf{v}_m).
+		\end{align*}
+		Vektorummet V er dermed udspændt af $\mathcal{W}'$, dvs. af m-1 elementer. Anvendes IH opnås det, at $\mathcal{W}'$, kan udtyndes til en basis. Men en udtynding af $\mathcal{W}'$ er også en udtynding af $\mathcal{W}$.
+	\end{proof}
+	
+	Men vi kan ikke blot udtynde os til en basis, vi kan også udvide os til en basis
+	
+	\paragraph{Sætning 7.9} Lad V betegne et vektorrum af endelig dimension $n>0$, og lad $\mathcal{W}=(\mathbf{v}_1,\mathbf{v}_2,...,\mathbf{v}_m)$ betegne en samling af m elementer i V.
+	\begin{enumerate}
+		\item Hvis $\mathcal{W}$ udspænder V, så er $n\leq m$ og $\mathcal{W}$ kan \textbf{udtyndes} til en basis for V; dvs. at der eksisterer en følge af helt
+		\begin{align*}
+		1\leq i_1 < i_2 <...<i_n \leq m,
+		\end{align*}
+		så $\mathcal{V}=(\mathbf{v}_{i_1},\mathbf{v}_{i_2},...,\mathbf{v}_{i_n})$ er en basis for V.
+		\begin{itemize}
+			\item Vi lægge mærke til at dette blot er en omformulering af lemma 7.6 som vi har bevist. Den eneste forskel er at proposition 7.4 bruges at vise at $dim(v)=n$ hvilket blot er det antal elementer der er i basen.
+		\end{itemize}
+		\item Hvis $\mathcal{W}$ er lineært uafhængig, så er $m\leq n$ og $\mathcal{W}$ kan \textbf{udvides} til en bassis for V; dvs der eksisterer elementer 
+		\begin{align*}
+		\mathbf{v}_{m+1},\mathbf{v}_{m+2},...,\mathbf{v}_{n}\in V
+		\end{align*}
+		så $\mathcal{V}=(\mathbf{v}_{1},\mathbf{v}_{2},...,\mathbf{v}_{n})$ er en base for V.
+	\end{enumerate}
+	
+	\begin{proof}
+		At $m\leq n$ følger af lemma 7.8, som vi ikke vil bevise. Vi observer at hvis $Span(\mathcal{W})=V$, så er $\mathcal{W}$ en basis for V. Modsat, hvis $Span(\mathcal{W})\neq V$, så eksisterer der et $\mathbf{v}_{m+1}\in V$, som ikke er indeholdt i $Span(\mathcal{W})$. Ifølge Lemma 7.5(2) er $\mathcal{W}'=(\mathbf{v}_1,\mathbf{v}_2,...,\mathbf{v}_{m+1})$ da lineært uafhængig, og derfor vil $m+1\leq n$ i dette tilfælde. \\
+		
+		Ved induktion i tallet $n-m\geq0$ kan vi vise at $\mathcal{W}$ kan udvides til en basis for V. Hvis $n-m=0$, så er $\mathcal{W}$ allerede en basis for V, og udsagnet er vist. Vi betragter tilfældet for $n-m>0$, og antager det er vist for alle tal mindre end det. Hvis $Span(\mathcal{W})=V$, så er $\mathcal{W}$ en basis for V, og vi er færdige. Hvis ikke, kan vi tilføje et passende $\mathbf{v}_{m+1}$ til $\mathcal{W}$ og opnå en lineært uafhængig samling af $m+1$ elementer $\mathcal{W}'=(\mathbf{v}_1,\mathbf{v}_2,...,\mathbf{v}_{m+1}$. Pr induktion, så kan $\mathcal{W}'$ nu udvides til en basis fir V, og en sådan udvidelse er samtidig en udvidelse af $\mathcal{W}$
+	\end{proof}
+	
+	\newpage
+	
+	\section{Matrixrepræsentationer}
+	
+	
+	\subsection{Disposition}
+	
+	\begin{itemize}
+		\item \textbf{Def. 8.2 (KV)}
+		\item \textbf{Def. 8.5 (KTM)}
+		\item \textbf{Prop. 8.6}
+		\item \textbf{Def. 8.9 (MR)}
+		\item \textbf{Prop. 8.11}
+		\item \textbf{Lemma 8.21, m. bevis}
+		\item \textbf{Lemma 8.22, m. bevis for (1)}
+	\end{itemize}
+	
+	\subsection{Udspecificering}
+	
+	\paragraph{Indledning}
+	
+	
+	
+	
+	For et generelt $\mathbb{F}$ vektorrum giver det mening at snakke om koordinatsystemet i form af en basis $\mathcal{V}$ for netop et $\mathbb{F}$-vektorrum, hvilket giver anledning til en bijektiv afbildning
+	
+	\[L_{\mathcal{V}} : \mathbb{F}^n \rightarrow V\]
+	
+	Vi ser at $L_{\mathcal{V}}$ er en isomorfi (idet bijektiv) og punkterne i V svarer derfor 1-1 til punkterne i $\mathbb{F}$. Vi ser også at $L_{\mathcal{V}}$ er lineær og derfor er addition og skalarmultiplikation også defineret mellem V og $\mathbb{F}$. Dette betyder at vi kan arbejde med V som om det blot var $\mathbb{F}$. Konsekvensen af dette er at oversættelsen afhænger af valget af basis $\mathcal{V}$ for $\mathbb{F}$.
+	
+	\paragraph{Def. 8.2 (Koordinatvektorer)}
+	\textit{Lad $\mathcal{V} = (v_1,\cdots,v_n)$ betegne en basis for et $\mathbb{F}$-vektorrum V. Med \textbf{koordinatvektoren} for et element $v \in V$ mht. basen $\mathcal{V}$ menes elementet $L_{\mathcal{V}}^{-1}(v) \in \mathbb{F}^n$. Koordinatvektoren betegnes også med $[v]_{\mathcal{V}}$}
+	
+	Med andre ord kan vi beskrive koordinatvektoren $[v]_{\mathcal{V}}$ for $v \in V$ som den vektor
+	\[\begin{pmatrix}
+	\alpha_1 \\
+	\alpha_2 \\
+	\vdots \\
+	\alpha_n
+	\end{pmatrix} \in \mathbb{F}^n \tag{8.8}
+	\]
+	
+	som opfylder relationen
+	
+	\[v = \alpha_1 \cdot v_1 + \alpha_2 \cdot v_2 + \cdots + \alpha_n \cdot v_n \tag{8.9}\] 
+	
+	Da afbildningen
+	\begin{align*}
+	[\,\cdot\,]_{\mathcal{V}} : &V \rightarrow \mathbb{F}^n\\
+	& v \mapsto [\,v\,]_{\mathcal{V}}
+	\end{align*}
+	
+	er en lineær transformation har vi at skalarmultiplikation og addition gælder for koordinatvektoren.
+	
+	\paragraph{Def 8.5 (Koordinattransformationsmatrix)}
+	
+	\textit{Standardmatrixrepræsentationen $\mathcal{M}(L_{\mathcal{V}}^{-1} \circ L_{\mathcal{W}} \in Mat_n(\mathbb{F})$ for den lineære afbildning $L_{\mathcal{V}}^{-1} \circ L_{\mathcal{W}}$ kaldes for \textbf{koordinattransformationsmatricen} for overgangen fra $\mathcal{W}$-basen tuk $\mathcal{V}$-basen. Koordinattransformationsmatricen betegnes også med $_\mathcal{V}[{\scriptstyle\square}]_{\mathcal{W}}$}
+	
+	Umiddelbart følger
+	
+	\paragraph{Proposition 8.6} \textit{Lad $\mathcal{V}, \mathcal{U}$ og $\mathcal{W}$ betegne baser for et $\mathbb{F}$-vektorrum V. Så}
+	
+	
+	\begin{align*}
+	&(1) \quad [\,v\,]_{\mathcal{V}} = _{\mathcal{V}}[{{\scriptstyle\square}}]_{\mathcal{W}} \cdot [\,v\,]_{\mathcal{W}} \text{ for } v \in V\\
+	&(2) \quad \text{Hvis } A \in Mat_{n,n}(\mathbb{F}) \text{ opfylder relationen}\\
+	&\qquad \qquad\qquad\qquad\qquad\qquad\qquad\qquad[v]_{\mathcal{V}} = A \cdot [\,v\,]_{\mathcal{W}}\\
+	&\qquad \; \text{for alle } v \in V, \text{ så er } A = _{\mathcal{V}}[{\scriptstyle\square}]_{\mathcal{W}}\\
+	&(3) \quad _{\mathcal{V}}[{\scriptstyle\square}]_{\mathcal{V}} \text{ er identitetsmatricen} \\
+	&(4) \quad _{\mathcal{W}}[{\scriptstyle\square}]_{\mathcal{V}} \cdot _{\mathcal{V}}[{\scriptstyle\square}]_{\mathcal{U}} = _{\mathcal{W}}[{\scriptstyle\square}]_{\mathcal{U}}\\
+	&(5) \quad _{\mathcal{W}}[{\scriptstyle\square}]_{\mathcal{V}} \text{ er invertibel med inverse } _{\mathcal{V}}[{\scriptstyle\square}]_{\mathcal{W}}
+	\end{align*}
+	
+	
+	
+	
+	\paragraph{Def. 8.9 (Matrixrepræsentation)}
+	
+	\textit{Standardmatrixrepræsentationen $\mathcal{M}(L_{\mathcal{W}}^{-1} \circ L \circ L_{\mathcal{V}}) \in Mat_{m,n}(\mathbb{F})$ kaldes for \textbf{Matrixrepræsentationen} for L mht. baserne $\mathcal{V}$ og $\mathcal{W}$. Matrixrepræsentationen betegnes også med notationen $_{\mathcal{W}}[L]_{\mathcal{V}}$}
+	Eller:
+	
+	\begin{align*}
+	&V \xrightarrow{\makebox[2cm]{L}} W\\
+	L_{\mathcal{V}} & \uparrow \qquad \qquad \qquad \quad \downarrow L_{\mathcal{W}}^{-1}\\
+	&\mathbb{F}^n \xrightarrow{\makebox[2cm]{$L_{\mathcal{W}}^{-1} \circ L \circ L_{\mathcal{V}}$}} \mathbb{F}^m
+	\end{align*}
+	
+	\begin{cstmproposition}{8.11}
+		
+		Lad $L: \; V \rightarrow W$ betegne en lineær afbildning mellem $\mathbb{F}$-vektorrum $V$ og $W$ med baser hhv. $\mathcal{V}$ og $\mathcal{W}$. Så:
+		
+		\begin{align*}
+		(1) \; &[L(v)]_{\mathcal{W}} = _{\mathcal{W}}[L]_{\mathcal{V}} \cdot [v]_{\mathcal{V}}, \forall v \in V\\
+		(2) \; &\mbox{Hvis } A \in Mat_{m,n}(\mathbb{F}) \mbox{ opfylder relationen}\\
+		&[L(v)]_{\mathcal{W}} = A \cdot [v]_{\mathcal{V}}\\
+		&\forall v \in V, \mbox{ så er } A = _{\mathcal{W}}[L]_{\mathcal{V}}
+		\end{align*}
+		
+		
+	\end{cstmproposition}
+	
+	\begin{proof}
+		
+		udsagn (1) følger via
+		
+		\begin{align*}
+		_{\mathcal{W}}[L]_{\mathcal{V}} \cdot [v]_{\mathcal{V}} &= \mathcal{M}(L_{\mathcal{W}}^{-1} \circ L \circ L_{\mathcal{V}}) \cdot [v]_\mathcal{V}\\
+		&=(L_{\mathcal{W}}^{-1} \circ L \circ L_{\mathcal{V}})([v]_{\mathcal{V}})\\
+		&=(L_{\mathcal{W}}^{-1} \circ L)(v)\\
+		&=L_{\mathcal{W}}^{-1}(L(v))\\
+		&=[L(v)]_{\mathcal{W}}
+		\end{align*}
+		
+		For herefter at indse udsagn (2) sætter vi $B = _{\mathcal{W}}[L]_{\mathcal{V}}$. Det implicerer da
+		
+		\begin{align*}
+		&L_A([v]_{\mathcal{V}}) = A \cdot [v]_{\mathcal{V}} = [L(v)]_{\mathcal{W}} = B \cdot [v]_{\mathcal{V}} = L_B([v]_{\mathcal{V}}), \forall v \in V
+		\end{align*}
+		Men vi ved at ethvert element i $\mathbb{F}^n$ er på formen $[v]_{\mathcal{V}}$, for et passende $v \in V$, og dermed er $L_A = L_B$, specielt (iflg. \textbf{Korollar 6.7}) og udsagn 2 følger derfor.
+		
+		
+	\end{proof}
+	
+	\paragraph{Bemærk:}
+	\[_{\mathcal{W}}[\text{Id}]_{\mathcal{V}} = \mathcal{M}(L_{\mathcal{W}}^{-1} \circ \text{Id} \circ L_{\mathcal{V}}) = \mathcal{M}(L_{\mathcal{W}}^{-1} \circ L_{\mathcal{V}}) = _{\mathcal{W}}[{\scriptstyle\square}]_{\mathcal{V}}\]
+	
+	\paragraph{Lemma 8.21} \textit{Lad $L : V \rightarrow W$ betegne en lineær afbildnings, og lad $\mathcal{V}$ og $\mathcal{W}$ betegne baser for hhv $V$ og $W$. Så gælder:}
+	
+	\begin{align*}
+	&(1) \; v \in ker(L) \Leftrightarrow [\,v\,]_{\mathcal{V}} \in N(_{\mathcal{W}}[L]_{\mathcal{V}}), v \in V \\
+	&(2) \; w \in L(V) \Leftrightarrow [\,w\,]_{\mathcal{W}} \in R(_{\mathcal{W}}[L]_{\mathcal{V}}, w \ in W
+	\end{align*}
+	
+	
+	
+	\begin{proof}
+		
+		Først vil vi bevise påstand (1)
+		
+		Idet $L_{\mathcal{W}}$ er en isomorfi, så er $v \in V$ et element i $ker(L)$
+		
+		\[\Leftrightarrow L_{\mathcal{W}}^{-1}(L(v)) = 0 \tag{1}\]
+		
+		Men 
+		
+		\[L_{\mathcal{W}}^{-1}(L(v)) = [L(v)]_{\mathcal{W}}]\]
+		
+		som ifølge \textbf{Prop. 8.11} var lig
+		
+		\[[L(v)]_{\mathcal{W}} = _{\mathcal{W}}[L]_{\mathcal{V}} \cdot [v]_{\mathcal{V}}\]
+		
+		Hvoraf udsagn (1) følger umiddelbart i og med 
+		
+		\begin{align*}
+		&[_{\mathcal{W}}[L]_{\mathcal{V}} \cdot [v]_{\mathcal{V}} = [L(v)]_{\mathcal{W}} = L_{\mathcal{W}}^{-1}(L(v)) = 0
+		\end{align*}
+		
+		
+		Vi beviser udsagn (2).
+		
+		Hvis $w \in L(V), w \in W \Rightarrow \exists v \in V \Rightarrow w = L(v)$
+		
+		\[\Rightarrow [\,w\,]_{\mathcal{W}} = [L(v)]_{\mathcal{W}} = _{\mathcal{W}}[L]_{\mathcal{V}} \cdot [\,v\,]_{\mathcal{V}} \Rightarrow [\,w\,]_{\mathcal{W}} \in R(_{\mathcal{W}}[L]_{\mathcal{V}})\]
+		
+		Omvendt $w \in R(_{\mathcal{W}}[L]_{\mathcal{V}}), \exists a \in \mathbb{F}^n (dim(V) = n)$
+		
+		\[[\,w\,]_{\mathcal{W}} = _{\mathcal{W}}[L]_{\mathcal{V}} \cdot a\]
+		
+		Sæt $v = L_{\mathcal{V}}(a)$
+		
+		\begin{align*}
+		[L(v)]_{\mathcal{W}} &= _{\mathcal{W}}[L]_{\mathcal{V}} \cdot [\,v\,]_{\mathcal{V}}\\
+		&= _{\mathcal{W}}[L]_{\mathcal{V}} \cdot a\\
+		&= [\,w\,]_{\mathcal{W}}
+		\end{align*}
+		
+		$L_{\mathcal{W}}$ isomorfi $\Rightarrow w = L(v) \Rightarrow w \in L(V)$
+	\end{proof}
+	Hvilket vi kan bruge til at vise 
+	
+	\paragraph{Lemma 8.22} \textit{Lad $L: V \rightarrow W$ betegne en lineær afbildning og lad $\mathcal{V}$ og $\mathcal{W}$ betegne baser for hhv. $V$ og $W$. Lad $r$ betegne rangen af matrixrepræsentationen $_{\mathcal{W}}[L]_{\mathcal{V}}$ så gælder:}
+	
+	
+	\begin{align*}
+	&(1) \; L_{\mathcal{V}}(N(_{\mathcal{W}}[L]_{\mathcal{V}})) = ker(L). \text{ Specielt inducerer $L_{\mathcal{V}}$ en isomorfi for } \\
+	& \qquad N(_{\mathcal{W}}[L]_{\mathcal{V}}) \rightarrow ker(L)\\
+	& \Rightarrow \mbox{dim}(ker(L)) = \mbox{dim}(V) - r\\
+	&(2) \; L_{\mathcal{W}}(R(_{\mathcal{W}}[L]_{\mathcal{V}}) = L(V). \text{ Specielt inducerer $L_{\mathcal{W}}$ en isomorfi for } \\
+	& \qquad R(_{\mathcal{W}}[L]_{\mathcal{V}} \rightarrow L(V)\\
+	& \Rightarrow \mbox{dim}(L(V)) = r
+	\end{align*}
+	\begin{proof}
+		
+		Ifølge \textbf{Lemma 8.21} er elementerne i $N(_{\mathcal{W}}[L]_{\mathcal{V}})$ på formen $[\,v\,]_{\mathcal{V}}, v \in ker(L)$
+		
+		\[L_{\mathcal{V}}([\,v\,]_{\mathcal{V}}) = v\]
+		
+		Hvilket afslutter beviset af første del af (1). Dimensionsidentiten følger af 6.22, 7.29(2) og
+		
+		\[dim(ker(L)) = dim(N(_{\mathcal{W}}[L]_{\mathcal{V}})) = dim(V) - r\]
+		
+		Udsagn (2) vises på lignende vis.
+	\end{proof}
+	\newpage
+	
+	\section{Indre Produkt}
+	
+	
+	Vi har for et legeme $\mathbb{K}$ enten $\mathbb{C}$ eller $\mathbb{R}$ med vektorrum $V$ over $\mathbb{K}$. Vi kan dermed definere vinkler og længder vha. det indre produkt med afbildningen
+	
+	\[\langle \cdot , \cdot \rangle \; \; V \times V \rightarrow \mathbb{K}\]
+	
+	Vi betegner da $(v,w) \in V \times V$ under $\langle \cdot , \cdot \rangle$ med $\langle v,w \rangle$.
+	
+	\begin{cstmdefinition}{9.1 (Indre produkt)}
+		
+		\subsection{Disposition}
+		
+		\begin{itemize}
+			\item \textbf{Def. 9.1 (Indre produkt)}
+			\item \textbf{Def. 9.5 (Norm)}
+			\item \textbf{Def. 9.7 (Ortogonalitet)}
+			\item \textbf{Prop. 9.9 (Pythagoras' Sætning), m. bevis}
+			\item \textbf{Def. 9.11 (Projektion på vektor)}
+			\item \textbf{Prop. 9.12 (Cauchy-Schwarz' ulighed)}
+		\end{itemize}
+		
+		\subsection{Udspecificering}
+		
+		Afbildningen ovenfor kaldes for et indre produkt på et vektorrum $V$ såfremt der gælder for $u,v,w \in V, \alpha,\beta \in \mathbb{K}$
+		
+		\begin{align*}
+		&(a) \; \mbox{Skalaren } \langle v,v \rangle \mbox{ er et reelt tal og } \langle v,v \rangle \geq 0\\
+		&(b) \; \langle v,v \rangle = 0 \Rightarrow v = 0\\
+		&(c) \; \langle v,w \rangle = \overline{\langle w,v \rangle}\\
+		&(d) \; \langle \alpha \cdot u + \beta \cdot v, w \rangle = \alpha \cdot \langle u,w \rangle + \beta \cdot \langle v,w \rangle
+		\end{align*}
+		
+		$V$ er dermed et indre produkt rum
+		
+	\end{cstmdefinition}
+	
+	
+	\begin{cstmdefinition}{9.5 (Norm)}
+		
+		
+		Lad $V$ betegne et indre produkt rum. Vi siger da at normen af $v \in V$ defineres som
+		
+		\[||v|| = \sqrt{\langle v,v \rangle} \in \mathbb{R}_{\geq 0}\]
+		
+	\end{cstmdefinition}
+	
+	
+	\begin{cstmdefinition}{9.7 (Ortogonalitet)}
+		
+		Elementer $v,w$ i et indre produkt rum kaldes ortogonale hvis $\langle v,w \rangle = 0$. I givet fald skriver vi $v \bot w$ 
+		
+	\end{cstmdefinition}
+	
+	
+	\begin{cstmproposition}{9.9 (Pythagoras' sætning)}
+		
+		Lad $v,w$ betegne ortogonale vektorer i et indre produkt rum $V$
+		
+		\[||v + w||^2 = ||v||^2 + ||w||^2\]
+		
+	\end{cstmproposition}
+	
+	
+	\begin{proof}
+		Det følger ved anvendelse af \textbf{Def. 9.1(d)} og at $\langle w , \alpha \cdot u + \beta \cdot v \rangle = \overline{\alpha} \cdot \langle w , u \rangle + \overline{\beta} \cdot \langle w,v \rangle$ ifølge \textbf{Bemærkning 9.2(ii)}
+		
+		\begin{align*}
+		||v + w||^2 &= \langle v + w , v + w \rangle\\
+		&= \langle v,v \rangle + \langle v , w \rangle + \langle w , v \rangle + \langle w,w \rangle\\
+		&= \langle v,v \rangle + \langle w,w \rangle \\
+		&= ||v||^2 + ||w||^2
+		\end{align*}
+		
+		Hvor tredje lighedstegn netop følger af elementernes ortogonalitet.
+		
+	\end{proof}
+	
+	\begin{cstmdefinition}{9.11 (Projektion på vektor)}
+		
+		Lad $v,w \in V , w \not = 0$ Så kaldes 
+		
+		\[p = \frac{\langle v,w \rangle}{\langle w,w \rangle} w\]
+		
+		den ortogonale projektion af $v$ på $w$.
+		
+	\end{cstmdefinition}
+	
+	\begin{cstmproposition}{9.12 (Cauchy-Schwarz' ulighed)}
+		
+		For vektorer $v,w$ i et I.P.-rum $V$ har vi uligheden 
+		
+		\[|\langle v,w \rangle | \leq ||v|| \cdot ||w||\]
+		
+		hvor venstresiden betegner modulus værdien af tallet $\langle v,w \rangle$
+		
+	\end{cstmproposition}
+	
+	\begin{proof}
+		
+		Uligheden er opfyldt, hvis $w = 0$ ifølge \textbf{Lemma 9.6(3)}. Vi antager derfor at $w \not = 0$ og lad $p$ betegne den ortogonale projektion af $v$ på $w$. Så er
+		
+		\[v = p + (v-p)\]
+		
+		og $p \bot v-p$. Ifølge Pythagoras er $||v||$ derfor
+		
+		\[||v||^2 = ||p||^2 + ||v - p||^2 \geq ||p||^2\]
+		
+		
+		Specielt $||v|| \geq ||p||$. Men definitionen af projektionen sammen med at $||\alpha v|| = |\alpha| \cdot ||v||$ i \textbf{Lemma 9.6(2)} betyder at 
+		
+		\[||p|| = \frac{|\langle v,w \rangle |}{||w||^2} \cdot ||w|| = \frac{|\langle v,w \rangle|}{||w||}\]
+		
+		
+		\[\Rightarrow ||v|| \geq \frac{ |\langle v,w \rangle | }{ ||w|| }\]
+		Som netop er ækvivalent til det vi vil bevise.
+		
+		
+	\end{proof}
+	
+	
+	
+	\newpage
+	
+	\section{Ortogonalt komplement og projektion}
+	
+	\subsection{Disposition}
+	
+	\begin{itemize}
+		\item \textbf{Def. 10.1 (Ortogonale og ortonormale mængder)}
+		\item \textbf{Def. 10.5 (Ortogonalt komplemet)}
+		\item \textbf{Def. 10.11 (Ortogonalt projektion på underrum)
+			\item \textbf{Lemma 10.12}
+			\item \textbf{Lemma 10.13}
+		\end{itemize}
+		
+		\subsection{Udspecificering}
+		
+		\begin{cstmdefinition}{10.1 (Ortogonale og ortonormale mængder)}
+			$v_1,v_2,\cdots,v_n \in V$ kaldes en ortogonal mængde, hvis
+			\begin{align*}
+			&(a) \; v_i \not = 0, i = 1,2,\cdots,n\\
+			&(b) \; v_i \bot v, i \not = j\\
+			&\text{Hvis også}\\
+			&(c) \; ||v_i|| = 1, i = 1,2,\cdots,n\\
+			&\text{kaldes mængden ortonormal}
+			\end{align*}
+			
+		\end{cstmdefinition}
+		
+		\begin{cstmdefinition}{10.5 (Ortogonalt komplemt)}
+			Lad W betegne et underrumi et indre produktrum V. Det \textbf{ortogonale komplement} til W i V defineres som mængden
+			\begin{align*}
+			W^\bot =\{\mathbf{v}\in V|\langle\mathbf{v},\mathbf{w}\rangle=0 \text{ for alle w } \mathbf{w}\in W
+			\end{align*}
+			
+		\end{cstmdefinition}
+		
+		\begin{cstmdefinition}{10.11 (Ortogonal projektion på underrum}
+			Lad W betegne et underrum i et indre produkt rum V, og lad $\mathbf{v}\in V$ betegne et element i V. Et element $\mathbf{p}\in W$ kaldes for en \textbf{ortogonal projektion} af $\mathbf{v}$ på W, hvis $\mathbf{v}-\mathbf{p}$ er et element i $W^\bot$
+			
+		\end{cstmdefinition}
+		
+		\begin{cstmlemma}{10.12}
+			Lad W betegne et underrum i et indre produktrum V, og lad $\mathbf{v}\in V$ betegne et element i V. Hvis $\mathbf{p}$ og $\mathbf{p}'$ betegner ortogonale projektioner af $\mathbf{v}$ på W, så er $\mathbf{p}=\mathbf{p}'$.
+		\end{cstmlemma}
+		
+		\begin{proof}
+			Idet $W^\bot$ er et vektorrum, så vil differensen
+			\begin{align*}
+			\mathbf{p}-\mathbf{p}' =(\mathbf{v}-\mathbf{p}')-(\mathbf{v}-\mathbf{p})\in W^\bot
+			\end{align*}
+			være et element i$W^\bot$. Men $\mathbf{p}-\mathbf{p}'$ er også et element i W, og dermed
+			\begin{align*}
+			\mathbf{p}-\mathbf{p}'\in W^\bot \cap W=\{0\}
+			\end{align*}
+			Jf. Lemma 10.7 ($W\cap W^\bot =\{0\}$). Vi konkluderer, at $\mathbf{p}-\mathbf{p}'=\mathbf{0}$, hvilket er ækvivalent med det ønskede.
+		\end{proof}
+		
+		\begin{cstmlemma}{10.13}
+			
+			Lad $\mathbf{v}_1,\mathbf{v}_2,...,\mathbf{v}_n$ betegne en ortogonal mængde i et indre produktrum V, og lad W betegne spannet $Span(\mathbf{v}_1,\mathbf{v}_2,...,\mathbf{v}_n)$. Ethvert element i $\mathbf{v}$ i V kan da entydig skrives som en sum
+			\begin{align*}
+			\mathbf{v}=\mathbf{p}+\mathbf{h}
+			\end{align*}
+			Hvor $\mathbf{p}\in W$ og $\mathbf{h}\in W^\bot$. Faktisk er 
+			\begin{align*}
+			\mathbf{p}=\frac{\langle\mathbf{v},\mathbf{v}_1\rangle}{||\mathbf{v_1}||^2}\cdot\mathbf{v}_1+\frac{\langle\mathbf{v},\mathbf{v}_2\rangle}{||\mathbf{v_2}||^2}\cdot\mathbf{v}_2+...+\frac{\langle\mathbf{v},\mathbf{v}_n\rangle}{||\mathbf{v_n}||^2}\cdot\mathbf{v}_n
+			\end{align*}
+		\end{cstmlemma}
+		
+		\begin{proof}
+			Ifølge lemma 10.12 så er det tilstrækkeligt at vise eksistensen af en opspaltning af $\mathbf{v}$ på formen $\mathbf{v}=\mathbf{p}+\mathbf{h}$. Lad $\mathbf{p}_i$, for $i=1,2,...,n$, betegne den ortogonale projektion af $\mathbf{v}$ på $\mathbf{v}_i$; dvs
+			\begin{align*}
+			\mathbf{p}_i=\frac{\langle\mathbf{v},\mathbf{v}_i\rangle}{||\mathbf{v}_i||^2}\cdots\mathbf{v}_i
+			\end{align*}
+			jf. def 9.11
+			\begin{displayquote}
+				\begin{cstmdefinition}{9.11}
+					Lad $\mathbf{v},\mathbf{w}\in V$, med $\mathbf{w}\neq 0\}$. Så kaldes elementet
+					\begin{align*}
+					\mathbf{p}=\frac{\langle\mathbf{v},\mathbf{w}\rangle}{\langle\mathbf{w},\mathbf{w}\rangle}\cdot w
+					\end{align*}
+					kaldes for den \textbf{ortogonale projektion} af v på w. 
+				\end{cstmdefinition}
+			\end{displayquote}
+			Sæt herefter 
+			\begin{align*}
+			\mathbf{p}=\mathbf{p}_1+\mathbf{p}_2+\cdots+\mathbf{p}_n.
+			\end{align*}
+			Idet $\mathbf{p}_i$ er et skalarmultiplum af $\mathbf{v}_i$, så vil $\mathbf{p}_i\in W$, for $i=1,2,...,n$, og dermed vil $p\in W$. Det resterer derfor kun at vise at $\mathbf{v}-\mathbf{p}\in W^\bot$ hvilket, ifølge lemma 10.9,
+			\begin{displayquote}
+				\begin{cstmlemma}{10.9}
+					Lad V betegne et indre produktrum, og lad $\mathbf{v}_1, \mathbf{v}_2,...,\mathbf{v}_n$ betegne en samling af elementer i V. Så er 
+					\begin{align*}
+					Span(\mathbf{v}_1,\mathbf{v}_2,...,\mathbf{v}_n)^\bot=\{\mathbf{v}\in V|\langle\mathbf{v},\mathbf{v}_i\rangle = 0 \text{ for } i=1,2,...,n\}
+					\end{align*}
+				\end{cstmlemma}
+			\end{displayquote}
+			er ækvivalent med, at
+			\begin{align*}
+			\langle\mathbf{v}-\mathbf{p},\mathbf{v}_i\rangle=0 \hspace{1cm} \textbf{for } i=1,2,...,n
+			\end{align*}
+			Specielt vil $\mathbf{p}-\mathbf{p}_i$ være en sum af elementer, der alle er ortogonale på $\mathbf{_i$, og dermed må 
+				\begin{align*}
+				\langle\mathbf{p}-\mathbf{p}_i,\mathbf{v}_i\rangle=0,
+				\end{align*}
+				jf. Definition 9.1(d) ($\langle\alpha\cdot\mathbf{u}+\beta\cdot\mathbf{v},\mathbf{w}\rangle=\alpha\cdot\langle\mathbf{u},\mathbf{w}\rangle+\beta\cdot\langle,\mathbf{v},\mathbf{w}\rangle$). Yderligere vil
+				\begin{align*}
+				\langle\mathbf{v}-\mathbf{p}_i,\mathbf{v}\rangle=0
+				\end{align*}
+				idet $\mathbf{p}_i$ er den ortogonale projektion af $\mathbf{v}$ på $\mathbf{v}_i$. Vi konkludere derfor, at 
+				\begin{align*}
+				\langle\mathbf{v}-\mathbf{p},\mathbf{v}_i\ranglee&=\langle(\mathbf{v}-\mathbf{p})-(\mathbf{p}-\mathbf{p}_i),\mathbf{v}_i\rangle \\
+				&=\langle\mathbf{v}-\mathbf{p}_i,\mathbf{v}_i\rangle-\langle\mathbf{p}-\mathbf{p}_i,\mathbf{v}_i\rangle \\
+				&=0-0 \\
+				&=0
+				\end{align*}
+				som ønsket
+			\end{proof}
+			
+			EVT BEVISE LEMMA 10.9
+			
+			\newpage
+			
+			\section{Ortogonale og ortonormale baser}
+			
+			\subsection{Disposition}
+			
+			\begin{itemize}
+				\item \textbf{Def. 10.1 (Ortogonale og ortonormale mængder)}
+				\item \textbf{Prop. 10.4}
+				\item \textbf{Def. 10.14}
+				\item \textbf{Lemma 10.22 (Gram-Schmidt Ortogonal), m. bevis}
+				\item \textbf{Lemma 10.23 (Gram-Schmidt Ortonormal), m. bevis}
+			\end{itemize}
+			
+			\subsection{Udspecificering}
+			
+			
+			
+			Vi har kort for ortogonale og ortonormale mængder at 
+			
+			\begin{cstmdefinition}{10.1 (Ortogonale og ortonormale mængder)}
+				$v_1,v_2,\cdots,v_n \in V$ kaldes en ortogonal mængde, hvis
+				
+				\begin{align*}
+				&(a) \; v_i \not = 0, i = 1,2,\cdots,n\\
+				&(b) \; v_i \bot v, i \not = j\\
+				&\text{Hvis også}\\
+				&(c) \; ||v_i|| = 1, i = 1,2,\cdots,n\\
+				&\text{kaldes mængden ortonormal}
+				\end{align*}
+				
+			\end{cstmdefinition}
+			
+			Det bør nævnes at enhver ortogonal mængde kan laves om til en ortonormale mængde ved at gå fra mængden $v_1,v_2,\cdots,v_n \in V$ til
+			
+			\[\frac{1}{||v_1||}v_1 + \frac{1}{||v_2||}v_2 + \cdots + \frac{1}{||v_n||}v_n\]
+			
+			\begin{cstmproposition}{10.4}
+				Lad $v_1,v_2,\cdots,v_n$ betegne en ortogonal mængde i $V$. Så er $\mathcal{V} = (v_1,v_2,\cdots,v_n)$ lineært uafhængig.
+				
+				
+			\end{cstmproposition}
+			
+			Hvilket fører os videre til netop ortogonale og ortonormale baser. At hvis vi har et vektorrum $W$ som er udspændt af en ortogonal mængde (jf. prop. 10.4) er ækvivalent til, at $W$ har en basis hvis elementer udgør en ortogonal mængde. Hvilket giver følgende definition:
+			
+			\begin{cstmdefinition}{10.14}
+				En ortogonal basis for et vektorrum $V$ er en basis $\mathcal{V} = (v_1,v_2,\cdots,v_n)$, hvor $v_1,v_2,\cdots,v_n$ er en ortogonal mængde. Hvis mængden er ortonormal kaldes $\mathcal{V}$ en ortonormal basis.
+				
+			\end{cstmdefinition}
+			
+			Vi skynder os hurtigt videre til en konkret algoritme til at finde ortogonale og dermed også ortonormale baser
+			
+			\begin{cstmlemma}{10.22 (Gram-Schmidt processen)}
+				
+				Lad $V$ betegne et indre produkt rum med basis $\mathcal{V} = (v_1,v_2,\cdots,v_n)$, $p_k, k = 1,2,\cdots,n-1$ betegner den ortogonale projektion af $v_{k+1}$ på underrummet $Span(v_1,v_2,\cdots,v_k)$ Så
+				
+				\[\mathcal{W} = (v_1,v_2 - p_1,v_3 - p_2,\cdots, v_n - p_{n-1}) \tag{10.17}\]
+				
+				er en ortogonal basis for $\mathcal{V}$.
+				
+			\end{cstmlemma}
+			
+			\begin{proof}
+				
+				Sæt $w_1 = v_1, w_k = v_k - p_{k-1}, k = 2,3,\cdots,n$. Pga. 10.4 og ækvivalensen i 7.10 er det tilstrækkeligt at vise at $w_1,w_2,\cdots,w_n$ er en ortogonal mængde, da vi har at hvis det netop er en ortogonal mængde er den også lineært uafhængig og dermed (jf. 7.10) en basis.
+				$V_k = Span(v_1,v_2,\cdots,v_k), k = 1,2,\cdots,n$. Så påstår vi at
+				
+				\[v_{k+1}-p_k=w_{k+1} \in V_k^{\bot} \cap V_{k+1}, k = 1,2,\cdots,n-1 \tag{10.18}\]
+				
+				Vi ser at $p_k, k = 1,2,\cdots,n-1$ er den ortogonale projektion af $v_{k+1}$ på $V_k \Rightarrow w_{k+1} = v_{k+1} - p_k \in V_k^{\bot}$. Da $w_{k+1} = v_{k+1} - p_k$ er en differens af to elementer i $V_{k+1}$ er det også selv indeholdt i $V_{k+1}$. Vi vil nu vise at $w_i, w_j, i < j$ er ortogonale. $j > 1$ (10.18) implicerer
+				
+				\[w_j\in V^\bot_{j-1} \hspace{2cm} w_i\in V_i\subseteq V_{j-1}\]
+				
+				Det resterer at vise at $w_1,w_2,\cdots,w_n \not = 0$. Vi ser tydeligt at $w_1 = v_1 \not = 0$ idet $v_1$ er en del af en basis for $V$. Vi ser på $w_k, k > 1$. Hvis $w_k = 0 \Rightarrow v_{k} = p_k-1 \in V_{k-1}$, men $\Rightarrow (v_1,v_2,\cdots,v_k)$ lineært afhængig, jf. \textbf{Lemma 7.5(2)} $\lightning$.
+				
+			\end{proof}
+			
+			Som sagt ovenfor kan dette laves om til en ortonormal basis. Ved beviser følgende lemma
+			
+			\begin{cstmlemma}{10.23 (Gram-Schmidt fortsat)}
+				
+				
+				Lad $V$ betegne et I.P.-rum med basis $\mathcal{V} = (v_1,v_2,\cdots,v_n)$ og lad $\mathcal{W} = (w_,1,w_2,\cdots,w_n)$ betegne den ortogonale basis som i (10.17) for V bestemt ud fra $\mathcal{V}$.
+				
+				\[u_i = \frac{1}{||w_i||}w_i, i = 1,2,\cdots,n\]
+				
+				Så er 
+				
+				\[u_1 = \frac{1}{||v_1||}v_1\]
+				
+				mens
+				
+				\[u_{k+1} = \frac{1}{||v_{k+1}-p_k||}(v_{k+1}-p_k), for k = 1,2,\cdots,n-1\]
+				
+				hvor
+				
+				\[p_k = \langle v_{k+1} , u_1 \rangle u_1 + \langle v_{k+1},u_2 \rangle u_2 + \cdots + \langle v_{k+1},u_k \rangle u_k \tag{10.22}\]
+				
+			\end{cstmlemma}
+			
+			\begin{proof}
+				
+				Vi skal vise at $p_k$ i (10.22) stemmer overens med tilsvarende notation i \textbf{Lemma 10.22}. Med andre ord er $p_k$ den ortogonale projektion af $v_{k+1}$ på $V_k = Span(v_1,v_2,\cdots,v_k), k = 1,2,\cdots,n-1$.
+				Ifølge def. i \textbf{Lemma 10.22} vil $w_k \in V_k = Span(v_1,v_2,\cdots,v_n), k = 1,2,\cdots,n$. Specielt vil elementerne $w_1,w_2,\cdots,w_k$ udgøre en ortogonal mængde i $V_k$. Heraf følger det at $u_1,u_2,\cdots,u_k$ udgør en ortonormal mængde i $V_k, k = 1,2,\cdots,n$. Vi kan igen argumentere vha. \textbf{Prop. 10.4 og 7.10} at $\mathcal{U}_k = (u_1,u_2,\cdots,u_k)$ derfor er en ortonormal basis for $V_k$. Specielt definerer (10.22) jf. 
+				\[p = \frac{\langle v,v_1\rangle}{||v_1||^2} v_1 + \cdots \frac{\langle v,v_n \rangle}{||v_n||^2}\]
+				
+				den ortogonale projektion af $v_{k+1}$ på $V_k$.
+				
+			\end{proof}
+			
+			
+			
+			
+			\newpage
+			
+			\section{Determinanter}
+			
+			\subsection{Disposition}
+			
+			\begin{itemize}
+				\item \textbf{Def. 11.1 (Permutation)}
+				\item \textbf{Def. 11.4 (Fortegnet af en permutation)}
+				\item \textbf{Lemma 11.9}
+				\item \textbf{Def. 11.10 (Determinant)}
+				\item \textbf{Lemma 11.20, Lemma 11.16, Prop. 11.17}
+				\item \textbf{Sætning 11.18, m. bevis}
+				\item \textbf{Prop. 11.22 (Cramers Regel), m. bevis}
+			\end{itemize}
+			
+			\subsection{Udspecificering}
+			
+			
+			Under determinanter hører tre essentielle definitioner
+			
+			\paragraph{Def. 11.1 (Permutation)} \textit{En permutation af n elementer er en invertibel afbildning af formen}
+			
+			\[\sigma : \{1,2,3,\cdots,n\} \rightarrow \{1,2,3,\cdots,n\}\]
+			
+			\textit{Mængden af alle sådanne permutationer af n elementer betegnes med $\mathbb{S}_n$}
+			
+			
+			Som regel anvendes for permutationer følgende notation
+			
+			\[\begin{pmatrix}
+			1 & 2 & 3 & \cdots & n\\
+			\sigma (1) & \sigma (2) & \sigma (3) & \cdots & \sigma (n)
+			\end{pmatrix}\]
+			
+			For permutationer gælder ifølge \textbf{Lemma 11.3} at enhver permutation $\sigma$ af $n$ elementer med $n \geq 2$ er en sammensætning af simple transpositioner, hvor transpositioner er den permutation, hvor 
+			
+			\[\sigma (i) = \left \{
+			\begin{array}{ll}
+			i & \mbox{hvis } i \not = s \mbox{ og } i \not = t,\\
+			t & \mbox{hvis } i = s, \\
+			s & \mbox{hvis } i = t.
+			\end{array}
+			\right.\]
+			
+			\paragraph{Def. 11.4 (Fortegnet af en permutation)} \textit{Lad $\sigma$ betegne en permutation af $n$ elementer. Definer}
+			
+			\[M_{\sigma} = \{(i,j) \in \{1,2,\cdots,n\} \times \{1,2,\cdots,n\} \,|\, i < j \land \sigma (j) < \sigma (i)\}\]
+			
+			\textit{og lad $n_{\sigma}$ betegne antallet af elementer i $M_{\sigma}$. Fortegnet $sgn(\sigma)$ defineres som}
+			
+			\[sgn(\sigma) = (-1)^{n_{\sigma}}\]
+			
+			\begin{cstmlemma}{11.9} 
+				
+				Afbildningen
+				
+				\begin{align*}
+				&\mathbb{S}_n \rightarrow \mathbb{S}_n\\
+				&\sigma \mapsto \sigma^{-1}
+				\end{align*}
+				er en invertibel afbildning.
+			\end{cstmlemma}
+			
+			
+			\begin{cstmdefinition}{11.10 (Determinant)}
+				
+				Lad $A=(a_{ij}) \in Mat_n(\mathbb{F})$ betegne en kvadratisk matrix, så definerer
+				
+				\[Det(A) = \sum_{\sigma \in \mathbb{S}_n} sgn(\sigma) \cdot a_{1\sigma(1)}a_{2\sigma(2)} \cdots a_{n\sigma(n)}\]
+				
+			\end{cstmdefinition}
+			
+			Vi har for determinanter 
+			
+			\begin{cstmlemma}{11.20}
+				$Det(A) = Det(A^T)$
+			\end{cstmlemma}
+			
+			
+			
+			
+			\begin{cstmlemma}{11.16}
+				Lad $A,B,C,D \in Mat_n(\mathbb{F})$ og antag $(A\,|\,B) \sim (C\,|\,D) \Rightarrow \exists \alpha \in \mathbb{F} \backslash \{0\}$.
+				
+				\[Det(C) = \alpha \cdot Det(A) \mbox{ og } Det(D) = \alpha \cdot Det(B)\]
+				
+			\end{cstmlemma}
+			
+			
+			Desuden har vi at 
+			
+			\begin{cstmproposition}{11.17}
+				En kvadratisk matrix $A \in Mat_n(\mathbb{F})$ er invertibel $\Leftrightarrow Det(A) \not = 0$
+			\end{cstmproposition}
+			
+			Vi kan nu vise den næste vigtige sætning
+			
+			\begin{theorem}{11.18}
+				Lad $A,B \in Mat_n(\mathbb{F})$
+				
+				\[Det(A\cdot B) = Det(A) \cdot Det(B) \tag{11.19}\]
+			\end{theorem}
+			
+			\begin{proof}
+				Vi antager først at $A$ er singulær. Dette betyder nødvendigvis at $A\cdot B$ er singulær. Ellers ville der eksistere en invers $B \cdot (A \cdot B)^{-1}$
+				
+				\[\Rightarrow A \cdot (B \cdot (A \cdot B)^{-1}) = (A \cdot B) \cdot (A\cdot B)^{-1} = I\]
+				Hvilket netop er umuligt da $A$ er antaget singulær. Proposition 11.17 giver os dermed 
+				
+				\[Det(A \cdot B) = Det(A) = 0\]
+				
+				hvilket opfylder (11.19)\\
+				Modsat hvis $A$ er invertibel og $A \sim I$ og vi betragter $(A\,|\,A\cdot B) \sim (I\,|\,C)$ for $C \in Mat_n(\mathbb{F})$, $\exists \alpha \in \mathbb{F}$
+				
+				\begin{align*}
+				&Det(A) = \alpha \cdot Det(I) \tag{11.21}
+				\intertext{og}
+				&Det(A\cdot B) = \alpha \cdot Det(C) \tag{11.22}
+				\intertext{(11.21) implicerer $\alpha = Det(A)$}
+				&Det(A\cdot B) = Det(A) \cdot Det(C)
+				\intertext{hvis $C = A^{-1} \cdot (A \cdot B) = B$}
+				\end{align*}
+				
+			\end{proof}
+			
+			\begin{cstmproposition}{11.22 (Cramers regel)}
+				Lad $A \in Mat_n(\mathbb{F})$ betgne en invertibel matrix, og $b \in \mathbb{F}^n$. Lad $A_i, i = 1,2,\cdots,n$ betegne matricen der fremkommen ved at udskifte den i'te søjle i $A$ med $b$. Den entydige løsning $(\alpha_1,\alpha_2,\cdots,\alpha_n)^T \in \mathbb{F}^n$ til det lineære ligningsystem $A \cdot x = b$ er da bestemt ved
+				
+				\[\alpha_i = \frac{Det(A_i)}{Det(A)}, i = 1,2,\cdots,n\]
+				
+			\end{cstmproposition}
+			
+			\begin{proof}
+				
+				\[(\alpha_1,\alpha_2,\cdots,\alpha_n)^T \in \mathbb{F}^n \mbox {er bestemt ved }\]
+				\[b = \alpha_1 \cdot a_1 + \alpha_2 \cdot a_2 + \cdots + \alpha_n \cdot a_n \tag{11.28}\]
+				
+				Specielt er den i'te søjle i $A_i$ givet ved højresiden af (11.28). For $j \not = i$ er j'te søjle i $A_i$ lig $a_j$ hvilket betyder vi kan udføre ERO Type III på $A_i$ og opnå en matrix $B_i$ hvor den i'te søjle er $\alpha_i \cdot a_i$ mens de øvrige søjler er identiske med dem i $A$. Ifølge \textbf{Proposition 11.21(3)} $Det(B_i) = Det(A_i)$ mens \textbf{Proposition 11.21(2)} implicerer $Det(B_i) = \alpha_i \cdot Det(A)$ 
+				
+				\[\Rightarrow Det(A_i) = \alpha_i \cdot Det(A)\]
+				
+			\end{proof}
+			
+			
+			
+			\newpage
+			
+			\section{Egenværdier}
+			
+			\subsection{Disposition}
+			
+			\begin{itemize}
+				\item \textbf{Def. 12.1 (Egenværdier og egenvektorier)}
+				\item \textbf{Prop. 12.3}
+				\item \textbf{Prop. 12.10}
+			\end{itemize}
+			
+			
+			\subsection{Udspecificering}
+			
+			
+			\paragraph{Def 12.1} Et element $\mathbf{v}\in V\backslash \{\mathbf{0}\}$ siges at være en \textbf{egenvektor} for L, såfremt der eksistere en skalar $\lambda\in\mathbb{F}$ så:
+			\begin{gather*}
+			L(\mathbf{v})=\lambda*\mathbf{v}
+			\end{gather*}
+			Så kaldes skalaren $\lambda$ for en \textbf{egenværdi} hørende til egenvektoren $\mathbf{v}$. Hvis der eksistere en egenvektor for L, og den egenvektor har den egenværdi, så er $\lambda$ en egenværdi for L. \\
+			Hvis $L=L_A$ (en lineær operator $L:V\rightarrow V$), for en matrix $A\in Mat_n(\mathbb{F})$, så kaldes egenværdien for $L_A$ også egenværdien for A. Det samme gælder egenvektoren.
+			
+			\paragraph{Proposition 12.3} Hvis $v_1,v_2,...,v_n$ er egenvektorer for en operator $L:V\rightarrow V$, og de har parvist forskellige egenværdier $\lambda_1, \lambda_2,...,\lambda_n$, så er $\mathcal{V}=(v_1,v_2,...,v_n)$ lineært uafhængige, og specielt er $n\leq dim(V)$. \\ \\
+			Bevises med induktion over n. Hvis $n=1$ så er $\mathcal{V}=(v_1)$ lineært uafhængig, i det $v_1\neq0$, altså kan alle punkter i $\mathcal{V}$ kun opskrives med 1 vektor og derfor kun på en måde. \\ \\
+			
+			
+			\begin{proof}
+				Vi går ud fra at udsagnet er vist for tilfældet n-1, og at n>1. Da kan vi kigge på den lineære relation:
+				\setcounter{equation}{0}
+				\begin{gather}
+				\alpha_1*v_1+\alpha*v_2+...+\alpha_n*v_n=0
+				\end{gather} 
+				med skalarer $\alpha_1,\alpha_2,...,\alpha_n\in\mathbb{F}$, anvendes L på begge sider af lighedstegnet får man
+				\begin{align}
+				\mathbf{0}&=L(\sum_{i=1}^{n}\alpha_i*v_i) &&\text{0 er entydig bestemt i lineærtransformationer} \\
+				&=\sum_{i=1}^{n}\alpha_i*L(v_i) &&\text{Prop 6.2} \\
+				&=\sum_{i=1}^{n}(\alpha_i*\lambda_i)*v_i&&\text{$v_i$ er en egenvektor}
+				\end{align}
+				Vi kan nu multiplicere 1 med $\lambda_n$ og derefter fratrække 2:
+				\begin{align*}
+				\mathbf{0}&=\lambda_n*\mathbf{0}-\mathbf{0} \\
+				&=\lambda_n*\sum_{i=1}^{n}\alpha_i*v_i-\sum_{i=1}^{n}(\alpha_i*\lambda_i)*v_i \\
+				&=\sum_{i=1}^{n}(\alpha_i*\lambda_n)*v_i-\sum_{i=1}^{n}(\alpha_i*\lambda_i)*v_i \\
+				&=\sum_{i=1}^{n}(\alpha_i*\lambda_n-\alpha_i*\lambda_i)*v_i \\
+				&=\sum_{i=1}^{n}\beta_i*v_i
+				\end{align*}
+				Dette ser vi betyder at $\beta_i=0$ når $i=n$:
+				\begin{align*}
+				\beta_n=(\alpha_n*\lambda_n-\alpha_n*\lambda_n)=\alpha_n(\lambda_n-\lambda_n)=0
+				\end{align*}
+				Grundet deres parvis forskellighed. Altså har vi en lineær relation der siger:
+				\begin{align*}
+				\sum_{i=1}^{n-1}\beta_i*v_i
+				\end{align*}
+				Men dette har vi ud fra IH er lig 0, altså
+				\begin{align*}
+				\alpha_1=\alpha_2=...=\alpha_{n-1}=0
+				\end{align*}
+				Derfor hvis vi indsætter i 1, får vi:
+				\begin{align*}
+				\alpha_n*v_n=0
+				\end{align*}
+				Hvilket kun er muligt hvis $\alpha_n=0$ grundet definitionen på egenvektorer. Vurderingen om $n\leq dim(V)$ følger fra lemma 7.8, som vi ikke vil bevise.
+				
+			\end{proof}
+			
+			\paragraph{Proposition 12.10} Lad $L:V\rightarrow V$, betegne en lineær operator på vektorrum V af endelig dimension > 0. Lad $\lambda_1,\lambda_2,...,\lambda_n\in\mathbb{F}$ betgne de forskellige egenværdier for V, og lad (med $d_i=Heo(\lambda_i)$)
+			\begin{align*}
+			\mathcal{V}_i=(v_{i1},v_{i2},...,v_{id_i}),
+			\end{align*}
+			Betegne en bases for egenrummet $E_L(\Lambda_i)$. Samlingen (ordnet i vilkårlig rækkefølge)
+			\begin{align*}
+			\mathcal{V}=(v_{ij})_{1\leq i\leq k, 1\leq j \leq d_i}
+			\end{align*}
+			er da lienær uafhængig. Specielt er 
+			\begin{align*}
+			\sum_{\lambda\in\mathbb{F}}^{}Geo_L(\lambda)\leq dim(V)
+			\end{align*}
+			
+			\begin{proof}
+				
+				Bevist er som følger:
+				Hvis vi ser på den lineære realtion
+				\setcounter{equation}{0}
+				\begin{align}
+				\sum_{i,j}\alpha_{ij}*\mathbf{v_{ij}}=\mathbf{0} \qquad \text{for skalarer } \alpha_{ij}\in\mathbb{F}
+				\end{align}
+				Så kan vi sætte
+				\begin{align}
+				\mathbf{w}_i=\sum_{i=1}^{d_i}\alpha_{ij}*\mathbf{v}_{ij}\in E_L(\lambda_i) \qquad \text{for } i=1,...,k
+				\end{align}
+				Dette er da ækvivalent med 
+				\begin{align}
+				\mathbf{w}_1+\mathbf{w}_2+...+\mathbf{w}_k=\mathbf{0}
+				\end{align}
+				Summanden $\mathbf{w}_i$ i (2), kan da enten være nulvektoren eller en egenvektor for L med egenværdi $\lambda_i$. Hvis alle $\mathbf{w}_i$ ikke er nulvektorer, vil der da være en lineær relation mellem egenvektorer hørende til forskellige egenværdier, hvilket er umuligt grundet 12.3 fortæller at egenvektorer lineært uafhænginge. Derfor må $\mathbf{w}_i=\mathbf{0}$, for i=1,...,k\\ \\
+				Men så er (2) en lineær relation mellem basiselementerne i $\mathcal{V}_i$ for $i=1,...,k$, hvilket kun er muligt, hvis $\alpha_{ij}=0$ for $j=1,...,d_i$. Det følger derfor, at $\mathcal{V}$ er lineært uafhængig og dermed en basis for Span($\mathcal{V}$). Specielt er 
+				\begin{align*}
+				dim(V)\geq dim(Span(\mathcal{V}))=\sum_{i=1}^{k}d_i=\sum_{\lambda\in \mathbb{F}}Geo_L(\lambda)
+				\end{align*}
+				
+				
+			\end{proof}
+			
+			\newpage
+			
+			\section{Diagonalisering}
+			
+			\subsection{Disposition}
+			
+			\begin{itemize}
+				\item \textbf{Def. 13.1}
+				\item \textbf{Prop. 13.2}
+				\item \textbf{Lemma 13.3, m. bevis}
+				\item \textbf{Prop. 13.5, m. bevis}
+				\item \textbf{Korollar 13.6, m. bevis}
+			\end{itemize}
+			
+			\subsection{Udspecificering}
+			
+			
+			Vi starter med den centrale definition
+			
+			\begin{cstmdefinition}{13.1}
+				
+				Den lineære operator $L$ kaldes diagonaliserbar, såfremt der eksisterer en basis for $V$, bestående af egenvektorer for $L$. En matrix $A \in Mat_n(\mathbb{F})$ siges at være diagonaliserbar, hvis det tilsvarende er gældende for den lineære operator $L_A \; : \; \mathbb{F}^n \rightarrow \mathbb{F}^n$
+				
+				
+			\end{cstmdefinition}
+			
+			Betegnelsen diagonaliserbar bruges pga. resultatet i \textbf{Prop. 13.2} og \textbf{Lemma 13.3}. Vi vil se på begge to, men kun bevise \textbf{13.3}.
+			
+			\begin{cstmproposition}{13.2}
+				Lad $\mathcal{V} = (v_1,v_2,\cdots,v_n)$ betegne en basis for $V$. Så er $\mathcal{V}$ en basis af egenvektorer for $L \Leftrightarrow \, _{\mathcal{V}}[L]_{\mathcal{V}}$ er diagonal. I givet fald er den i'te diagonalindgang i $_{\mathcal{V}}[L]_{\mathcal{V}}$ lig egenværdien for $v_i$   
+				
+			\end{cstmproposition}
+			
+			
+			\begin{cstmlemma}{13.3}
+				
+				Lad $A \in Mat_n(\mathbb{F})$. For en invertibel matrix $S \in Mat_n(\mathbb{F})$ vil
+				
+				\[D = S^{-1} A S\]
+				
+				være en diagonalmatrix $\Leftrightarrow$ søjlerne i $S$ udgør en basis for $\mathbb{F}^n$ bestående af egenvektorer for $A$. I givet fald vil egenværdien for den i'te søjle i $S$ være identisk med den i'te diagonalindgang i $D$. Specielt er $A$ diagonaliserbar $\Leftrightarrow A$ er similær til en diagonalmatrix. 
+				
+			\end{cstmlemma}
+			
+			\begin{proof}
+				
+				Lad $S \in Mat_n(\mathbb{F})$ betegne en matrix med søjler $v_1,v_2,\cdots,v_n$. Jf. \textbf{Prop. 7.32} så udgør $\mathcal{V} = (v_1,v_2,\cdots,v_n)$ en basis for $\mathcal{F}^n$ netop når $S$ er invertibel. Såfremt $S$ er invertibel, så vil vi yderligere have, at 
+				
+				\[S = _{\mathcal{E}}[{\scriptstyle\square}]_{\mathcal{V}}\]
+				
+				ifølge et tidligere eksempel, og dermed er
+				
+				\[S^{-1}AS = \, _{\mathcal{E}}[{\scriptstyle\square}]_{\mathcal{V}}^{-1} \cdot \, _{\mathcal{E}}[L_A]_{\mathcal{E}} \cdot \, _{\mathcal{E}}[{\scriptstyle\square}]_{\mathcal{V}} = \, _{\mathcal{V}}[L_A]_{\mathcal{V}}\]
+				
+				jf. \textbf{Korollar 8.15} og \textbf{Prop. 8.6}. Udsagnet følger da af \textbf{Prop. 13.2}
+				
+			\end{proof}
+			
+			
+			\begin{cstmproposition}{13.5}
+				
+				Lad $\lambda_1,\lambda_2,\cdots,\lambda_k$ betegne de forskellige egenværdier for $L$. Så er $L$ diagonaliserbar $\Leftrightarrow$
+				
+				\[\sum_{i=1}^k Geo_L(\lambda_i) = dim(V) \tag{13.2}\]
+				I givet fald kan man konstruere en basis for $V$ på følgende vis: sæt $d_i = Geo_L(\lambda_i), i = 1,2,\cdots,k$ og lad 
+				
+				\[\mathcal{V}_i = (v_{i1},v_{i2},\cdots,v_{id_i})\]
+				
+				betegne en basis for $E_L(\lambda_i)$ og ordnet i vilkårlig rækkefølge
+				
+				\[\mathcal{V} = (v_{ij})_{1 \leq i \leq k, 1 \leq j \leq d_i}\]
+				
+				er da en basis for $V$
+				
+				
+			\end{cstmproposition}
+			
+			
+			\begin{proof}
+				
+				Vi konstruerer $\mathcal{V}$ som angivet ovenfor. Ifølge \textbf{Prop 12.10} er $\mathcal{V}$ lineær uafhængig, og derfor en basis for $Span(\mathcal{V})$. Specielt er $Span(\mathcal{V})$ et underrum i $V$ med
+				
+				\[\sum_{i=1}^k d_i = \sum_{i=1}^k Geo_L(\lambda_i)\]
+				
+				Betingelsen (13.2) er derfor ækvivalent til, at 
+				
+				\[dim(Span(\mathcal{V})) = dim(V)\]
+				
+				hvilket, jf. \textbf{Prop. 7.12} er det samme, som at $V = Span(\mathcal{V}$. Vi skal derfor vise at $L$ er diagonaliserbar $\Leftrightarrow V = Span(\mathcal{V})$. Vi antager venstresiden, altså at $L$ er diagonaliserbar. Så har $V$ en basis
+				
+				\[\mathcal{W} = (w_1,w_2,\cdots,w_n)\]
+				
+				bestående af egenvektorer for $L$ ifølge \textbf{Def. 13.1}. Idet $w_j, j = 1,2,\cdots,n$ er en egenvektor,  så er $w_j \in E_L(\lambda_i)$. Specielt er $w_j$ en linearkombination af elementerne i $\mathcal{V}_i$. Men elementerne i $\mathcal{V}_i$ er en delmængde af elementer i $\mathcal{V}$, og dermed er $w_j \in Span(\mathcal{V})$. Dette gælder for alle basiselementerne i $\mathcal{W}$ så
+				
+				\[V = Span(\mathcal{W}) \subseteq Span(\mathcal{V}) \subseteq V\]
+				
+				hvilket betyder at $V = Span(\mathcal{V}$ som ønsket.
+				
+				Vi kan omvendt sige $V = Span(\mathcal{V})$ så er $\mathcal{V}$ en basis for $V$, og da $\mathcal{V}$ pr. konstruktion består af egenvektorer, så er $L$ diagonaliserbar.
+				
+			\end{proof}
+			
+			Vi kan nu se på en konsekvens af ovenstående proposition
+			
+			\begin{cstmkorollar}{13.6}
+				
+				Lad $L$ betegne en lineær operator på et vektorrum $V, dim(V) > 0$. Hvis $L$ har $n$ parvis forskellige egenværdier, så er $L$ diagonaliserbar. 
+				
+			\end{cstmkorollar}
+			
+			
+			\begin{proof}
+				
+				Lad $\lambda_1,\lambda_2,\cdots,\lambda_n$ betegne $n$ parvis forskellige egenværdier for $L$. Jf. \textbf{Proposition 12.3}, så udgør disse egenværdier nødvendigvis alle mulige egenværdier for $V$. Udover dette er $Geo_L(\lambda_i) \geq 1, i = 1,2,\cdots,n$. \textbf{Prop. 12.10} implicerer da
+				
+				\[dim(V) = n \leq \sum_{i=1}^n Geo_L(\lambda_i) \leq dim(V)\]
+				
+				og så er $L$ nødvendigvis diagonaliserbar jf. \textbf{Prop.13.5}
+				
+			\end{proof}
+			
+			
+			\newpage
+			
+			\section{Spektralsætningen}
+			
+			\subsection{Disposition}
+			
+			\begin{itemize}
+				\item \textbf{Sætning 14.20}
+				\item \textbf{Sætning 14.18, m. bevis}
+				\item \textbf{Bevis spektral for n = 1}
+				\item \textbf{Lemma 14.10, m. bevis}
+				\item \textbf{Bevis spektral for n}
+			\end{itemize}
+			
+			\subsection{Udspecificering}
+			
+			
+			\paragraph{Sætning 14.20} Lad $L:V\rightarrow V$ betegne en selvadjungeret operator. Så eksisterer der en ortinormal basis for V bestående af egenvektorer for L med reelle egenværdier. Specielt er L ortonormal diagonaliserbar.  \\ 
+			
+			Først vil vi bevise at vores selvadjungeret operator L, kun har reelle egenværdier. Dette er en del af bevises for sætning 14.18.
+			
+			\paragraph{Sætning 14.18} Lad $L:V\rightarrow V$ betegne en selvadjungeret operator. Så gælder der:
+			\begin{enumerate}
+				\item Alle egenværdier for L er reelle
+				\item Såfremt $\mathbf{v}$ og $\mathbf{w}$ er egenvektorer for L L hørende til forskellige egenværdier, så er $\mathbf{v}$ og $\mathbf{w}$ ortogonale.
+			\end{enumerate}
+			Vi vil som sagt kun bevise udsagn 1.
+			
+			\begin{proof} Lad $\mathbf{v}$ og $\mathbf{u}$ betegne egenvektorer for L med egenværdier hhv. $\lambda$ og $\mu$. Så gælder der både, at
+				\begin{align*}
+				\langle \mathbf{u},L(\mathbf{v}\rangle&=\langle\mathbf{u},\lambda\cdot\mathbf{v}\rangle\\
+				&=\bar{\lambda}\cdot\langle\mathbf{u},\mathbf{v}\rangle
+				\end{align*}
+				
+				men også, grundet def 14.4 for en adjungeret operator, at
+				\begin{align*}
+				\langle\mathbf{u},L(\mathbf{v})\rangle&=\langle L^*(\mathbf{u}),\mathbf{v}\rangle \\
+				&=\langle L(\mathbf{u}),\mathbf{v}\rangle \\
+				&=\langle \mu\cdot\mathbf{u},\mathbf{v}\rangle \\
+				&=\mu \cdot \langle\mathbf{u},\mathbf{v}\rangle 
+				\end{align*}
+				Dermed har vi, i tilfældet for $\mathbf{u}=\mathbf{v}$(og dermed specielt når $\lambda=\mu$, at
+				\begin{align*}
+				\bar{\lambda}\cdot\langle\mathbf{u},\mathbf{v}\rangle=\lambda\cdot\langle\mathbf{u},\mathbf{v}\rangle
+				\end{align*}
+			\end{proof}
+			
+			Ift. Spektralsætningen mangler vi blot nu at vise, at V har en ortonormal basis bestående af egenvektorer for L.
+			Beviset for dette forløber via induktion i $\textit{n}=dim(V)$.
+			\begin{proof} Hvis dim(V)=1, så lader vi $\mathcal{V}=(\mathbf{v}$ betegne en arbitrær prtonormalbasis i V. I givet fald er $L(\mathbf{v})\in Span(\mathbf{v})$, og $\mathbf{v}$ er dermed også en egenvektor for L. \\
+				Antag nu, at $n>1$, og at resultatet er vist for selvadjungerede operatorer på vektorrum af dimension $n-1$. Vi benytter sætning 14.19, 
+				\begin{displayquote} 
+					\item \paragraph{Sætning 14.19} Lad $L:V\rightarrow V$ betegne en selvadjungeret operator. Så har L en reel egenværdi.
+				\end{displayquote}
+				uden bevis, til at vælge en egenvektor $\mathbf{v}$ for L. Yderligere sætter vi $W=Span(\mathbf{v})^\bot$. For at vise at W er stabil overfor L, vil vi bevise lemma 14.10.
+				\paragraph{Lemma 14.10} Lad $L:V\rightarrow V$ betegne en lineær operator på et endelig dimensionlet indre produktrum V af dimension > 0 over legemet $\mathbb{K}$. Lad W betegne et underrum af V der er stabilt overfor $L^*$. Så vil det ortogonale komplement $W^\bot$ være stabilt overfor L.
+				\begin{proof}
+					Lad $\mathbf{v}\in W^\bot$. Vi skal vise, at $L(\mathbf{v})$ er et element i $W^\bot$; dvs, vi skal vise
+					\begin{align*}
+					\langle\mathbf{w},L(\mathbf{v})\rangle=0 \hspace{2cm} \text{for alle } \mathbf{w}\in W.
+					\end{align*}
+					men grundet def 14.4 (adjungerede operator) så har vi 
+					\begin{align*}
+					\langle\mathbf{w},L(\mathbf{v})\rangle=\langle L^*(\mathbf{w}),\mathbf{v}\rangle=0
+					\end{align*}
+					hvor det sidste lighedstegn følger, idet $L^*(\mathbf{w})$, pr. angtagel, er et element i W.
+				\end{proof}
+				Nu da vi har bevist lemma 14.10 kan vi med ret antage at W er stabil overfor L, idet $L=L^*$. Vi introducere operatoren $L_W:W\rightarrow W$, på W som er selvadjungeret. Dette ses ved at checke
+				\begin{align*}
+				\langle\mathbf{w}_1,L_W(\mathbf{w}_2)\rangle=\langle L_W(\mathbf{w}_1),\mathbf{w}_2\rangle,
+				\end{align*}
+				er opfyldt for alle $\mathbf{w}_1,\mathbf{w}_2\in W$. Men dette er oplagt opfyldet da L er selvadjungeret, og idet $L_W(\mathbf{w}_i=L(\mathbf{w}_i)$ for $i=1,2$, pr definition af $L_W$.\\
+				
+				Idet $dim(W)=n-1$, grundet korollar 10.21 ($dim(V)=dim(W)+dim(W^\bot)$, så implicerer induktionsantagelsen, at W har en ortonormalbasis $\mathcal{W}=(\mathbf{w}_1,\mathbf{w}_2,...,\mathbf{w}_{n-1})$ bestående af egenvektorer for $L_W$ (ogo dermed også for L). Sæt nu
+				\begin{align*}
+				\mathbf{w}_n=\frac{1}{||\mathbf{v}||}*\mathbf{v}
+				\end{align*}
+				Så er elementerne i $\mathcal{V}=(\mathbf{w}a_1,\mathbf{w}_2,...,\mathbf{w}_n)$, en ortonormal mængde: $\mathbf{w}a_1,\mathbf{w}_2,...,\mathbf{w}_{n-1}$ er ortonormal pr. valg af $\mathcal{W}$, og $\mathbf{v}$ (og dermed $\mathbf{w}_n$ er ortogonal på $\mathbf{w}_1,\mathbf{w}_2,...,\mathbf{w}_{n-1}$, idet $W=Span(\mathbf{v})^\bot$ Specielt er $\mathcal{V}$ lineært uafhængig og dermed en ortonormalbasis for V. Til sidst bemærkes, at $\mathcal{V}$ består af egenvektorer for L. Dette afslutter beviset for spektralsætningen. 
+			\end{proof}
+			
+			\newpage
+			
+			\section{Lineære Differentialligniner}
+			
+			
+			\subsection{Disposition}
+			
+			\begin{itemize}
+				\item \textbf{Def. 16.2 (Eksponentialfunktion)}
+				\item \textbf{Def. Lineære Differentialligninssystemer}
+				\item \textbf{Prop. 16.10, m. bevis}
+				\item \textbf{Prop. 16.12}
+				\item \textbf{Korollar 16.3, m. bevis}
+			\end{itemize}
+			
+			\subsection{Udspecificering}
+			
+			
+			Vi kan kort begynde med at notere definitionen for eksponentialfunktioner
+			
+			\begin{cstmdefinition}{16.2 (Eksponentialfunktion)}
+				
+				En afbildning $F \in Mat_n^{\infty}(\mathbb{K})$ kaldes for en eksponentialfunktion hørende til en kvadratisk matrix $A \in Mat_n(\mathbb{K})$, hvis følgende betingelser er opfyldt
+				
+				\begin{align*}
+				&(a) \; F(0) = I\\
+				&(b) \; F' = A \cdot F \\
+				&(c) \; A \cdot F = F \cdot A
+				\end{align*}
+				
+			\end{cstmdefinition}
+			
+			og introducerer det egentlige emne herefter, nemlig
+			
+			
+			\begin{cstmdefinition}{Lineære Differentialligningssystemer}
+				
+				
+				Vi lader $A \in Mat_n{\mathbb{K}})$ og siger at $z \in Mat_{n,1}^{\infty}(\mathbb{K})$ er en løsning til det lineære differentialligningssystem hørende til $A$ såfremt
+				
+				\[z' = A \cdot z\]
+				
+				z er altså en funktion
+				
+				\begin{align*}
+				z: \; &\mathbb{R} \rightarrow Mat_{n,1}(\mathbb{K}) = \mathbb{K}^n,\\
+				&t \mapsto 
+				\begin{pmatrix} 
+				z_1(t) \\ z_2(t) \\ \vdots \\ z_n(t)
+				\end{pmatrix} 
+				\end{align*}
+				
+				\begin{align*}
+				\mbox{hvor } z_i \in C^{\infty}(\mathbb{R},\mathbb{C}, i &= 1,2, \cdots, n,\mbox{ der opfylder}\\
+				&\begin{array}{c c c c c c}
+				z'_1(t) &= a_{11}z_1(t) &+ a_{12}z_2(t) &+ &\cdots &+ a_{1n}z_n(t)\\
+				z'_1(t) &= a_{11}z_1(t) &+ a_{12}z_2(t) &+ &\cdots &+ a_{1n}z_n(t)	\\
+				\vdots  & \vdots & \vdots & & & \vdots\\
+				z'_n(t) &= a_{n1}z_1(t) &+ a_{n2}z_2(t) &+ &\cdots &+ a_{nn}z_n(t)
+				\end{array}, \forall t \in \mathbb{R} 
+				\end{align*}
+				
+				Vi omtaler $z(0)$ som begyndelsesværdien for løsningen $z$. Det lineære differentialligningssystem hørende til $A$ anvender notationen
+				
+				\[x' = A \cdot x \tag{16.11}\]
+				
+				Derudover betegnes mængden af løsninger til (16.11) med $\mathcal{L}^{\infty}(A)$, som samtidigt også er et underrum af $Mat_{n,1}^{\infty}(\mathbb{K})$.  
+				
+			\end{cstmdefinition}
+			
+			
+			Derudover kan vi snakke om løsninger på forskellige måder. Følgende sætning specificerer dette
+			
+			\begin{cstmproposition}{16.10}
+				
+				Lad $A \in Mat_n(\mathbb{K}), v \in \mathbb{K}^n$. Der eksisterer netop én løsning til differentialligningssystemet $x' = A \cdot x$ med begyndelsesværdi $v$. Denne løsning er lig $z = exp(A) \cdot v$.
+				
+			\end{cstmproposition}
+			
+			\begin{proof}
+				
+				Vi sætter $z = exp(A) \cdot v$ og bemærker at
+				
+				\[z' = exp(A)' \cdot v = (A \cdot exp(A)) \cdot v = A \cdot (exp(A) \cdot v) = A \cdot z\]
+				
+				$z$ er dermed en løsning til $x' = A \cdot x$ med begyndelsesværdi
+				
+				\[z(0) = exp(A;0) \cdot v = 1 \cdot v = v\]
+				
+				Antag nu at $y \in Mat_{n,1}^{\infty}(\mathbb{K})$ også er en løsning til $x' = A \cdot x$ med begyndelsesværdi $v$. Betegn nu $exp(A) = F$ (for notationens skyld). Vi ser så
+				
+				\begin{align*}
+				H: \; &\mathbb{R} \rightarrow Mat_{n,1}(\mathbb{K})\\
+				&t \mapsto F(-t) \cdot y(t)
+				\end{align*}
+				
+				med 
+				
+				\begin{align*}
+				H'(t) &= -F'(-t) \cdot y(t) + F(-t) \cdot y'(t) \\
+				&= (-A\cdot F(-t)) \cdot y(t) + F(-t) \cdot (A \cdot y(t))\\
+				&= 0
+				\end{align*}
+				
+				hvor der undervejs er blevet brugt regler og egenskaber for differentiation og eksponentialfunktioner. Vi kan konkludere at $H$ er en konstant funktion.
+				
+				\[H(t) = H(0) = F(-0) \cdot y(0) = I \cdot v = v, \forall t \in \mathbb{R}\]
+				
+				Hvis vi nu anvender \textbf{Lemma 16.4} får vi
+				
+				\[y(t) = (F(t) \cdot F(-t)) \cdot y(t) = F(t) \cdot H(t) = F(t) \cdot v = z(t), \forall t \in \mathbb{R}\]
+				
+				og $y = z$, som ønsket.
+				
+				
+			\end{proof}
+			
+			Desuden er 
+			
+			\begin{align*}
+			\mathcal{L}(A) &\rightarrow \mathbb{K}^n\\
+			z &\mapsto z(0)
+			\end{align*}
+			
+			en lineær isomorfi med invers
+			
+			\[v \mapsto exp(A) \cdot v, v \in \mathbb{K}^n, dim(\mathcal{L}^{\infty}(A) = n\]
+			
+			Vi kan derudover tale om følgende sætning
+			
+			\begin{cstmproposition}{16.12}
+				
+				Lad $v \in \mathbb{K}^n$ betegne en egenvektor for en matrix $A \in Mat_n(\mathbb{K})$, så er 
+				\[z(t) = e^{\lambda \cdot t} \cdot v\]
+				
+				en løsning til $x' = A \cdot x$ med begyndelsesværdi $v$.
+				
+			\end{cstmproposition}
+			
+			
+			Vi vil nu snakke om og bevise følgende sætning der omhandler entydige løsninger for diagonaliserbare matricer
+			
+			\begin{cstmkorollar}{16.13}
+				
+				
+				Antag at $A \in Mat_n(\mathbb{K})$ er diagonaliserbar, og lad $\mathcal{V} = (v_1,v_2,\cdots,v_n)$ betegne en basis for $\mathbb{K}^n)$ bestående af egenvektorer for $A$. Idet $\lambda_i, i = 1,2,\cdots,n$ er egenværdien for $v_i$ så definerer $f_i \in Mat_{n,1}^{\infty}(\mathbb{K})$ 
+				
+				\[f_i(t) = e^{\lambda_i \cdot t} \cdot v_i, t \in \mathbb{R}\]
+				
+				Da er $(f_1,f_2,\cdots,f_n)$ en basis for $\mathcal{L}^{\infty}(A)$. Specielt definerer
+				
+				\[f(t) = c_1 \cdot e^{\lambda_1 \cdot t} \cdot v_1 + c_2 \cdot e^{\lambda_2 \cdot t} \cdot v_2 \cdots + c_n \cdot e^{\lambda_n \cdot t} \cdot v_n, t \in \mathbb{R}\]
+				
+				for $c_1,c_2,\cdots,c_n \in \mathbb{K}$, den entydige løsning til $x' = A \cdot x$ med begyndelsesværdi 
+				
+				\[c_1 \cdot v_1 + c_2 \cdot v_2 + \cdots + c_n \cdot v_n \in \mathbb{K}^n\] 
+				
+			\end{cstmkorollar}
+			
+			\begin{proof}
+				
+				Det bemærkes at $f_i \in \mathcal{L}^{\infty}, i = 1,2,\cdots,n$ jf. \textbf{Prop. 16.12}. Derudover afbilder $f_1,_2,\cdots,f_n$ via den tidligere lineære isomorfi i basiselementerne $v_1,v_2,\cdots,v_n$ for $\mathbb{K}^n$. At $(f_1,f_2,\cdots,f_n)$ er en basis for $\mathcal{L}^{\infty}(A)$ følger da af \textbf{Prop. 7.13} idet $\mathcal{V}$ er en basis for $\mathcal{K}^n$. Påstanden om $f$ er da oplagt
+				
+			\end{proof}
+			
+			
+			
+			
+		\end{document}
+\documentclass[paper=a4, fontsize=11pt]{scrartcl} % A4 paper and 11pt font size
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc} % Use 8-bit encoding that has 256 glyphs
+%\usepackage{fourier} % Use the Adobe Utopia font for the document - comment this line to return to the LaTeX default
+\usepackage{amsmath,amsfonts,amsthm} % Math packages
+\usepackage{stmaryrd}
+
+\usepackage{lipsum} % Used for inserting dummy 'Lorem ipsum' text into the template
+
+\usepackage{sectsty} % Allows customizing section commands
+\allsectionsfont{\centering \normalfont\scshape} % Make all sections centered, the default font and small caps
+
+\usepackage{fancyhdr} % Custom headers and footers
+\pagestyle{fancyplain} % Makes all pages in the document conform to the custom headers and footers
+\fancyhead{} % No page header - if you want one, create it in the same way as the footers below
+\fancyfoot[L]{} % Empty left footer
+\fancyfoot[C]{} % Empty center footer
+\fancyfoot[R]{\thepage} % Page numbering for right footer
+\renewcommand{\headrulewidth}{0pt} % Remove header underlines
+\renewcommand{\footrulewidth}{0pt} % Remove footer underlines
+\setlength{\headheight}{13.6pt} % Customize the height of the header
+
+\setlength\parindent{0pt} % Removes all indentation from paragraphs - comment this line for an assignment with lots of text
+
+\renewcommand{\proofname}{Bevis:}
+\usepackage{csquotes}
+
+%----------------------------------------------------------------------------------------
+%	TITLE SECTION
+%----------------------------------------------------------------------------------------
+
+\newcommand{\horrule}[1]{\rule{\linewidth}{#1}} % Create horizontal rule command with 1 argument of height
+
+
+
+\newtheorem*{theorem}{Sætning}
+\newtheorem*{korollar}{Korollar}
+\newtheorem*{lemma}{Lemma}
+\newtheorem*{definition}{Definition}
+\newtheorem*{proposition}{Proposition}
+
+\newenvironment{cstmproposition}[1]{\begin{proposition} {\normalfont\textbf{#1}}}{\end{proposition}}
+\newenvironment{cstmtheorem}[1]{\begin{theorem} {\normalfont\textbf{#1}}}{\end{theorem}}
+\newenvironment{cstmkorollar}[1]{\begin{korollar} {\normalfont\textbf{#1}}}{\end{korollar}}
+\newenvironment{cstmlemma}[1]{\begin{lemma} {\normalfont\textbf{#1}}}{\end{lemma}}
+\newenvironment{cstmdefinition}[1]{\begin{definition} {\normalfont\textbf{#1}}}{\end{definition}}
+
+\title{	
+	\normalfont \normalsize 
+	\textsc{university, school or department name} \\ [25pt] % Your university, school and/or department name(s)
+	\horrule{0.5pt} \\[0.4cm] % Thin top horizontal rule
+	\huge Assignment Title \\ % The assignment title
+	\horrule{2pt} \\[0.5cm] % Thick bottom horizontal rule
+}
+
+\author{John Smith} % Your name
+
+\date{\normalsize\today} % Today's date or a custom date
+
+\begin{document}
+	
+	\section{Løsninger og mindste kvadraters løsninger af lineære ligningssystemer}
+	
+	
+	\subsection{Disposition}
+	
+	\begin{itemize}
+		\item \textbf{Definition af Lineære ligningssystemer}
+		\item \textbf{RREF/Rækkeækvivalens (Korollar 2.5)}
+		\item \textbf{Lemma 4.3}
+		\item \textbf{Proposition 10.33, m. bevis}
+		\item \textbf{Lemma 10.35, m. bevis}
+		\item \textbf{Proposition 10.36, m. bevis}
+	\end{itemize}
+	
+	\subsection{Udspecificering}
+	
+	\begin{cstmdefinition}{Lineære Ligningssystemer}
+		
+		Når vi siger vi har et lineært ligningssystem af $m$ ligninger med $n$ ubekendte $x_1,\cdots,x_n$ menes følgende ordnede samling 
+		
+		\begin{align*}
+		\begin{array}{c c c c c c c c c c}
+		l_1: & a_{11}x_1 & + & a_{12}x_2 & + & \cdots & + & a_{1n}x_n  & = & b_1 \\
+		l_2: & a_{21}x_1 & + & a_{22}x_2 & + & \cdots & + & a_{12n}x_n  & = & b_2 \\
+		& \vdots & & \vdots & & & &  \vdots & & \vdots \\
+		l_m: & a_{m1}x_1 & + & a_{m2}x_2 & + & \cdots & + & a_{mn}x_n  & = & b_m
+		\end{array}
+		\end{align*}
+		
+		Vi skynder os at definere \textbf{koefficientmatricen} 
+		
+		\begin{align*}
+		&A = \begin{pmatrix}
+		a_{11} & a_{12} & \cdots & a_{1n} \\
+		a_{21} & a_{22} & \cdots & a_{2n} \\
+		\cdots & \vdots & \ddots & \vdots \\
+		a_{m1} & a_{m2} & \cdots & a_{mn}
+		\end{pmatrix} \in Mat_{m,n}(\mathbb{F})
+		\intertext{samt}
+		&b = \begin{pmatrix}
+		b_1 \\ b_2 \\ \vdots \\ b_n
+		\end{pmatrix} \in \mathbb{F}^m
+		\intertext{det ovenstående lineære ligningssystem kan nu skrives om til}
+		&A\cdot \textbf{x} = \textbf{b}
+		\end{align*}
+		
+	\end{cstmdefinition}
+	
+	\begin{cstmdefinition}{Elementære Rækkeoperationer (ERO)}
+		
+		En ERO er en af følgende
+		\begin{itemize}
+			\item [(I)] For $i \not = j$, ombyt den i'te og den j'te række i $A$
+			\item [(II)] Multiplicer alle elementer i den $i$'te række i $A$ med den samme skalar $\alpha \in \mathbb{F} \backslash \{0\}$
+			\item [(III)] Multiplicer alle elementer i den $i$'te række i $A$ med den samme skalar $\alpha \in \mathbb{F}$ og adder resultatet til de tilsvarende elementer $i$ den $j$'te række $(i \not = j)$
+		\end{itemize}
+		
+	\end{cstmdefinition}
+	
+	\begin{cstmdefinition}{2.2 (Række-echelongform (REF))}
+		
+		En matrix $A \in Mat_{m,n}(\mathbb{F})$ siges at være på række-echelonform (REF) såfremt der findes en voksende følge af naturlige tal 
+		
+		\[1 \leq d_1 < d_2 < \cdots < d_r \leq n\]
+		
+		hvor
+		
+		\begin{itemize}
+			\item $a_{ij} = 0 \mbox{ for } i \leq r \mbox{ og } j < d_i$
+			\item $a_{id_i} \not = 0 \mbox{ for } i \leq r$
+			\item $a_{ij} = 0 \mbox{ for } i > r$
+		\end{itemize}
+		
+	\end{cstmdefinition}
+	
+	\begin{cstmdefinition}{2.3 (Reduceret række-echelonform (RREF))}
+		
+		Som ved REF har vi en matrix $A \in Mat_{m,n}(\mathbb{F})$ som siges at være på RREF hvis vi har en følge af voksende naturlige tal 
+		
+		\[1 \leq d_1 < d_2 < \cdots < d_r \leq n\]
+		
+		hvor 
+		
+		\begin{itemize}
+			\item $a_{ij} = 0 \mbox{ for } i \leq r \mbox{ og } j < d_i$
+			\item $a_{id_i} = 1 \mbox{ for } i \leq r$
+			\item $a_{jd_i} = 0 \mbox{ for } i \leq r \mbox{ og } j \not = i$
+			\item $a_{ij} = 0 \mbox{ for } i > r$
+		\end{itemize}
+		
+	\end{cstmdefinition}
+	
+	En vigtig følge af de ovenstående definitioner er følgende definition
+	
+	\begin{cstmdefinition}{2.4 (Rækkeækvivalente matricer)}
+		To matricer $A,B \in Mat_{m,n}(\mathbb{F})$ siges at være rækkeækvivalente, hvis man kan opnå $B$ fra $A$ vha. en successive følge af elementære rækkeoperationer. I givet fald skriver vi $A \sim B$.
+	\end{cstmdefinition}
+	
+	Hvoraf det følger at
+	
+	\begin{cstmkorollar}{2.5}
+		
+		Enhver matrix $A \in Mat_{m,n}(\mathbb{F})$ er rækkeækvivalent til en matrix $H$ på RREF
+		
+	\end{cstmkorollar}
+	
+	Udfra alt dette kan vi nu snakke om løsninger til lineære ligningssystemer igen
+	
+	\begin{cstmlemma}{4.3}
+		
+		$A \in Mat_n(\mathbb{F})$ og lad $H$ betegne en matrix på $RREF$ der er rækkeækvivalent til $A$. Så har vi følgende ækvivalenser
+		
+		\begin{align*}
+		&(1) \; \mbox{For ethvert } b \in \mathbb{F}^n \mbox{ der har det lineære ligningssystem } A \cdot x = b \mbox{ præcis én løsning}\\
+		&(2) \; \mbox{Det homogene lineære lignigssystem } A \cdot x = 0 \mbox{ har alene løsningen } 0\\
+		&(3) \; \mbox{Antallet af frie ubekendte for det homogene fuldstændigt reducerede ligningssystem } H \cdot x = 0 \mbox{ 0}\\
+		&(4) \; H = I_n
+		\end{align*}
+		
+		
+		
+	\end{cstmlemma}
+	
+	
+	En vigtig pointe for lineære ligningssystemer er at hvis vi for et ligningssystem $A \cdot \textbf{x} = \textbf{b}$ ikke kan finde en entydig løsning i $R(A)$ taler vi om at $\textbf{z}$ er en mindste kvadraters løsning (MKL) til det lineære ligningssystem ovenfor såfremt vi har at $A \cdot \textbf{z} \in R(A)$ er tættest på $\textbf{b}$. Vi forstår tættest som at $||\textbf{b} - A \cdot \textbf{z}||$ skal være minimal. 
+	
+	\begin{cstmproposition}{10.33}
+		
+		Det lineære ligningsysstem $A \cdot \textbf{x} = \textbf{b}$ har (mindst) en MKL. MKL bestemmes som løsningsmængden til det lineære ligningssystem
+		
+		\[A \cdot \textbf{x} = \textbf{p}\]
+		
+		hvor $\textbf{p} \in \mathbb{R}^m$ betegner den ortogonale projektion af \textbf{b} på søjlerummet $R(A)$ og lighedstegn når $A \cdot \textbf{z} = \textbf{p}$.
+	\end{cstmproposition}
+	
+	\begin{proof}
+		
+		\textbf{p} $\in R(A)$ pr. definition. $\textbf{z} \in \mathbb{R}^n \Rightarrow A \cdot \textbf{z} \in R(A)$
+		
+		\[\Rightarrow ||\boldsymbol{b} - A \cdot \boldsymbol{z}|| \geq ||\boldsymbol{b} - \boldsymbol{p}|| \tag{Prop. 10.32}\]
+		
+	\end{proof}
+	
+	\begin{cstmlemma}{10.35}
+		
+		$R(A)^{\bot} \in $ indre produktrum $\mathbb{R}^m$ er identisk med $N(A)^T$
+		
+	\end{cstmlemma}
+	
+	\begin{proof}
+		
+		$R(A) = \{v \in \mathbb{R}^n \, | \, A \cdot \textbf{v}\}$
+		
+		\begin{align*}
+		z \in R(A)^{\bot}& \mbox{ er ækvivalent med}\\
+		&\langle \boldsymbol{z}, A \cdot \boldsymbol{v} \rangle = 0, \forall \boldsymbol{v} \in \mathbb{R}^n \tag{10.29}\\
+		&\langle \boldsymbol{z}, A \cdot \boldsymbol{v} \rangle = (A \cdot \boldsymbol{v})^T \cdot \boldsymbol{z} = \boldsymbol{v}^T \cdot (A^T \cdot \boldsymbol{z}) = \langle A^T\cdot \boldsymbol{z},\boldsymbol{v} \rangle \tag{10.30}
+		\intertext{(10.29) er da ækvivalent med}
+		&\langle A^T\cdot \boldsymbol{z},\boldsymbol{v} \rangle, \forall \boldsymbol{v} \in \mathbb{R}^n
+		\end{align*}
+		
+		(10.30) er da ækvivalent med at $A^T \cdot \boldsymbol{z} \in (\mathbb{R}^n)^{\perp}$, dvs. $A^T \cdot \boldsymbol{z} = 0 \Rightarrow \boldsymbol{z} \in N(A^T)$
+		
+	\end{proof}
+	
+	\begin{cstmproposition}{10.36}
+		MKL'er til $A \cdot \boldsymbol{x} = \boldsymbol{b}$ bestemmes som løsningerne til
+		
+		\[(A^T A) \cdot \boldsymbol{x} = A^T \cdot \boldsymbol{b}\]
+		
+	\end{cstmproposition}
+	
+	\begin{proof}
+		
+		Lad $\boldsymbol{p}$ betegne den ortogonale projektion af $\boldsymbol{b}$ på $R(A)$. Pr. def. af $\boldsymbol{p}$ dermed det entydige element i $R(A)$ der opfylder
+		
+		\[\textbf{b} - \textbf{p} \in R(A)^{\bot} = N(A^T) \tag{10.31}\]
+		
+		hvor det sidste lighedstegn netop følger af $\textbf{Lemma 10.35}$. For $\boldsymbol{z} \in \mathbb{R}^n$ vil $A \cdot \boldsymbol{z} \in R(A)$, og $A\cdot \boldsymbol{z} = \boldsymbol{p}$ præcist når 
+		
+		\[A^T(\textbf{b} - A \cdot \textbf{z}) = \textbf{0} \tag{10.32}\]
+		
+		Men at $\boldsymbol{z}$ opfylder (10.32), er oplagt ækvivalent til at $\boldsymbol{z}$ er en løsning til (10.31)
+		
+	\end{proof}
+	
+	\newpage
+	
+	\section{Vektorrum og underrum}
+	
+	\subsection{Disposition}
+	
+	\begin{itemize}
+		\item \textbf{Def. 5.1}
+		\item \textbf{Proposition 5.2, m. bevis}
+		\item \textbf{Korollar 5.3, m. bevis}
+		\item \textbf{Def. 5.7}
+		\item \textbf{Def. 5.9 (Linear kombination)}
+		\item \textbf{Def. 5.11}
+		\item \textbf{Lemma 5.12, m. bevis}
+	\end{itemize}
+	
+	\subsection{Udspecificering}
+	
+	\paragraph{Def. 5.1} $\mathbb{F}$-vektorrum består af en mængde V, samt to afbildninger af addition$(+)$ og skalarmultilplikation $(*)$, der opfylder:
+	\begin{align}
+	\nonumber & &&\forall u,v,w\in V \text{ og } \alpha,\beta\in \mathbb{F} \\
+	&\text{Kommutative lov: }&& u+v=v+u \\
+	&\text{Associative lov: }&& (u+v)+w=u+(v+w) \\
+	&\text{Neutral element: }&& \exists\mathbf{0}\in V, u+\mathbf{0}=u \text{ og } 1*v = v\\
+	&\text{Inverse element: }&& \exists-u\in V, u-u=\mathbf{0}\\
+	&\text{Distributiv lov: }&& \alpha*(u+v)=(\alpha*u)+(\alpha*v) \\
+	&\text{Distributiv lov: }&& (\alpha*\beta)*v=(\alpha*v)+(\beta*v)\\
+	&\text{Associative lov:}&& \alpha*(\beta*v)=(\alpha\beta)*v \\
+	&\text{Neutral element: }&& 1*v=v
+	\end{align}
+	
+	\paragraph{Proposition 5.2} Lad V betegne et vektorrum, $\forall v \in V$ glæder:
+	\setcounter{equation}{0}
+	\begin{align}
+	&\text{Hvis 0 betegner nulelementet i }\mathbb{F} \text{ så: }&& 0*u=0,  \\
+	&\forall\alpha\in \mathbb{F} \text{ så: }&& \alpha*0=0 \\
+	& && (-1)*u=-u
+	\end{align}
+	
+	Bevis for Prop 5.2(1.
+	\begin{align*}
+	&\text{Lad $v = 0*u$. grundet distributiv lov så: }&& v=(0+0)u=0*u+0*u=v+v &&&\\
+	&\text{Dermed}&& \mathbf{0}=v+(-v)=(v+v)+(-v) &&&\text{via, valg af v} \\
+	& && =v+(v+(-v)) &&& \text{associative lov}\\
+	& &&  =v+\mathbf{0} &&& \text{inverse element} \\
+	& && =v &&& \text{neutrale element}
+	\end{align*}
+	
+	Der ud over har vi
+	\paragraph{Korollar 5.3} Elementerne $\mathbf{0}$ og $-v$ i def. 5.1 er entydige bestemte. \\
+	Bevis for $\mathbf{0}$ er entydig bestemt:
+	\begin{gather*}
+	\text{Antag at $\mathbf{0}_1, \mathbf{0}_2\in V$ opfylder krav for at være neutrale elementer:} \\
+	\mathbf{0}_1=0*\mathbf{0}_1=\mathbf{0_2}
+	\end{gather*}
+	
+	\paragraph{Def 5.7} Et underrum af et $\mathbb{F}$-vektorrum V er  $S \subseteq V$, der indeholder $\mathbf{0}$ og som er stabil overfor addition og skalarmultiplikation. Dette betyder at:
+	\setcounter{equation}{0}
+	\begin{align}
+	& &&\mathbf{0}\in S  \\
+	&\forall u,v \in S \text{ så } &&u+v\in S \\
+	&\forall v \in S \land \forall\alpha\in\mathbb{F} \text{ så } &&\alpha*u\in S
+	\end{align}
+	et eksempel på et underrum er $N(A)=\{x|Ax=0\}$, dette vises ved:
+	\begin{gather*}
+	\text{For } \alpha, \beta\in\mathbb{F} \text{, og }x\in N(A) \iff Ax=0 \land y\in N(A) \iff Ay=0 \\
+	A(\alpha*x+\beta*y)=A(\alpha*x)+A(\beta*y)=\alpha*Ax+\beta*Ay=\alpha*0+\beta*0=0\in N(A)	
+	\end{gather*}
+	
+	\paragraph{Def 5.9} Et element v i vektorrummet V kaldes en \textbf{linearkombination} af $v_1,v_2,...,v_n$ hvis der eksistere skalarer $\alpha_1,\alpha_2,...,\alpha_n\in\mathbb{F}$, så
+	\begin{align*}
+	v=\alpha_1*v_1+\alpha_2*v_2+...+\alpha_n*v_n=\sum_{i=1}^{n}\alpha_i*v_i \in V
+	\end{align*}
+	
+	Mængden af alle sådanne kombinationer kaldes for spannet
+	
+	\paragraph{Def. 5.11} mængden af alle linearkombination af $v_1,v_2,...,v_n$ kaldes for spannet af elementerne $v_1,v_2,...,v_n$:
+	\begin{align*}
+	Span(v_1,v_2,...,v_n)
+	\end{align*}
+	
+	Det minimale antal $v_i$ der skal til for at udspænde V udgøre dimensionen
+	
+	
+	\paragraph{Lemma 5.12}
+	
+	Mængden $Span(v_1,v_2,\cdots,v_n)$ idgør et underrum i $V$ indeholdende alle elementerne $v_i, i = 1,2,\cdots,n$. Ethvert underrum af $V$ indeholdende $v_i, i = 1,2,\cdots,n$ vil indeholde $Span(v_1,v_2,\cdots,v_n)$ som delmængde.
+	
+	
+	\begin{proof}
+		
+		Jf. \textbf{Proposition 5.2(1)}, så er
+		
+		\[0 \cdot v_1 + 0 \cdot v_2 + \cdots + 0 \cdot v_n\]
+		
+		neutralelementet $\textbf{0} \in V$. Specielt $\textbf{0} \in Span(v_1,v_2,\cdots,v_n)$. Desuden gælder
+		
+		\[\sum_{i=1}^n \alpha_i v_i + \sum_{i=1}^n \beta_i v_i = \sum_{i=1}^n (\alpha_i + \beta_i) v_i \in Span(v_1,v_2,\cdots,v_n)\]
+		
+		og
+		
+		\[\alpha \cdot \sum_{i=1}^n \alpha_i v_i = \sum_{i=1}^n(\alpha \alpha_i)v_i \in Span(v_1,v_2,\cdots,v_n)\]
+		
+		jf. regnereglerne i \textbf{Def. 5.1}. Der konkluderes hermed jf. \textbf{Def. 5.7}, at  $Span(v_1,v_2,\cdots,v_n)$ er et underrum i $V$. At $v_i \in Span(v_1,v_2,\cdots,v_n), i = 1,2,\cdots,n$ følger af
+		
+		\[v_i = 0 \cdot v_1 + \cdots + 0 \cdot v_{i-1} + 1 \cdot v_i + 0 \cdot v_{i+1} + \cdots + 0 \cdot v_n\]
+		
+		Vi lader nu $S$ betegne et underrum af $V$, som indeholder alle $v_i, i = 1,2,\cdots,n$. $S$ indeholder ethvert element på formen $\alpha_i v_i$ for $\alpha_i \in \mathbb{F}$, og specielt indeholder $S$ da alle endelige summer af elementer af denne form. Alle linearkombinationer af $v_i$'erne er dermed indeholdt i $S$, og $Span(v_1,v_2,\cdots,v_n) \subseteq S$. 
+		
+	\end{proof}
+	
+	\paragraph{Ekstra Note}
+	
+	\paragraph{Def 5.14} Lad V betegne et $\mathbb{F}$-vektorrum. Vi definere da:
+	\begin{itemize}
+		\item Hvis $V=\{0\}$, så siger vi at V har dimension 0.
+		\item Hvis V er forskellige fra $\{0\}$ og kan udspændes af n elementer, men ikke færre end n elementer, så siger vi, at dimensionen af v er lig n. 
+		\item Hvis v ikke kan udspændes af en endelig mængde, så siges V at have uendelig dimension. 
+	\end{itemize}
+	
+	\newpage
+	
+	\section{Basis for Vektorrum}
+	
+	\subsection{Disposition}
+	
+	\begin{itemize}
+		\item \textbf{Def. 7.1}
+		\item \textbf{Proposition 7.4}
+		\item \textbf{Lemma 7.6, m. bevis}
+		\item \textbf{Sætninger 7.9, m. bevis}
+	\end{itemize}
+	
+	\subsection{Udspecificering}
+	
+	\paragraph{Def 7.1} For en samling $\mathcal{V}=(\mathbf{v}_1,\mathbf{v}_2,...,\mathbf{v}_n)$ af elementer i et $\mathbb{F}$-vektorrum V defineres:
+	\begin{enumerate}
+		\setlength\itemsep{-0.5em}
+		\item Sanlingen af elementer $\mathbb{V}$ siges at \textbf{udspænde} V, hvis den lineære afbildning $L_\mathcal{V}$ er surjektiv; dvs. hvis ethvert element i V er lig en linearkombination af $\mathbf{v}_1,\mathbf{v}_2,...,\mathbf{v}_n$
+		\item Samlingen af elementer $\mathcal{V}$ kaldes \textbf{lineært uafhængig}, hvis den lienære afbildning $L_\mathcal{V}$ er injektiv; dvs. hvis ethvert element i V maksimalt kan skrives på én måde som en linearkombination af $\mathbf{v}_1,\mathbf{v}_2,...,\mathbf{v}_n$. I modsat fald kaldes samlingen af elementer i $\mathbb{V}$ for \textbf{lineært afhængig}.
+		\item Samlingen af elementer $\mathcal{V}$ kaldes en \textbf{basis}, hvis den lineære afbildning $L_\mathcal{V}$ er invertibel; dvs. hvis ethvert element i V på netop én måde kan skrives som en linearkombination af $\mathbf{v}_1,\mathbf{v}_2,...,\mathbf{v}_n$
+	\end{enumerate}
+	
+	Vi ligger mærke til den egenskab at
+	
+	\paragraph{Proposition 7.4} Lad $\mathcal{V}=(\mathbf{v}_1,\mathbf{v}_2,...,\mathbf{v}_n)$ betegne en basis for et vektorrum V. Så er 
+	\begin{align*}
+	dim(V)=n
+	\end{align*}
+	Hvis $\mathcal{W}=(\mathbf{w}_1,\mathbf{w}_2,...,\mathbf{w}_n)$ betegner yderligere en basis for V, så er $n=m$.\\
+	
+	Nu hvor vi har defineret en basis for et vektorrum, vil vi bevise 
+	
+	\paragraph{Lemma 7.6} Lad $\mathcal{W}=(\mathbf{v}_1,\mathbf{v}_2,...,\mathbf{v}_m)$ betegne en samling af elementer der udspænder et vektorrum $V\neq \{0\}$. Så kan $\mathcal{W}$ udtyndes til en basis for V; dvs. der eksisterer et heltal $k>0$ og en følge af tal
+	\begin{align*}
+	1\leq i_1 < 1_2 < ... < i_k \leq m,
+	\end{align*}
+	så $\mathcal{V}=(\mathbf{v}_{i_1},\mathbf{v}_{i_2},...,\mathbf{v}_{i_k})$ er en basis for V.
+	\begin{proof}
+		Udsagnet vises via induktion i m. I tilfælder hvor $m=1$, så er lineært afhænging hvis $v_1=0$, gundet at så vil $1*\mathbf{v}_1=\mathbf{0}$ være en ikke-triviel lineær relation, og $\mathcal{V}=(\mathbf{v}_1)$ er derfor lineært afhængig. Specielt vil $V=Span(\mathcal{W})=\{\mathbf{0}\}$, hvilket er en modstrid. Derfor er $\mathcal{W}$ lineært uafhængig og dermed en basis. Dette viser udsagnet i tilfæld $m=1$.	
+		
+		Antag at $m>1$, og at udsagnet er vist i tilfældet, hvor $\mathcal{W}$ består af $m-1$ elementer. Hvis $\mathcal{W}$ er lineært uafhængig, så er $\mathcal{W}$ selv en basis, og udsagnet er vist. Antag derfor at $\mathcal{W}$ er lineært afhængig. Så findes der, grundet lemma 7.5(1) et i, så $V=Span(\mathcal{W}')$ hvor
+		\begin{align*}
+		\mathcal{W}'=(\mathbf{v}_1,...,\mathbf{v}_{i-1},\mathbf{v}_{i+1},...,\mathbf{v}_m).
+		\end{align*}
+		Vektorummet V er dermed udspændt af $\mathcal{W}'$, dvs. af m-1 elementer. Anvendes IH opnås det, at $\mathcal{W}'$, kan udtyndes til en basis. Men en udtynding af $\mathcal{W}'$ er også en udtynding af $\mathcal{W}$.
+	\end{proof}
+	
+	Men vi kan ikke blot udtynde os til en basis, vi kan også udvide os til en basis
+	
+	\paragraph{Sætning 7.9} Lad V betegne et vektorrum af endelig dimension $n>0$, og lad $\mathcal{W}=(\mathbf{v}_1,\mathbf{v}_2,...,\mathbf{v}_m)$ betegne en samling af m elementer i V.
+	\begin{enumerate}
+		\item Hvis $\mathcal{W}$ udspænder V, så er $n\leq m$ og $\mathcal{W}$ kan \textbf{udtyndes} til en basis for V; dvs. at der eksisterer en følge af helt
+		\begin{align*}
+		1\leq i_1 < i_2 <...<i_n \leq m,
+		\end{align*}
+		så $\mathcal{V}=(\mathbf{v}_{i_1},\mathbf{v}_{i_2},...,\mathbf{v}_{i_n})$ er en basis for V.
+		\begin{itemize}
+			\item Vi lægge mærke til at dette blot er en omformulering af lemma 7.6 som vi har bevist. Den eneste forskel er at proposition 7.4 bruges at vise at $dim(v)=n$ hvilket blot er det antal elementer der er i basen.
+		\end{itemize}
+		\item Hvis $\mathcal{W}$ er lineært uafhængig, så er $m\leq n$ og $\mathcal{W}$ kan \textbf{udvides} til en bassis for V; dvs der eksisterer elementer 
+		\begin{align*}
+		\mathbf{v}_{m+1},\mathbf{v}_{m+2},...,\mathbf{v}_{n}\in V
+		\end{align*}
+		så $\mathcal{V}=(\mathbf{v}_{1},\mathbf{v}_{2},...,\mathbf{v}_{n})$ er en base for V.
+	\end{enumerate}
+	
+	\begin{proof}
+		At $m\leq n$ følger af lemma 7.8, som vi ikke vil bevise. Vi observer at hvis $Span(\mathcal{W})=V$, så er $\mathcal{W}$ en basis for V. Modsat, hvis $Span(\mathcal{W})\neq V$, så eksisterer der et $\mathbf{v}_{m+1}\in V$, som ikke er indeholdt i $Span(\mathcal{W})$. Ifølge Lemma 7.5(2) er $\mathcal{W}'=(\mathbf{v}_1,\mathbf{v}_2,...,\mathbf{v}_{m+1})$ da lineært uafhængig, og derfor vil $m+1\leq n$ i dette tilfælde. \\
+		
+		Ved induktion i tallet $n-m\geq0$ kan vi vise at $\mathcal{W}$ kan udvides til en basis for V. Hvis $n-m=0$, så er $\mathcal{W}$ allerede en basis for V, og udsagnet er vist. Vi betragter tilfældet for $n-m>0$, og antager det er vist for alle tal mindre end det. Hvis $Span(\mathcal{W})=V$, så er $\mathcal{W}$ en basis for V, og vi er færdige. Hvis ikke, kan vi tilføje et passende $\mathbf{v}_{m+1}$ til $\mathcal{W}$ og opnå en lineært uafhængig samling af $m+1$ elementer $\mathcal{W}'=(\mathbf{v}_1,\mathbf{v}_2,...,\mathbf{v}_{m+1}$. Pr induktion, så kan $\mathcal{W}'$ nu udvides til en basis fir V, og en sådan udvidelse er samtidig en udvidelse af $\mathcal{W}$
+	\end{proof}
+	
+	\newpage
+	
+	\section{Matrixrepræsentationer}
+	
+	
+	\subsection{Disposition}
+	
+	\begin{itemize}
+		\item \textbf{Def. 8.2 (KV)}
+		\item \textbf{Def. 8.5 (KTM)}
+		\item \textbf{Prop. 8.6}
+		\item \textbf{Def. 8.9 (MR)}
+		\item \textbf{Prop. 8.11}
+		\item \textbf{Lemma 8.21, m. bevis}
+		\item \textbf{Lemma 8.22, m. bevis for (1)}
+	\end{itemize}
+	
+	\subsection{Udspecificering}
+	
+	\paragraph{Indledning}
+	
+	
+	
+	
+	For et generelt $\mathbb{F}$ vektorrum giver det mening at snakke om koordinatsystemet i form af en basis $\mathcal{V}$ for netop et $\mathbb{F}$-vektorrum, hvilket giver anledning til en bijektiv afbildning
+	
+	\[L_{\mathcal{V}} : \mathbb{F}^n \rightarrow V\]
+	
+	Vi ser at $L_{\mathcal{V}}$ er en isomorfi (idet bijektiv) og punkterne i V svarer derfor 1-1 til punkterne i $\mathbb{F}$. Vi ser også at $L_{\mathcal{V}}$ er lineær og derfor er addition og skalarmultiplikation også defineret mellem V og $\mathbb{F}$. Dette betyder at vi kan arbejde med V som om det blot var $\mathbb{F}$. Konsekvensen af dette er at oversættelsen afhænger af valget af basis $\mathcal{V}$ for $\mathbb{F}$.
+	
+	\paragraph{Def. 8.2 (Koordinatvektorer)}
+	\textit{Lad $\mathcal{V} = (v_1,\cdots,v_n)$ betegne en basis for et $\mathbb{F}$-vektorrum V. Med \textbf{koordinatvektoren} for et element $v \in V$ mht. basen $\mathcal{V}$ menes elementet $L_{\mathcal{V}}^{-1}(v) \in \mathbb{F}^n$. Koordinatvektoren betegnes også med $[v]_{\mathcal{V}}$}
+	
+	Med andre ord kan vi beskrive koordinatvektoren $[v]_{\mathcal{V}}$ for $v \in V$ som den vektor
+	\[\begin{pmatrix}
+	\alpha_1 \\
+	\alpha_2 \\
+	\vdots \\
+	\alpha_n
+	\end{pmatrix} \in \mathbb{F}^n \tag{8.8}
+	\]
+	
+	som opfylder relationen
+	
+	\[v = \alpha_1 \cdot v_1 + \alpha_2 \cdot v_2 + \cdots + \alpha_n \cdot v_n \tag{8.9}\] 
+	
+	Da afbildningen
+	\begin{align*}
+	[\,\cdot\,]_{\mathcal{V}} : &V \rightarrow \mathbb{F}^n\\
+	& v \mapsto [\,v\,]_{\mathcal{V}}
+	\end{align*}
+	
+	er en lineær transformation har vi at skalarmultiplikation og addition gælder for koordinatvektoren.
+	
+	\paragraph{Def 8.5 (Koordinattransformationsmatrix)}
+	
+	\textit{Standardmatrixrepræsentationen $\mathcal{M}(L_{\mathcal{V}}^{-1} \circ L_{\mathcal{W}} \in Mat_n(\mathbb{F})$ for den lineære afbildning $L_{\mathcal{V}}^{-1} \circ L_{\mathcal{W}}$ kaldes for \textbf{koordinattransformationsmatricen} for overgangen fra $\mathcal{W}$-basen tuk $\mathcal{V}$-basen. Koordinattransformationsmatricen betegnes også med $_\mathcal{V}[{\scriptstyle\square}]_{\mathcal{W}}$}
+	
+	Umiddelbart følger
+	
+	\paragraph{Proposition 8.6} \textit{Lad $\mathcal{V}, \mathcal{U}$ og $\mathcal{W}$ betegne baser for et $\mathbb{F}$-vektorrum V. Så}
+	
+	
+	\begin{align*}
+	&(1) \quad [\,v\,]_{\mathcal{V}} = _{\mathcal{V}}[{{\scriptstyle\square}}]_{\mathcal{W}} \cdot [\,v\,]_{\mathcal{W}} \text{ for } v \in V\\
+	&(2) \quad \text{Hvis } A \in Mat_{n,n}(\mathbb{F}) \text{ opfylder relationen}\\
+	&\qquad \qquad\qquad\qquad\qquad\qquad\qquad\qquad[v]_{\mathcal{V}} = A \cdot [\,v\,]_{\mathcal{W}}\\
+	&\qquad \; \text{for alle } v \in V, \text{ så er } A = _{\mathcal{V}}[{\scriptstyle\square}]_{\mathcal{W}}\\
+	&(3) \quad _{\mathcal{V}}[{\scriptstyle\square}]_{\mathcal{V}} \text{ er identitetsmatricen} \\
+	&(4) \quad _{\mathcal{W}}[{\scriptstyle\square}]_{\mathcal{V}} \cdot _{\mathcal{V}}[{\scriptstyle\square}]_{\mathcal{U}} = _{\mathcal{W}}[{\scriptstyle\square}]_{\mathcal{U}}\\
+	&(5) \quad _{\mathcal{W}}[{\scriptstyle\square}]_{\mathcal{V}} \text{ er invertibel med inverse } _{\mathcal{V}}[{\scriptstyle\square}]_{\mathcal{W}}
+	\end{align*}
+	
+	
+	
+	
+	\paragraph{Def. 8.9 (Matrixrepræsentation)}
+	
+	\textit{Standardmatrixrepræsentationen $\mathcal{M}(L_{\mathcal{W}}^{-1} \circ L \circ L_{\mathcal{V}}) \in Mat_{m,n}(\mathbb{F})$ kaldes for \textbf{Matrixrepræsentationen} for L mht. baserne $\mathcal{V}$ og $\mathcal{W}$. Matrixrepræsentationen betegnes også med notationen $_{\mathcal{W}}[L]_{\mathcal{V}}$}
+	Eller:
+	
+	\begin{align*}
+	&V \xrightarrow{\makebox[2cm]{L}} W\\
+	L_{\mathcal{V}} & \uparrow \qquad \qquad \qquad \quad \downarrow L_{\mathcal{W}}^{-1}\\
+	&\mathbb{F}^n \xrightarrow{\makebox[2cm]{$L_{\mathcal{W}}^{-1} \circ L \circ L_{\mathcal{V}}$}} \mathbb{F}^m
+	\end{align*}
+	
+	\begin{cstmproposition}{8.11}
+		
+		Lad $L: \; V \rightarrow W$ betegne en lineær afbildning mellem $\mathbb{F}$-vektorrum $V$ og $W$ med baser hhv. $\mathcal{V}$ og $\mathcal{W}$. Så:
+		
+		\begin{align*}
+		(1) \; &[L(v)]_{\mathcal{W}} = _{\mathcal{W}}[L]_{\mathcal{V}} \cdot [v]_{\mathcal{V}}, \forall v \in V\\
+		(2) \; &\mbox{Hvis } A \in Mat_{m,n}(\mathbb{F}) \mbox{ opfylder relationen}\\
+		&[L(v)]_{\mathcal{W}} = A \cdot [v]_{\mathcal{V}}\\
+		&\forall v \in V, \mbox{ så er } A = _{\mathcal{W}}[L]_{\mathcal{V}}
+		\end{align*}
+		
+		
+	\end{cstmproposition}
+	
+	\begin{proof}
+		
+		udsagn (1) følger via
+		
+		\begin{align*}
+		_{\mathcal{W}}[L]_{\mathcal{V}} \cdot [v]_{\mathcal{V}} &= \mathcal{M}(L_{\mathcal{W}}^{-1} \circ L \circ L_{\mathcal{V}}) \cdot [v]_\mathcal{V}\\
+		&=(L_{\mathcal{W}}^{-1} \circ L \circ L_{\mathcal{V}})([v]_{\mathcal{V}})\\
+		&=(L_{\mathcal{W}}^{-1} \circ L)(v)\\
+		&=L_{\mathcal{W}}^{-1}(L(v))\\
+		&=[L(v)]_{\mathcal{W}}
+		\end{align*}
+		
+		For herefter at indse udsagn (2) sætter vi $B = _{\mathcal{W}}[L]_{\mathcal{V}}$. Det implicerer da
+		
+		\begin{align*}
+		&L_A([v]_{\mathcal{V}}) = A \cdot [v]_{\mathcal{V}} = [L(v)]_{\mathcal{W}} = B \cdot [v]_{\mathcal{V}} = L_B([v]_{\mathcal{V}}), \forall v \in V
+		\end{align*}
+		Men vi ved at ethvert element i $\mathbb{F}^n$ er på formen $[v]_{\mathcal{V}}$, for et passende $v \in V$, og dermed er $L_A = L_B$, specielt (iflg. \textbf{Korollar 6.7}) og udsagn 2 følger derfor.
+		
+		
+	\end{proof}
+	
+	\paragraph{Bemærk:}
+	\[_{\mathcal{W}}[\text{Id}]_{\mathcal{V}} = \mathcal{M}(L_{\mathcal{W}}^{-1} \circ \text{Id} \circ L_{\mathcal{V}}) = \mathcal{M}(L_{\mathcal{W}}^{-1} \circ L_{\mathcal{V}}) = _{\mathcal{W}}[{\scriptstyle\square}]_{\mathcal{V}}\]
+	
+	\paragraph{Lemma 8.21} \textit{Lad $L : V \rightarrow W$ betegne en lineær afbildnings, og lad $\mathcal{V}$ og $\mathcal{W}$ betegne baser for hhv $V$ og $W$. Så gælder:}
+	
+	\begin{align*}
+	&(1) \; v \in ker(L) \Leftrightarrow [\,v\,]_{\mathcal{V}} \in N(_{\mathcal{W}}[L]_{\mathcal{V}}), v \in V \\
+	&(2) \; w \in L(V) \Leftrightarrow [\,w\,]_{\mathcal{W}} \in R(_{\mathcal{W}}[L]_{\mathcal{V}}, w \ in W
+	\end{align*}
+	
+	
+	
+	\begin{proof}
+		
+		Først vil vi bevise påstand (1)
+		
+		Idet $L_{\mathcal{W}}$ er en isomorfi, så er $v \in V$ et element i $ker(L)$
+		
+		\[\Leftrightarrow L_{\mathcal{W}}^{-1}(L(v)) = 0 \tag{1}\]
+		
+		Men 
+		
+		\[L_{\mathcal{W}}^{-1}(L(v)) = [L(v)]_{\mathcal{W}}]\]
+		
+		som ifølge \textbf{Prop. 8.11} var lig
+		
+		\[[L(v)]_{\mathcal{W}} = _{\mathcal{W}}[L]_{\mathcal{V}} \cdot [v]_{\mathcal{V}}\]
+		
+		Hvoraf udsagn (1) følger umiddelbart i og med 
+		
+		\begin{align*}
+		&[_{\mathcal{W}}[L]_{\mathcal{V}} \cdot [v]_{\mathcal{V}} = [L(v)]_{\mathcal{W}} = L_{\mathcal{W}}^{-1}(L(v)) = 0
+		\end{align*}
+		
+		
+		Vi beviser udsagn (2).
+		
+		Hvis $w \in L(V), w \in W \Rightarrow \exists v \in V \Rightarrow w = L(v)$
+		
+		\[\Rightarrow [\,w\,]_{\mathcal{W}} = [L(v)]_{\mathcal{W}} = _{\mathcal{W}}[L]_{\mathcal{V}} \cdot [\,v\,]_{\mathcal{V}} \Rightarrow [\,w\,]_{\mathcal{W}} \in R(_{\mathcal{W}}[L]_{\mathcal{V}})\]
+		
+		Omvendt $w \in R(_{\mathcal{W}}[L]_{\mathcal{V}}), \exists a \in \mathbb{F}^n (dim(V) = n)$
+		
+		\[[\,w\,]_{\mathcal{W}} = _{\mathcal{W}}[L]_{\mathcal{V}} \cdot a\]
+		
+		Sæt $v = L_{\mathcal{V}}(a)$
+		
+		\begin{align*}
+		[L(v)]_{\mathcal{W}} &= _{\mathcal{W}}[L]_{\mathcal{V}} \cdot [\,v\,]_{\mathcal{V}}\\
+		&= _{\mathcal{W}}[L]_{\mathcal{V}} \cdot a\\
+		&= [\,w\,]_{\mathcal{W}}
+		\end{align*}
+		
+		$L_{\mathcal{W}}$ isomorfi $\Rightarrow w = L(v) \Rightarrow w \in L(V)$
+	\end{proof}
+	Hvilket vi kan bruge til at vise 
+	
+	\paragraph{Lemma 8.22} \textit{Lad $L: V \rightarrow W$ betegne en lineær afbildning og lad $\mathcal{V}$ og $\mathcal{W}$ betegne baser for hhv. $V$ og $W$. Lad $r$ betegne rangen af matrixrepræsentationen $_{\mathcal{W}}[L]_{\mathcal{V}}$ så gælder:}
+	
+	
+	\begin{align*}
+	&(1) \; L_{\mathcal{V}}(N(_{\mathcal{W}}[L]_{\mathcal{V}})) = ker(L). \text{ Specielt inducerer $L_{\mathcal{V}}$ en isomorfi for } \\
+	& \qquad N(_{\mathcal{W}}[L]_{\mathcal{V}}) \rightarrow ker(L)\\
+	& \Rightarrow \mbox{dim}(ker(L)) = \mbox{dim}(V) - r\\
+	&(2) \; L_{\mathcal{W}}(R(_{\mathcal{W}}[L]_{\mathcal{V}}) = L(V). \text{ Specielt inducerer $L_{\mathcal{W}}$ en isomorfi for } \\
+	& \qquad R(_{\mathcal{W}}[L]_{\mathcal{V}} \rightarrow L(V)\\
+	& \Rightarrow \mbox{dim}(L(V)) = r
+	\end{align*}
+	\begin{proof}
+		
+		Ifølge \textbf{Lemma 8.21} er elementerne i $N(_{\mathcal{W}}[L]_{\mathcal{V}})$ på formen $[\,v\,]_{\mathcal{V}}, v \in ker(L)$
+		
+		\[L_{\mathcal{V}}([\,v\,]_{\mathcal{V}}) = v\]
+		
+		Hvilket afslutter beviset af første del af (1). Dimensionsidentiten følger af 6.22, 7.29(2) og
+		
+		\[dim(ker(L)) = dim(N(_{\mathcal{W}}[L]_{\mathcal{V}})) = dim(V) - r\]
+		
+		Udsagn (2) vises på lignende vis.
+	\end{proof}
+	\newpage
+	
+	\section{Indre Produkt}
+	
+	
+	Vi har for et legeme $\mathbb{K}$ enten $\mathbb{C}$ eller $\mathbb{R}$ med vektorrum $V$ over $\mathbb{K}$. Vi kan dermed definere vinkler og længder vha. det indre produkt med afbildningen
+	
+	\[\langle \cdot , \cdot \rangle \; \; V \times V \rightarrow \mathbb{K}\]
+	
+	Vi betegner da $(v,w) \in V \times V$ under $\langle \cdot , \cdot \rangle$ med $\langle v,w \rangle$.
+	
+	\begin{cstmdefinition}{9.1 (Indre produkt)}
+		
+		\subsection{Disposition}
+		
+		\begin{itemize}
+			\item \textbf{Def. 9.1 (Indre produkt)}
+			\item \textbf{Def. 9.5 (Norm)}
+			\item \textbf{Def. 9.7 (Ortogonalitet)}
+			\item \textbf{Prop. 9.9 (Pythagoras' Sætning), m. bevis}
+			\item \textbf{Def. 9.11 (Projektion på vektor)}
+			\item \textbf{Prop. 9.12 (Cauchy-Schwarz' ulighed)}
+		\end{itemize}
+		
+		\subsection{Udspecificering}
+		
+		Afbildningen ovenfor kaldes for et indre produkt på et vektorrum $V$ såfremt der gælder for $u,v,w \in V, \alpha,\beta \in \mathbb{K}$
+		
+		\begin{align*}
+		&(a) \; \mbox{Skalaren } \langle v,v \rangle \mbox{ er et reelt tal og } \langle v,v \rangle \geq 0\\
+		&(b) \; \langle v,v \rangle = 0 \Rightarrow v = 0\\
+		&(c) \; \langle v,w \rangle = \overline{\langle w,v \rangle}\\
+		&(d) \; \langle \alpha \cdot u + \beta \cdot v, w \rangle = \alpha \cdot \langle u,w \rangle + \beta \cdot \langle v,w \rangle
+		\end{align*}
+		
+		$V$ er dermed et indre produkt rum
+		
+	\end{cstmdefinition}
+	
+	
+	\begin{cstmdefinition}{9.5 (Norm)}
+		
+		
+		Lad $V$ betegne et indre produkt rum. Vi siger da at normen af $v \in V$ defineres som
+		
+		\[||v|| = \sqrt{\langle v,v \rangle} \in \mathbb{R}_{\geq 0}\]
+		
+	\end{cstmdefinition}
+	
+	
+	\begin{cstmdefinition}{9.7 (Ortogonalitet)}
+		
+		Elementer $v,w$ i et indre produkt rum kaldes ortogonale hvis $\langle v,w \rangle = 0$. I givet fald skriver vi $v \bot w$ 
+		
+	\end{cstmdefinition}
+	
+	
+	\begin{cstmproposition}{9.9 (Pythagoras' sætning)}
+		
+		Lad $v,w$ betegne ortogonale vektorer i et indre produkt rum $V$
+		
+		\[||v + w||^2 = ||v||^2 + ||w||^2\]
+		
+	\end{cstmproposition}
+	
+	
+	\begin{proof}
+		Det følger ved anvendelse af \textbf{Def. 9.1(d)} og at $\langle w , \alpha \cdot u + \beta \cdot v \rangle = \overline{\alpha} \cdot \langle w , u \rangle + \overline{\beta} \cdot \langle w,v \rangle$ ifølge \textbf{Bemærkning 9.2(ii)}
+		
+		\begin{align*}
+		||v + w||^2 &= \langle v + w , v + w \rangle\\
+		&= \langle v,v \rangle + \langle v , w \rangle + \langle w , v \rangle + \langle w,w \rangle\\
+		&= \langle v,v \rangle + \langle w,w \rangle \\
+		&= ||v||^2 + ||w||^2
+		\end{align*}
+		
+		Hvor tredje lighedstegn netop følger af elementernes ortogonalitet.
+		
+	\end{proof}
+	
+	\begin{cstmdefinition}{9.11 (Projektion på vektor)}
+		
+		Lad $v,w \in V , w \not = 0$ Så kaldes 
+		
+		\[p = \frac{\langle v,w \rangle}{\langle w,w \rangle} w\]
+		
+		den ortogonale projektion af $v$ på $w$.
+		
+	\end{cstmdefinition}
+	
+	\begin{cstmproposition}{9.12 (Cauchy-Schwarz' ulighed)}
+		
+		For vektorer $v,w$ i et I.P.-rum $V$ har vi uligheden 
+		
+		\[|\langle v,w \rangle | \leq ||v|| \cdot ||w||\]
+		
+		hvor venstresiden betegner modulus værdien af tallet $\langle v,w \rangle$
+		
+	\end{cstmproposition}
+	
+	\begin{proof}
+		
+		Uligheden er opfyldt, hvis $w = 0$ ifølge \textbf{Lemma 9.6(3)}. Vi antager derfor at $w \not = 0$ og lad $p$ betegne den ortogonale projektion af $v$ på $w$. Så er
+		
+		\[v = p + (v-p)\]
+		
+		og $p \bot v-p$. Ifølge Pythagoras er $||v||$ derfor
+		
+		\[||v||^2 = ||p||^2 + ||v - p||^2 \geq ||p||^2\]
+		
+		
+		Specielt $||v|| \geq ||p||$. Men definitionen af projektionen sammen med at $||\alpha v|| = |\alpha| \cdot ||v||$ i \textbf{Lemma 9.6(2)} betyder at 
+		
+		\[||p|| = \frac{|\langle v,w \rangle |}{||w||^2} \cdot ||w|| = \frac{|\langle v,w \rangle|}{||w||}\]
+		
+		
+		\[\Rightarrow ||v|| \geq \frac{ |\langle v,w \rangle | }{ ||w|| }\]
+		Som netop er ækvivalent til det vi vil bevise.
+		
+		
+	\end{proof}
+	
+	
+	
+	\newpage
+	
+	\section{Ortogonalt komplement og projektion}
+	
+	\subsection{Disposition}
+	
+	\begin{itemize}
+		\item \textbf{Def. 10.1 (Ortogonale og ortonormale mængder)}
+		\item \textbf{Def. 10.5 (Ortogonalt komplemet)}
+		\item \textbf{Def. 10.11 (Ortogonalt projektion på underrum)
+			\item \textbf{Lemma 10.12}
+			\item \textbf{Lemma 10.13}
+		\end{itemize}
+		
+		\subsection{Udspecificering}
+		
+		\begin{cstmdefinition}{10.1 (Ortogonale og ortonormale mængder)}
+			$v_1,v_2,\cdots,v_n \in V$ kaldes en ortogonal mængde, hvis
+			\begin{align*}
+			&(a) \; v_i \not = 0, i = 1,2,\cdots,n\\
+			&(b) \; v_i \bot v, i \not = j\\
+			&\text{Hvis også}\\
+			&(c) \; ||v_i|| = 1, i = 1,2,\cdots,n\\
+			&\text{kaldes mængden ortonormal}
+			\end{align*}
+			
+		\end{cstmdefinition}
+		
+		\begin{cstmdefinition}{10.5 (Ortogonalt komplemt)}
+			Lad W betegne et underrumi et indre produktrum V. Det \textbf{ortogonale komplement} til W i V defineres som mængden
+			\begin{align*}
+			W^\bot =\{\mathbf{v}\in V|\langle\mathbf{v},\mathbf{w}\rangle=0 \text{ for alle w } \mathbf{w}\in W
+			\end{align*}
+			
+		\end{cstmdefinition}
+		
+		\begin{cstmdefinition}{10.11 (Ortogonal projektion på underrum}
+			Lad W betegne et underrum i et indre produkt rum V, og lad $\mathbf{v}\in V$ betegne et element i V. Et element $\mathbf{p}\in W$ kaldes for en \textbf{ortogonal projektion} af $\mathbf{v}$ på W, hvis $\mathbf{v}-\mathbf{p}$ er et element i $W^\bot$
+			
+		\end{cstmdefinition}
+		
+		\begin{cstmlemma}{10.12}
+			Lad W betegne et underrum i et indre produktrum V, og lad $\mathbf{v}\in V$ betegne et element i V. Hvis $\mathbf{p}$ og $\mathbf{p}'$ betegner ortogonale projektioner af $\mathbf{v}$ på W, så er $\mathbf{p}=\mathbf{p}'$.
+		\end{cstmlemma}
+		
+		\begin{proof}
+			Idet $W^\bot$ er et vektorrum, så vil differensen
+			\begin{align*}
+			\mathbf{p}-\mathbf{p}' =(\mathbf{v}-\mathbf{p}')-(\mathbf{v}-\mathbf{p})\in W^\bot
+			\end{align*}
+			være et element i$W^\bot$. Men $\mathbf{p}-\mathbf{p}'$ er også et element i W, og dermed
+			\begin{align*}
+			\mathbf{p}-\mathbf{p}'\in W^\bot \cap W=\{0\}
+			\end{align*}
+			Jf. Lemma 10.7 ($W\cap W^\bot =\{0\}$). Vi konkluderer, at $\mathbf{p}-\mathbf{p}'=\mathbf{0}$, hvilket er ækvivalent med det ønskede.
+		\end{proof}
+		
+		\begin{cstmlemma}{10.13}
+			
+			Lad $\mathbf{v}_1,\mathbf{v}_2,...,\mathbf{v}_n$ betegne en ortogonal mængde i et indre produktrum V, og lad W betegne spannet $Span(\mathbf{v}_1,\mathbf{v}_2,...,\mathbf{v}_n)$. Ethvert element i $\mathbf{v}$ i V kan da entydig skrives som en sum
+			\begin{align*}
+			\mathbf{v}=\mathbf{p}+\mathbf{h}
+			\end{align*}
+			Hvor $\mathbf{p}\in W$ og $\mathbf{h}\in W^\bot$. Faktisk er 
+			\begin{align*}
+			\mathbf{p}=\frac{\langle\mathbf{v},\mathbf{v}_1\rangle}{||\mathbf{v_1}||^2}\cdot\mathbf{v}_1+\frac{\langle\mathbf{v},\mathbf{v}_2\rangle}{||\mathbf{v_2}||^2}\cdot\mathbf{v}_2+...+\frac{\langle\mathbf{v},\mathbf{v}_n\rangle}{||\mathbf{v_n}||^2}\cdot\mathbf{v}_n
+			\end{align*}
+		\end{cstmlemma}
+		
+		\begin{proof}
+			Ifølge lemma 10.12 så er det tilstrækkeligt at vise eksistensen af en opspaltning af $\mathbf{v}$ på formen $\mathbf{v}=\mathbf{p}+\mathbf{h}$. Lad $\mathbf{p}_i$, for $i=1,2,...,n$, betegne den ortogonale projektion af $\mathbf{v}$ på $\mathbf{v}_i$; dvs
+			\begin{align*}
+			\mathbf{p}_i=\frac{\langle\mathbf{v},\mathbf{v}_i\rangle}{||\mathbf{v}_i||^2}\cdots\mathbf{v}_i
+			\end{align*}
+			jf. def 9.11
+			\begin{displayquote}
+				\begin{cstmdefinition}{9.11}
+					Lad $\mathbf{v},\mathbf{w}\in V$, med $\mathbf{w}\neq 0\}$. Så kaldes elementet
+					\begin{align*}
+					\mathbf{p}=\frac{\langle\mathbf{v},\mathbf{w}\rangle}{\langle\mathbf{w},\mathbf{w}\rangle}\cdot w
+					\end{align*}
+					kaldes for den \textbf{ortogonale projektion} af v på w. 
+				\end{cstmdefinition}
+			\end{displayquote}
+			Sæt herefter 
+			\begin{align*}
+			\mathbf{p}=\mathbf{p}_1+\mathbf{p}_2+\cdots+\mathbf{p}_n.
+			\end{align*}
+			Idet $\mathbf{p}_i$ er et skalarmultiplum af $\mathbf{v}_i$, så vil $\mathbf{p}_i\in W$, for $i=1,2,...,n$, og dermed vil $p\in W$. Det resterer derfor kun at vise at $\mathbf{v}-\mathbf{p}\in W^\bot$ hvilket, ifølge lemma 10.9,
+			\begin{displayquote}
+				\begin{cstmlemma}{10.9}
+					Lad V betegne et indre produktrum, og lad $\mathbf{v}_1, \mathbf{v}_2,...,\mathbf{v}_n$ betegne en samling af elementer i V. Så er 
+					\begin{align*}
+					Span(\mathbf{v}_1,\mathbf{v}_2,...,\mathbf{v}_n)^\bot=\{\mathbf{v}\in V|\langle\mathbf{v},\mathbf{v}_i\rangle = 0 \text{ for } i=1,2,...,n\}
+					\end{align*}
+				\end{cstmlemma}
+			\end{displayquote}
+			er ækvivalent med, at
+			\begin{align*}
+			\langle\mathbf{v}-\mathbf{p},\mathbf{v}_i\rangle=0 \hspace{1cm} \textbf{for } i=1,2,...,n
+			\end{align*}
+			Specielt vil $\mathbf{p}-\mathbf{p}_i$ være en sum af elementer, der alle er ortogonale på $\mathbf{_i$, og dermed må 
+				\begin{align*}
+				\langle\mathbf{p}-\mathbf{p}_i,\mathbf{v}_i\rangle=0,
+				\end{align*}
+				jf. Definition 9.1(d) ($\langle\alpha\cdot\mathbf{u}+\beta\cdot\mathbf{v},\mathbf{w}\rangle=\alpha\cdot\langle\mathbf{u},\mathbf{w}\rangle+\beta\cdot\langle,\mathbf{v},\mathbf{w}\rangle$). Yderligere vil
+				\begin{align*}
+				\langle\mathbf{v}-\mathbf{p}_i,\mathbf{v}\rangle=0
+				\end{align*}
+				idet $\mathbf{p}_i$ er den ortogonale projektion af $\mathbf{v}$ på $\mathbf{v}_i$. Vi konkludere derfor, at 
+				\begin{align*}
+				\langle\mathbf{v}-\mathbf{p},\mathbf{v}_i\ranglee&=\langle(\mathbf{v}-\mathbf{p})-(\mathbf{p}-\mathbf{p}_i),\mathbf{v}_i\rangle \\
+				&=\langle\mathbf{v}-\mathbf{p}_i,\mathbf{v}_i\rangle-\langle\mathbf{p}-\mathbf{p}_i,\mathbf{v}_i\rangle \\
+				&=0-0 \\
+				&=0
+				\end{align*}
+				som ønsket
+			\end{proof}
+			
+			EVT BEVISE LEMMA 10.9
+			
+			\newpage
+			
+			\section{Ortogonale og ortonormale baser}
+			
+			\subsection{Disposition}
+			
+			\begin{itemize}
+				\item \textbf{Def. 10.1 (Ortogonale og ortonormale mængder)}
+				\item \textbf{Prop. 10.4}
+				\item \textbf{Def. 10.14}
+				\item \textbf{Lemma 10.22 (Gram-Schmidt Ortogonal), m. bevis}
+				\item \textbf{Lemma 10.23 (Gram-Schmidt Ortonormal), m. bevis}
+			\end{itemize}
+			
+			\subsection{Udspecificering}
+			
+			
+			
+			Vi har kort for ortogonale og ortonormale mængder at 
+			
+			\begin{cstmdefinition}{10.1 (Ortogonale og ortonormale mængder)}
+				$v_1,v_2,\cdots,v_n \in V$ kaldes en ortogonal mængde, hvis
+				
+				\begin{align*}
+				&(a) \; v_i \not = 0, i = 1,2,\cdots,n\\
+				&(b) \; v_i \bot v, i \not = j\\
+				&\text{Hvis også}\\
+				&(c) \; ||v_i|| = 1, i = 1,2,\cdots,n\\
+				&\text{kaldes mængden ortonormal}
+				\end{align*}
+				
+			\end{cstmdefinition}
+			
+			Det bør nævnes at enhver ortogonal mængde kan laves om til en ortonormale mængde ved at gå fra mængden $v_1,v_2,\cdots,v_n \in V$ til
+			
+			\[\frac{1}{||v_1||}v_1 + \frac{1}{||v_2||}v_2 + \cdots + \frac{1}{||v_n||}v_n\]
+			
+			\begin{cstmproposition}{10.4}
+				Lad $v_1,v_2,\cdots,v_n$ betegne en ortogonal mængde i $V$. Så er $\mathcal{V} = (v_1,v_2,\cdots,v_n)$ lineært uafhængig.
+				
+				
+			\end{cstmproposition}
+			
+			Hvilket fører os videre til netop ortogonale og ortonormale baser. At hvis vi har et vektorrum $W$ som er udspændt af en ortogonal mængde (jf. prop. 10.4) er ækvivalent til, at $W$ har en basis hvis elementer udgør en ortogonal mængde. Hvilket giver følgende definition:
+			
+			\begin{cstmdefinition}{10.14}
+				En ortogonal basis for et vektorrum $V$ er en basis $\mathcal{V} = (v_1,v_2,\cdots,v_n)$, hvor $v_1,v_2,\cdots,v_n$ er en ortogonal mængde. Hvis mængden er ortonormal kaldes $\mathcal{V}$ en ortonormal basis.
+				
+			\end{cstmdefinition}
+			
+			Vi skynder os hurtigt videre til en konkret algoritme til at finde ortogonale og dermed også ortonormale baser
+			
+			\begin{cstmlemma}{10.22 (Gram-Schmidt processen)}
+				
+				Lad $V$ betegne et indre produkt rum med basis $\mathcal{V} = (v_1,v_2,\cdots,v_n)$, $p_k, k = 1,2,\cdots,n-1$ betegner den ortogonale projektion af $v_{k+1}$ på underrummet $Span(v_1,v_2,\cdots,v_k)$ Så
+				
+				\[\mathcal{W} = (v_1,v_2 - p_1,v_3 - p_2,\cdots, v_n - p_{n-1}) \tag{10.17}\]
+				
+				er en ortogonal basis for $\mathcal{V}$.
+				
+			\end{cstmlemma}
+			
+			\begin{proof}
+				
+				Sæt $w_1 = v_1, w_k = v_k - p_{k-1}, k = 2,3,\cdots,n$. Pga. 10.4 og ækvivalensen i 7.10 er det tilstrækkeligt at vise at $w_1,w_2,\cdots,w_n$ er en ortogonal mængde, da vi har at hvis det netop er en ortogonal mængde er den også lineært uafhængig og dermed (jf. 7.10) en basis.
+				$V_k = Span(v_1,v_2,\cdots,v_k), k = 1,2,\cdots,n$. Så påstår vi at
+				
+				\[v_{k+1}-p_k=w_{k+1} \in V_k^{\bot} \cap V_{k+1}, k = 1,2,\cdots,n-1 \tag{10.18}\]
+				
+				Vi ser at $p_k, k = 1,2,\cdots,n-1$ er den ortogonale projektion af $v_{k+1}$ på $V_k \Rightarrow w_{k+1} = v_{k+1} - p_k \in V_k^{\bot}$. Da $w_{k+1} = v_{k+1} - p_k$ er en differens af to elementer i $V_{k+1}$ er det også selv indeholdt i $V_{k+1}$. Vi vil nu vise at $w_i, w_j, i < j$ er ortogonale. $j > 1$ (10.18) implicerer
+				
+				\[w_j\in V^\bot_{j-1} \hspace{2cm} w_i\in V_i\subseteq V_{j-1}\]
+				
+				Det resterer at vise at $w_1,w_2,\cdots,w_n \not = 0$. Vi ser tydeligt at $w_1 = v_1 \not = 0$ idet $v_1$ er en del af en basis for $V$. Vi ser på $w_k, k > 1$. Hvis $w_k = 0 \Rightarrow v_{k} = p_k-1 \in V_{k-1}$, men $\Rightarrow (v_1,v_2,\cdots,v_k)$ lineært afhængig, jf. \textbf{Lemma 7.5(2)} $\lightning$.
+				
+			\end{proof}
+			
+			Som sagt ovenfor kan dette laves om til en ortonormal basis. Ved beviser følgende lemma
+			
+			\begin{cstmlemma}{10.23 (Gram-Schmidt fortsat)}
+				
+				
+				Lad $V$ betegne et I.P.-rum med basis $\mathcal{V} = (v_1,v_2,\cdots,v_n)$ og lad $\mathcal{W} = (w_,1,w_2,\cdots,w_n)$ betegne den ortogonale basis som i (10.17) for V bestemt ud fra $\mathcal{V}$.
+				
+				\[u_i = \frac{1}{||w_i||}w_i, i = 1,2,\cdots,n\]
+				
+				Så er 
+				
+				\[u_1 = \frac{1}{||v_1||}v_1\]
+				
+				mens
+				
+				\[u_{k+1} = \frac{1}{||v_{k+1}-p_k||}(v_{k+1}-p_k), for k = 1,2,\cdots,n-1\]
+				
+				hvor
+				
+				\[p_k = \langle v_{k+1} , u_1 \rangle u_1 + \langle v_{k+1},u_2 \rangle u_2 + \cdots + \langle v_{k+1},u_k \rangle u_k \tag{10.22}\]
+				
+			\end{cstmlemma}
+			
+			\begin{proof}
+				
+				Vi skal vise at $p_k$ i (10.22) stemmer overens med tilsvarende notation i \textbf{Lemma 10.22}. Med andre ord er $p_k$ den ortogonale projektion af $v_{k+1}$ på $V_k = Span(v_1,v_2,\cdots,v_k), k = 1,2,\cdots,n-1$.
+				Ifølge def. i \textbf{Lemma 10.22} vil $w_k \in V_k = Span(v_1,v_2,\cdots,v_n), k = 1,2,\cdots,n$. Specielt vil elementerne $w_1,w_2,\cdots,w_k$ udgøre en ortogonal mængde i $V_k$. Heraf følger det at $u_1,u_2,\cdots,u_k$ udgør en ortonormal mængde i $V_k, k = 1,2,\cdots,n$. Vi kan igen argumentere vha. \textbf{Prop. 10.4 og 7.10} at $\mathcal{U}_k = (u_1,u_2,\cdots,u_k)$ derfor er en ortonormal basis for $V_k$. Specielt definerer (10.22) jf. 
+				\[p = \frac{\langle v,v_1\rangle}{||v_1||^2} v_1 + \cdots \frac{\langle v,v_n \rangle}{||v_n||^2}\]
+				
+				den ortogonale projektion af $v_{k+1}$ på $V_k$.
+				
+			\end{proof}
+			
+			
+			
+			
+			\newpage
+			
+			\section{Determinanter}
+			
+			\subsection{Disposition}
+			
+			\begin{itemize}
+				\item \textbf{Def. 11.1 (Permutation)}
+				\item \textbf{Def. 11.4 (Fortegnet af en permutation)}
+				\item \textbf{Lemma 11.9}
+				\item \textbf{Def. 11.10 (Determinant)}
+				\item \textbf{Lemma 11.20, Lemma 11.16, Prop. 11.17}
+				\item \textbf{Sætning 11.18, m. bevis}
+				\item \textbf{Prop. 11.22 (Cramers Regel), m. bevis}
+			\end{itemize}
+			
+			\subsection{Udspecificering}
+			
+			
+			Under determinanter hører tre essentielle definitioner
+			
+			\paragraph{Def. 11.1 (Permutation)} \textit{En permutation af n elementer er en invertibel afbildning af formen}
+			
+			\[\sigma : \{1,2,3,\cdots,n\} \rightarrow \{1,2,3,\cdots,n\}\]
+			
+			\textit{Mængden af alle sådanne permutationer af n elementer betegnes med $\mathbb{S}_n$}
+			
+			
+			Som regel anvendes for permutationer følgende notation
+			
+			\[\begin{pmatrix}
+			1 & 2 & 3 & \cdots & n\\
+			\sigma (1) & \sigma (2) & \sigma (3) & \cdots & \sigma (n)
+			\end{pmatrix}\]
+			
+			For permutationer gælder ifølge \textbf{Lemma 11.3} at enhver permutation $\sigma$ af $n$ elementer med $n \geq 2$ er en sammensætning af simple transpositioner, hvor transpositioner er den permutation, hvor 
+			
+			\[\sigma (i) = \left \{
+			\begin{array}{ll}
+			i & \mbox{hvis } i \not = s \mbox{ og } i \not = t,\\
+			t & \mbox{hvis } i = s, \\
+			s & \mbox{hvis } i = t.
+			\end{array}
+			\right.\]
+			
+			\paragraph{Def. 11.4 (Fortegnet af en permutation)} \textit{Lad $\sigma$ betegne en permutation af $n$ elementer. Definer}
+			
+			\[M_{\sigma} = \{(i,j) \in \{1,2,\cdots,n\} \times \{1,2,\cdots,n\} \,|\, i < j \land \sigma (j) < \sigma (i)\}\]
+			
+			\textit{og lad $n_{\sigma}$ betegne antallet af elementer i $M_{\sigma}$. Fortegnet $sgn(\sigma)$ defineres som}
+			
+			\[sgn(\sigma) = (-1)^{n_{\sigma}}\]
+			
+			\begin{cstmlemma}{11.9} 
+				
+				Afbildningen
+				
+				\begin{align*}
+				&\mathbb{S}_n \rightarrow \mathbb{S}_n\\
+				&\sigma \mapsto \sigma^{-1}
+				\end{align*}
+				er en invertibel afbildning.
+			\end{cstmlemma}
+			
+			
+			\begin{cstmdefinition}{11.10 (Determinant)}
+				
+				Lad $A=(a_{ij}) \in Mat_n(\mathbb{F})$ betegne en kvadratisk matrix, så definerer
+				
+				\[Det(A) = \sum_{\sigma \in \mathbb{S}_n} sgn(\sigma) \cdot a_{1\sigma(1)}a_{2\sigma(2)} \cdots a_{n\sigma(n)}\]
+				
+			\end{cstmdefinition}
+			
+			Vi har for determinanter 
+			
+			\begin{cstmlemma}{11.20}
+				$Det(A) = Det(A^T)$
+			\end{cstmlemma}
+			
+			
+			
+			
+			\begin{cstmlemma}{11.16}
+				Lad $A,B,C,D \in Mat_n(\mathbb{F})$ og antag $(A\,|\,B) \sim (C\,|\,D) \Rightarrow \exists \alpha \in \mathbb{F} \backslash \{0\}$.
+				
+				\[Det(C) = \alpha \cdot Det(A) \mbox{ og } Det(D) = \alpha \cdot Det(B)\]
+				
+			\end{cstmlemma}
+			
+			
+			Desuden har vi at 
+			
+			\begin{cstmproposition}{11.17}
+				En kvadratisk matrix $A \in Mat_n(\mathbb{F})$ er invertibel $\Leftrightarrow Det(A) \not = 0$
+			\end{cstmproposition}
+			
+			Vi kan nu vise den næste vigtige sætning
+			
+			\begin{theorem}{11.18}
+				Lad $A,B \in Mat_n(\mathbb{F})$
+				
+				\[Det(A\cdot B) = Det(A) \cdot Det(B) \tag{11.19}\]
+			\end{theorem}
+			
+			\begin{proof}
+				Vi antager først at $A$ er singulær. Dette betyder nødvendigvis at $A\cdot B$ er singulær. Ellers ville der eksistere en invers $B \cdot (A \cdot B)^{-1}$
+				
+				\[\Rightarrow A \cdot (B \cdot (A \cdot B)^{-1}) = (A \cdot B) \cdot (A\cdot B)^{-1} = I\]
+				Hvilket netop er umuligt da $A$ er antaget singulær. Proposition 11.17 giver os dermed 
+				
+				\[Det(A \cdot B) = Det(A) = 0\]
+				
+				hvilket opfylder (11.19)\\
+				Modsat hvis $A$ er invertibel og $A \sim I$ og vi betragter $(A\,|\,A\cdot B) \sim (I\,|\,C)$ for $C \in Mat_n(\mathbb{F})$, $\exists \alpha \in \mathbb{F}$
+				
+				\begin{align*}
+				&Det(A) = \alpha \cdot Det(I) \tag{11.21}
+				\intertext{og}
+				&Det(A\cdot B) = \alpha \cdot Det(C) \tag{11.22}
+				\intertext{(11.21) implicerer $\alpha = Det(A)$}
+				&Det(A\cdot B) = Det(A) \cdot Det(C)
+				\intertext{hvis $C = A^{-1} \cdot (A \cdot B) = B$}
+				\end{align*}
+				
+			\end{proof}
+			
+			\begin{cstmproposition}{11.22 (Cramers regel)}
+				Lad $A \in Mat_n(\mathbb{F})$ betgne en invertibel matrix, og $b \in \mathbb{F}^n$. Lad $A_i, i = 1,2,\cdots,n$ betegne matricen der fremkommen ved at udskifte den i'te søjle i $A$ med $b$. Den entydige løsning $(\alpha_1,\alpha_2,\cdots,\alpha_n)^T \in \mathbb{F}^n$ til det lineære ligningsystem $A \cdot x = b$ er da bestemt ved
+				
+				\[\alpha_i = \frac{Det(A_i)}{Det(A)}, i = 1,2,\cdots,n\]
+				
+			\end{cstmproposition}
+			
+			\begin{proof}
+				
+				\[(\alpha_1,\alpha_2,\cdots,\alpha_n)^T \in \mathbb{F}^n \mbox {er bestemt ved }\]
+				\[b = \alpha_1 \cdot a_1 + \alpha_2 \cdot a_2 + \cdots + \alpha_n \cdot a_n \tag{11.28}\]
+				
+				Specielt er den i'te søjle i $A_i$ givet ved højresiden af (11.28). For $j \not = i$ er j'te søjle i $A_i$ lig $a_j$ hvilket betyder vi kan udføre ERO Type III på $A_i$ og opnå en matrix $B_i$ hvor den i'te søjle er $\alpha_i \cdot a_i$ mens de øvrige søjler er identiske med dem i $A$. Ifølge \textbf{Proposition 11.21(3)} $Det(B_i) = Det(A_i)$ mens \textbf{Proposition 11.21(2)} implicerer $Det(B_i) = \alpha_i \cdot Det(A)$ 
+				
+				\[\Rightarrow Det(A_i) = \alpha_i \cdot Det(A)\]
+				
+			\end{proof}
+			
+			
+			
+			\newpage
+			
+			\section{Egenværdier}
+			
+			\subsection{Disposition}
+			
+			\begin{itemize}
+				\item \textbf{Def. 12.1 (Egenværdier og egenvektorier)}
+				\item \textbf{Prop. 12.3}
+				\item \textbf{Prop. 12.10}
+			\end{itemize}
+			
+			
+			\subsection{Udspecificering}
+			
+			
+			\paragraph{Def 12.1} Et element $\mathbf{v}\in V\backslash \{\mathbf{0}\}$ siges at være en \textbf{egenvektor} for L, såfremt der eksistere en skalar $\lambda\in\mathbb{F}$ så:
+			\begin{gather*}
+			L(\mathbf{v})=\lambda*\mathbf{v}
+			\end{gather*}
+			Så kaldes skalaren $\lambda$ for en \textbf{egenværdi} hørende til egenvektoren $\mathbf{v}$. Hvis der eksistere en egenvektor for L, og den egenvektor har den egenværdi, så er $\lambda$ en egenværdi for L. \\
+			Hvis $L=L_A$ (en lineær operator $L:V\rightarrow V$), for en matrix $A\in Mat_n(\mathbb{F})$, så kaldes egenværdien for $L_A$ også egenværdien for A. Det samme gælder egenvektoren.
+			
+			\paragraph{Proposition 12.3} Hvis $v_1,v_2,...,v_n$ er egenvektorer for en operator $L:V\rightarrow V$, og de har parvist forskellige egenværdier $\lambda_1, \lambda_2,...,\lambda_n$, så er $\mathcal{V}=(v_1,v_2,...,v_n)$ lineært uafhængige, og specielt er $n\leq dim(V)$. \\ \\
+			Bevises med induktion over n. Hvis $n=1$ så er $\mathcal{V}=(v_1)$ lineært uafhængig, i det $v_1\neq0$, altså kan alle punkter i $\mathcal{V}$ kun opskrives med 1 vektor og derfor kun på en måde. \\ \\
+			
+			
+			\begin{proof}
+				Vi går ud fra at udsagnet er vist for tilfældet n-1, og at n>1. Da kan vi kigge på den lineære relation:
+				\setcounter{equation}{0}
+				\begin{gather}
+				\alpha_1*v_1+\alpha*v_2+...+\alpha_n*v_n=0
+				\end{gather} 
+				med skalarer $\alpha_1,\alpha_2,...,\alpha_n\in\mathbb{F}$, anvendes L på begge sider af lighedstegnet får man
+				\begin{align}
+				\mathbf{0}&=L(\sum_{i=1}^{n}\alpha_i*v_i) &&\text{0 er entydig bestemt i lineærtransformationer} \\
+				&=\sum_{i=1}^{n}\alpha_i*L(v_i) &&\text{Prop 6.2} \\
+				&=\sum_{i=1}^{n}(\alpha_i*\lambda_i)*v_i&&\text{$v_i$ er en egenvektor}
+				\end{align}
+				Vi kan nu multiplicere 1 med $\lambda_n$ og derefter fratrække 2:
+				\begin{align*}
+				\mathbf{0}&=\lambda_n*\mathbf{0}-\mathbf{0} \\
+				&=\lambda_n*\sum_{i=1}^{n}\alpha_i*v_i-\sum_{i=1}^{n}(\alpha_i*\lambda_i)*v_i \\
+				&=\sum_{i=1}^{n}(\alpha_i*\lambda_n)*v_i-\sum_{i=1}^{n}(\alpha_i*\lambda_i)*v_i \\
+				&=\sum_{i=1}^{n}(\alpha_i*\lambda_n-\alpha_i*\lambda_i)*v_i \\
+				&=\sum_{i=1}^{n}\beta_i*v_i
+				\end{align*}
+				Dette ser vi betyder at $\beta_i=0$ når $i=n$:
+				\begin{align*}
+				\beta_n=(\alpha_n*\lambda_n-\alpha_n*\lambda_n)=\alpha_n(\lambda_n-\lambda_n)=0
+				\end{align*}
+				Grundet deres parvis forskellighed. Altså har vi en lineær relation der siger:
+				\begin{align*}
+				\sum_{i=1}^{n-1}\beta_i*v_i
+				\end{align*}
+				Men dette har vi ud fra IH er lig 0, altså
+				\begin{align*}
+				\alpha_1=\alpha_2=...=\alpha_{n-1}=0
+				\end{align*}
+				Derfor hvis vi indsætter i 1, får vi:
+				\begin{align*}
+				\alpha_n*v_n=0
+				\end{align*}
+				Hvilket kun er muligt hvis $\alpha_n=0$ grundet definitionen på egenvektorer. Vurderingen om $n\leq dim(V)$ følger fra lemma 7.8, som vi ikke vil bevise.
+				
+			\end{proof}
+			
+			\paragraph{Proposition 12.10} Lad $L:V\rightarrow V$, betegne en lineær operator på vektorrum V af endelig dimension > 0. Lad $\lambda_1,\lambda_2,...,\lambda_n\in\mathbb{F}$ betgne de forskellige egenværdier for V, og lad (med $d_i=Heo(\lambda_i)$)
+			\begin{align*}
+			\mathcal{V}_i=(v_{i1},v_{i2},...,v_{id_i}),
+			\end{align*}
+			Betegne en bases for egenrummet $E_L(\Lambda_i)$. Samlingen (ordnet i vilkårlig rækkefølge)
+			\begin{align*}
+			\mathcal{V}=(v_{ij})_{1\leq i\leq k, 1\leq j \leq d_i}
+			\end{align*}
+			er da lienær uafhængig. Specielt er 
+			\begin{align*}
+			\sum_{\lambda\in\mathbb{F}}^{}Geo_L(\lambda)\leq dim(V)
+			\end{align*}
+			
+			\begin{proof}
+				
+				Bevist er som følger:
+				Hvis vi ser på den lineære realtion
+				\setcounter{equation}{0}
+				\begin{align}
+				\sum_{i,j}\alpha_{ij}*\mathbf{v_{ij}}=\mathbf{0} \qquad \text{for skalarer } \alpha_{ij}\in\mathbb{F}
+				\end{align}
+				Så kan vi sætte
+				\begin{align}
+				\mathbf{w}_i=\sum_{i=1}^{d_i}\alpha_{ij}*\mathbf{v}_{ij}\in E_L(\lambda_i) \qquad \text{for } i=1,...,k
+				\end{align}
+				Dette er da ækvivalent med 
+				\begin{align}
+				\mathbf{w}_1+\mathbf{w}_2+...+\mathbf{w}_k=\mathbf{0}
+				\end{align}
+				Summanden $\mathbf{w}_i$ i (2), kan da enten være nulvektoren eller en egenvektor for L med egenværdi $\lambda_i$. Hvis alle $\mathbf{w}_i$ ikke er nulvektorer, vil der da være en lineær relation mellem egenvektorer hørende til forskellige egenværdier, hvilket er umuligt grundet 12.3 fortæller at egenvektorer lineært uafhænginge. Derfor må $\mathbf{w}_i=\mathbf{0}$, for i=1,...,k\\ \\
+				Men så er (2) en lineær relation mellem basiselementerne i $\mathcal{V}_i$ for $i=1,...,k$, hvilket kun er muligt, hvis $\alpha_{ij}=0$ for $j=1,...,d_i$. Det følger derfor, at $\mathcal{V}$ er lineært uafhængig og dermed en basis for Span($\mathcal{V}$). Specielt er 
+				\begin{align*}
+				dim(V)\geq dim(Span(\mathcal{V}))=\sum_{i=1}^{k}d_i=\sum_{\lambda\in \mathbb{F}}Geo_L(\lambda)
+				\end{align*}
+				
+				
+			\end{proof}
+			
+			\newpage
+			
+			\section{Diagonalisering}
+			
+			\subsection{Disposition}
+			
+			\begin{itemize}
+				\item \textbf{Def. 13.1}
+				\item \textbf{Prop. 13.2}
+				\item \textbf{Lemma 13.3, m. bevis}
+				\item \textbf{Prop. 13.5, m. bevis}
+				\item \textbf{Korollar 13.6, m. bevis}
+			\end{itemize}
+			
+			\subsection{Udspecificering}
+			
+			
+			Vi starter med den centrale definition
+			
+			\begin{cstmdefinition}{13.1}
+				
+				Den lineære operator $L$ kaldes diagonaliserbar, såfremt der eksisterer en basis for $V$, bestående af egenvektorer for $L$. En matrix $A \in Mat_n(\mathbb{F})$ siges at være diagonaliserbar, hvis det tilsvarende er gældende for den lineære operator $L_A \; : \; \mathbb{F}^n \rightarrow \mathbb{F}^n$
+				
+				
+			\end{cstmdefinition}
+			
+			Betegnelsen diagonaliserbar bruges pga. resultatet i \textbf{Prop. 13.2} og \textbf{Lemma 13.3}. Vi vil se på begge to, men kun bevise \textbf{13.3}.
+			
+			\begin{cstmproposition}{13.2}
+				Lad $\mathcal{V} = (v_1,v_2,\cdots,v_n)$ betegne en basis for $V$. Så er $\mathcal{V}$ en basis af egenvektorer for $L \Leftrightarrow \, _{\mathcal{V}}[L]_{\mathcal{V}}$ er diagonal. I givet fald er den i'te diagonalindgang i $_{\mathcal{V}}[L]_{\mathcal{V}}$ lig egenværdien for $v_i$   
+				
+			\end{cstmproposition}
+			
+			
+			\begin{cstmlemma}{13.3}
+				
+				Lad $A \in Mat_n(\mathbb{F})$. For en invertibel matrix $S \in Mat_n(\mathbb{F})$ vil
+				
+				\[D = S^{-1} A S\]
+				
+				være en diagonalmatrix $\Leftrightarrow$ søjlerne i $S$ udgør en basis for $\mathbb{F}^n$ bestående af egenvektorer for $A$. I givet fald vil egenværdien for den i'te søjle i $S$ være identisk med den i'te diagonalindgang i $D$. Specielt er $A$ diagonaliserbar $\Leftrightarrow A$ er similær til en diagonalmatrix. 
+				
+			\end{cstmlemma}
+			
+			\begin{proof}
+				
+				Lad $S \in Mat_n(\mathbb{F})$ betegne en matrix med søjler $v_1,v_2,\cdots,v_n$. Jf. \textbf{Prop. 7.32} så udgør $\mathcal{V} = (v_1,v_2,\cdots,v_n)$ en basis for $\mathcal{F}^n$ netop når $S$ er invertibel. Såfremt $S$ er invertibel, så vil vi yderligere have, at 
+				
+				\[S = _{\mathcal{E}}[{\scriptstyle\square}]_{\mathcal{V}}\]
+				
+				ifølge et tidligere eksempel, og dermed er
+				
+				\[S^{-1}AS = \, _{\mathcal{E}}[{\scriptstyle\square}]_{\mathcal{V}}^{-1} \cdot \, _{\mathcal{E}}[L_A]_{\mathcal{E}} \cdot \, _{\mathcal{E}}[{\scriptstyle\square}]_{\mathcal{V}} = \, _{\mathcal{V}}[L_A]_{\mathcal{V}}\]
+				
+				jf. \textbf{Korollar 8.15} og \textbf{Prop. 8.6}. Udsagnet følger da af \textbf{Prop. 13.2}
+				
+			\end{proof}
+			
+			
+			\begin{cstmproposition}{13.5}
+				
+				Lad $\lambda_1,\lambda_2,\cdots,\lambda_k$ betegne de forskellige egenværdier for $L$. Så er $L$ diagonaliserbar $\Leftrightarrow$
+				
+				\[\sum_{i=1}^k Geo_L(\lambda_i) = dim(V) \tag{13.2}\]
+				I givet fald kan man konstruere en basis for $V$ på følgende vis: sæt $d_i = Geo_L(\lambda_i), i = 1,2,\cdots,k$ og lad 
+				
+				\[\mathcal{V}_i = (v_{i1},v_{i2},\cdots,v_{id_i})\]
+				
+				betegne en basis for $E_L(\lambda_i)$ og ordnet i vilkårlig rækkefølge
+				
+				\[\mathcal{V} = (v_{ij})_{1 \leq i \leq k, 1 \leq j \leq d_i}\]
+				
+				er da en basis for $V$
+				
+				
+			\end{cstmproposition}
+			
+			
+			\begin{proof}
+				
+				Vi konstruerer $\mathcal{V}$ som angivet ovenfor. Ifølge \textbf{Prop 12.10} er $\mathcal{V}$ lineær uafhængig, og derfor en basis for $Span(\mathcal{V})$. Specielt er $Span(\mathcal{V})$ et underrum i $V$ med
+				
+				\[\sum_{i=1}^k d_i = \sum_{i=1}^k Geo_L(\lambda_i)\]
+				
+				Betingelsen (13.2) er derfor ækvivalent til, at 
+				
+				\[dim(Span(\mathcal{V})) = dim(V)\]
+				
+				hvilket, jf. \textbf{Prop. 7.12} er det samme, som at $V = Span(\mathcal{V}$. Vi skal derfor vise at $L$ er diagonaliserbar $\Leftrightarrow V = Span(\mathcal{V})$. Vi antager venstresiden, altså at $L$ er diagonaliserbar. Så har $V$ en basis
+				
+				\[\mathcal{W} = (w_1,w_2,\cdots,w_n)\]
+				
+				bestående af egenvektorer for $L$ ifølge \textbf{Def. 13.1}. Idet $w_j, j = 1,2,\cdots,n$ er en egenvektor,  så er $w_j \in E_L(\lambda_i)$. Specielt er $w_j$ en linearkombination af elementerne i $\mathcal{V}_i$. Men elementerne i $\mathcal{V}_i$ er en delmængde af elementer i $\mathcal{V}$, og dermed er $w_j \in Span(\mathcal{V})$. Dette gælder for alle basiselementerne i $\mathcal{W}$ så
+				
+				\[V = Span(\mathcal{W}) \subseteq Span(\mathcal{V}) \subseteq V\]
+				
+				hvilket betyder at $V = Span(\mathcal{V}$ som ønsket.
+				
+				Vi kan omvendt sige $V = Span(\mathcal{V})$ så er $\mathcal{V}$ en basis for $V$, og da $\mathcal{V}$ pr. konstruktion består af egenvektorer, så er $L$ diagonaliserbar.
+				
+			\end{proof}
+			
+			Vi kan nu se på en konsekvens af ovenstående proposition
+			
+			\begin{cstmkorollar}{13.6}
+				
+				Lad $L$ betegne en lineær operator på et vektorrum $V, dim(V) > 0$. Hvis $L$ har $n$ parvis forskellige egenværdier, så er $L$ diagonaliserbar. 
+				
+			\end{cstmkorollar}
+			
+			
+			\begin{proof}
+				
+				Lad $\lambda_1,\lambda_2,\cdots,\lambda_n$ betegne $n$ parvis forskellige egenværdier for $L$. Jf. \textbf{Proposition 12.3}, så udgør disse egenværdier nødvendigvis alle mulige egenværdier for $V$. Udover dette er $Geo_L(\lambda_i) \geq 1, i = 1,2,\cdots,n$. \textbf{Prop. 12.10} implicerer da
+				
+				\[dim(V) = n \leq \sum_{i=1}^n Geo_L(\lambda_i) \leq dim(V)\]
+				
+				og så er $L$ nødvendigvis diagonaliserbar jf. \textbf{Prop.13.5}
+				
+			\end{proof}
+			
+			
+			\newpage
+			
+			\section{Spektralsætningen}
+			
+			\subsection{Disposition}
+			
+			\begin{itemize}
+				\item \textbf{Sætning 14.20}
+				\item \textbf{Sætning 14.18, m. bevis}
+				\item \textbf{Bevis spektral for n = 1}
+				\item \textbf{Lemma 14.10, m. bevis}
+				\item \textbf{Bevis spektral for n}
+			\end{itemize}
+			
+			\subsection{Udspecificering}
+			
+			
+			\paragraph{Sætning 14.20} Lad $L:V\rightarrow V$ betegne en selvadjungeret operator. Så eksisterer der en ortinormal basis for V bestående af egenvektorer for L med reelle egenværdier. Specielt er L ortonormal diagonaliserbar.  \\ 
+			
+			Først vil vi bevise at vores selvadjungeret operator L, kun har reelle egenværdier. Dette er en del af bevises for sætning 14.18.
+			
+			\paragraph{Sætning 14.18} Lad $L:V\rightarrow V$ betegne en selvadjungeret operator. Så gælder der:
+			\begin{enumerate}
+				\item Alle egenværdier for L er reelle
+				\item Såfremt $\mathbf{v}$ og $\mathbf{w}$ er egenvektorer for L L hørende til forskellige egenværdier, så er $\mathbf{v}$ og $\mathbf{w}$ ortogonale.
+			\end{enumerate}
+			Vi vil som sagt kun bevise udsagn 1.
+			
+			\begin{proof} Lad $\mathbf{v}$ og $\mathbf{u}$ betegne egenvektorer for L med egenværdier hhv. $\lambda$ og $\mu$. Så gælder der både, at
+				\begin{align*}
+				\langle \mathbf{u},L(\mathbf{v}\rangle&=\langle\mathbf{u},\lambda\cdot\mathbf{v}\rangle\\
+				&=\bar{\lambda}\cdot\langle\mathbf{u},\mathbf{v}\rangle
+				\end{align*}
+				
+				men også, grundet def 14.4 for en adjungeret operator, at
+				\begin{align*}
+				\langle\mathbf{u},L(\mathbf{v})\rangle&=\langle L^*(\mathbf{u}),\mathbf{v}\rangle \\
+				&=\langle L(\mathbf{u}),\mathbf{v}\rangle \\
+				&=\langle \mu\cdot\mathbf{u},\mathbf{v}\rangle \\
+				&=\mu \cdot \langle\mathbf{u},\mathbf{v}\rangle 
+				\end{align*}
+				Dermed har vi, i tilfældet for $\mathbf{u}=\mathbf{v}$(og dermed specielt når $\lambda=\mu$, at
+				\begin{align*}
+				\bar{\lambda}\cdot\langle\mathbf{u},\mathbf{v}\rangle=\lambda\cdot\langle\mathbf{u},\mathbf{v}\rangle
+				\end{align*}
+			\end{proof}
+			
+			Ift. Spektralsætningen mangler vi blot nu at vise, at V har en ortonormal basis bestående af egenvektorer for L.
+			Beviset for dette forløber via induktion i $\textit{n}=dim(V)$.
+			\begin{proof} Hvis dim(V)=1, så lader vi $\mathcal{V}=(\mathbf{v}$ betegne en arbitrær prtonormalbasis i V. I givet fald er $L(\mathbf{v})\in Span(\mathbf{v})$, og $\mathbf{v}$ er dermed også en egenvektor for L. \\
+				Antag nu, at $n>1$, og at resultatet er vist for selvadjungerede operatorer på vektorrum af dimension $n-1$. Vi benytter sætning 14.19, 
+				\begin{displayquote} 
+					\item \paragraph{Sætning 14.19} Lad $L:V\rightarrow V$ betegne en selvadjungeret operator. Så har L en reel egenværdi.
+				\end{displayquote}
+				uden bevis, til at vælge en egenvektor $\mathbf{v}$ for L. Yderligere sætter vi $W=Span(\mathbf{v})^\bot$. For at vise at W er stabil overfor L, vil vi bevise lemma 14.10.
+				\paragraph{Lemma 14.10} Lad $L:V\rightarrow V$ betegne en lineær operator på et endelig dimensionlet indre produktrum V af dimension > 0 over legemet $\mathbb{K}$. Lad W betegne et underrum af V der er stabilt overfor $L^*$. Så vil det ortogonale komplement $W^\bot$ være stabilt overfor L.
+				\begin{proof}
+					Lad $\mathbf{v}\in W^\bot$. Vi skal vise, at $L(\mathbf{v})$ er et element i $W^\bot$; dvs, vi skal vise
+					\begin{align*}
+					\langle\mathbf{w},L(\mathbf{v})\rangle=0 \hspace{2cm} \text{for alle } \mathbf{w}\in W.
+					\end{align*}
+					men grundet def 14.4 (adjungerede operator) så har vi 
+					\begin{align*}
+					\langle\mathbf{w},L(\mathbf{v})\rangle=\langle L^*(\mathbf{w}),\mathbf{v}\rangle=0
+					\end{align*}
+					hvor det sidste lighedstegn følger, idet $L^*(\mathbf{w})$, pr. angtagel, er et element i W.
+				\end{proof}
+				Nu da vi har bevist lemma 14.10 kan vi med ret antage at W er stabil overfor L, idet $L=L^*$. Vi introducere operatoren $L_W:W\rightarrow W$, på W som er selvadjungeret. Dette ses ved at checke
+				\begin{align*}
+				\langle\mathbf{w}_1,L_W(\mathbf{w}_2)\rangle=\langle L_W(\mathbf{w}_1),\mathbf{w}_2\rangle,
+				\end{align*}
+				er opfyldt for alle $\mathbf{w}_1,\mathbf{w}_2\in W$. Men dette er oplagt opfyldet da L er selvadjungeret, og idet $L_W(\mathbf{w}_i=L(\mathbf{w}_i)$ for $i=1,2$, pr definition af $L_W$.\\
+				
+				Idet $dim(W)=n-1$, grundet korollar 10.21 ($dim(V)=dim(W)+dim(W^\bot)$, så implicerer induktionsantagelsen, at W har en ortonormalbasis $\mathcal{W}=(\mathbf{w}_1,\mathbf{w}_2,...,\mathbf{w}_{n-1})$ bestående af egenvektorer for $L_W$ (ogo dermed også for L). Sæt nu
+				\begin{align*}
+				\mathbf{w}_n=\frac{1}{||\mathbf{v}||}*\mathbf{v}
+				\end{align*}
+				Så er elementerne i $\mathcal{V}=(\mathbf{w}a_1,\mathbf{w}_2,...,\mathbf{w}_n)$, en ortonormal mængde: $\mathbf{w}a_1,\mathbf{w}_2,...,\mathbf{w}_{n-1}$ er ortonormal pr. valg af $\mathcal{W}$, og $\mathbf{v}$ (og dermed $\mathbf{w}_n$ er ortogonal på $\mathbf{w}_1,\mathbf{w}_2,...,\mathbf{w}_{n-1}$, idet $W=Span(\mathbf{v})^\bot$ Specielt er $\mathcal{V}$ lineært uafhængig og dermed en ortonormalbasis for V. Til sidst bemærkes, at $\mathcal{V}$ består af egenvektorer for L. Dette afslutter beviset for spektralsætningen. 
+			\end{proof}
+			
+			\newpage
+			
+			\section{Lineære Differentialligniner}
+			
+			
+			\subsection{Disposition}
+			
+			\begin{itemize}
+				\item \textbf{Def. 16.2 (Eksponentialfunktion)}
+				\item \textbf{Def. Lineære Differentialligninssystemer}
+				\item \textbf{Prop. 16.10, m. bevis}
+				\item \textbf{Prop. 16.12}
+				\item \textbf{Korollar 16.3, m. bevis}
+			\end{itemize}
+			
+			\subsection{Udspecificering}
+			
+			
+			Vi kan kort begynde med at notere definitionen for eksponentialfunktioner
+			
+			\begin{cstmdefinition}{16.2 (Eksponentialfunktion)}
+				
+				En afbildning $F \in Mat_n^{\infty}(\mathbb{K})$ kaldes for en eksponentialfunktion hørende til en kvadratisk matrix $A \in Mat_n(\mathbb{K})$, hvis følgende betingelser er opfyldt
+				
+				\begin{align*}
+				&(a) \; F(0) = I\\
+				&(b) \; F' = A \cdot F \\
+				&(c) \; A \cdot F = F \cdot A
+				\end{align*}
+				
+			\end{cstmdefinition}
+			
+			og introducerer det egentlige emne herefter, nemlig
+			
+			
+			\begin{cstmdefinition}{Lineære Differentialligningssystemer}
+				
+				
+				Vi lader $A \in Mat_n{\mathbb{K}})$ og siger at $z \in Mat_{n,1}^{\infty}(\mathbb{K})$ er en løsning til det lineære differentialligningssystem hørende til $A$ såfremt
+				
+				\[z' = A \cdot z\]
+				
+				z er altså en funktion
+				
+				\begin{align*}
+				z: \; &\mathbb{R} \rightarrow Mat_{n,1}(\mathbb{K}) = \mathbb{K}^n,\\
+				&t \mapsto 
+				\begin{pmatrix} 
+				z_1(t) \\ z_2(t) \\ \vdots \\ z_n(t)
+				\end{pmatrix} 
+				\end{align*}
+				
+				\begin{align*}
+				\mbox{hvor } z_i \in C^{\infty}(\mathbb{R},\mathbb{C}, i &= 1,2, \cdots, n,\mbox{ der opfylder}\\
+				&\begin{array}{c c c c c c}
+				z'_1(t) &= a_{11}z_1(t) &+ a_{12}z_2(t) &+ &\cdots &+ a_{1n}z_n(t)\\
+				z'_1(t) &= a_{11}z_1(t) &+ a_{12}z_2(t) &+ &\cdots &+ a_{1n}z_n(t)	\\
+				\vdots  & \vdots & \vdots & & & \vdots\\
+				z'_n(t) &= a_{n1}z_1(t) &+ a_{n2}z_2(t) &+ &\cdots &+ a_{nn}z_n(t)
+				\end{array}, \forall t \in \mathbb{R} 
+				\end{align*}
+				
+				Vi omtaler $z(0)$ som begyndelsesværdien for løsningen $z$. Det lineære differentialligningssystem hørende til $A$ anvender notationen
+				
+				\[x' = A \cdot x \tag{16.11}\]
+				
+				Derudover betegnes mængden af løsninger til (16.11) med $\mathcal{L}^{\infty}(A)$, som samtidigt også er et underrum af $Mat_{n,1}^{\infty}(\mathbb{K})$.  
+				
+			\end{cstmdefinition}
+			
+			
+			Derudover kan vi snakke om løsninger på forskellige måder. Følgende sætning specificerer dette
+			
+			\begin{cstmproposition}{16.10}
+				
+				Lad $A \in Mat_n(\mathbb{K}), v \in \mathbb{K}^n$. Der eksisterer netop én løsning til differentialligningssystemet $x' = A \cdot x$ med begyndelsesværdi $v$. Denne løsning er lig $z = exp(A) \cdot v$.
+				
+			\end{cstmproposition}
+			
+			\begin{proof}
+				
+				Vi sætter $z = exp(A) \cdot v$ og bemærker at
+				
+				\[z' = exp(A)' \cdot v = (A \cdot exp(A)) \cdot v = A \cdot (exp(A) \cdot v) = A \cdot z\]
+				
+				$z$ er dermed en løsning til $x' = A \cdot x$ med begyndelsesværdi
+				
+				\[z(0) = exp(A;0) \cdot v = 1 \cdot v = v\]
+				
+				Antag nu at $y \in Mat_{n,1}^{\infty}(\mathbb{K})$ også er en løsning til $x' = A \cdot x$ med begyndelsesværdi $v$. Betegn nu $exp(A) = F$ (for notationens skyld). Vi ser så
+				
+				\begin{align*}
+				H: \; &\mathbb{R} \rightarrow Mat_{n,1}(\mathbb{K})\\
+				&t \mapsto F(-t) \cdot y(t)
+				\end{align*}
+				
+				med 
+				
+				\begin{align*}
+				H'(t) &= -F'(-t) \cdot y(t) + F(-t) \cdot y'(t) \\
+				&= (-A\cdot F(-t)) \cdot y(t) + F(-t) \cdot (A \cdot y(t))\\
+				&= 0
+				\end{align*}
+				
+				hvor der undervejs er blevet brugt regler og egenskaber for differentiation og eksponentialfunktioner. Vi kan konkludere at $H$ er en konstant funktion.
+				
+				\[H(t) = H(0) = F(-0) \cdot y(0) = I \cdot v = v, \forall t \in \mathbb{R}\]
+				
+				Hvis vi nu anvender \textbf{Lemma 16.4} får vi
+				
+				\[y(t) = (F(t) \cdot F(-t)) \cdot y(t) = F(t) \cdot H(t) = F(t) \cdot v = z(t), \forall t \in \mathbb{R}\]
+				
+				og $y = z$, som ønsket.
+				
+				
+			\end{proof}
+			
+			Desuden er 
+			
+			\begin{align*}
+			\mathcal{L}(A) &\rightarrow \mathbb{K}^n\\
+			z &\mapsto z(0)
+			\end{align*}
+			
+			en lineær isomorfi med invers
+			
+			\[v \mapsto exp(A) \cdot v, v \in \mathbb{K}^n, dim(\mathcal{L}^{\infty}(A) = n\]
+			
+			Vi kan derudover tale om følgende sætning
+			
+			\begin{cstmproposition}{16.12}
+				
+				Lad $v \in \mathbb{K}^n$ betegne en egenvektor for en matrix $A \in Mat_n(\mathbb{K})$, så er 
+				\[z(t) = e^{\lambda \cdot t} \cdot v\]
+				
+				en løsning til $x' = A \cdot x$ med begyndelsesværdi $v$.
+				
+			\end{cstmproposition}
+			
+			
+			Vi vil nu snakke om og bevise følgende sætning der omhandler entydige løsninger for diagonaliserbare matricer
+			
+			\begin{cstmkorollar}{16.13}
+				
+				
+				Antag at $A \in Mat_n(\mathbb{K})$ er diagonaliserbar, og lad $\mathcal{V} = (v_1,v_2,\cdots,v_n)$ betegne en basis for $\mathbb{K}^n)$ bestående af egenvektorer for $A$. Idet $\lambda_i, i = 1,2,\cdots,n$ er egenværdien for $v_i$ så definerer $f_i \in Mat_{n,1}^{\infty}(\mathbb{K})$ 
+				
+				\[f_i(t) = e^{\lambda_i \cdot t} \cdot v_i, t \in \mathbb{R}\]
+				
+				Da er $(f_1,f_2,\cdots,f_n)$ en basis for $\mathcal{L}^{\infty}(A)$. Specielt definerer
+				
+				\[f(t) = c_1 \cdot e^{\lambda_1 \cdot t} \cdot v_1 + c_2 \cdot e^{\lambda_2 \cdot t} \cdot v_2 \cdots + c_n \cdot e^{\lambda_n \cdot t} \cdot v_n, t \in \mathbb{R}\]
+				
+				for $c_1,c_2,\cdots,c_n \in \mathbb{K}$, den entydige løsning til $x' = A \cdot x$ med begyndelsesværdi 
+				
+				\[c_1 \cdot v_1 + c_2 \cdot v_2 + \cdots + c_n \cdot v_n \in \mathbb{K}^n\] 
+				
+			\end{cstmkorollar}
+			
+			\begin{proof}
+				
+				Det bemærkes at $f_i \in \mathcal{L}^{\infty}, i = 1,2,\cdots,n$ jf. \textbf{Prop. 16.12}. Derudover afbilder $f_1,_2,\cdots,f_n$ via den tidligere lineære isomorfi i basiselementerne $v_1,v_2,\cdots,v_n$ for $\mathbb{K}^n$. At $(f_1,f_2,\cdots,f_n)$ er en basis for $\mathcal{L}^{\infty}(A)$ følger da af \textbf{Prop. 7.13} idet $\mathcal{V}$ er en basis for $\mathcal{K}^n$. Påstanden om $f$ er da oplagt
+				
+			\end{proof}
+			
+			
+			
+			
+		\end{document}
