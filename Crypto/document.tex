@@ -101,12 +101,15 @@
 		\end{tabular}
 	\end{center}
 	
-	From this we get, the most two used letter in our cipertext is C with 32 apperences and B with 21 apperences. The two most common letters in french are E with 15.10 \% and A with 8.13 \%. Assuming Stinson only have been using the letters which are available in the english alphabet we assume $\mathcal{C}=\mathcal{P}=\mathbb{Z}_{26}$. At this point we will also assume that, A have been given the numerical value 1, and B given 2 etc. in the plain text.
+	From this we get, the most two used letter in our cipertext is C with 32 apperences and B with 21 apperences. The two most common letters in french are E with 15.10 \% and A with 8.13 \%. Assuming Stinson only have been using the letters which are available in the english alphabet we assume $\mathcal{C}=\mathcal{P}=\mathbb{Z}_{26}$. At this point we will also assume that, A have been given the numerical value 0, and B given 1 etc. in the plain text.
 	\\ \\
-	As a first guess, we might hypothesize that E encrypts to C and A encrypts to B, which implies $e_k(5)=3$ and $e_k(1)=2$, where $k\in\mathcal{K}$ being a key from the keyset and $e_k(\cdot)$ being the encryption function, using key $k$. This yields two linear equiations with two unknows:
+	First we might solve which number's x have $gcd(x,26)$. From theorem 1.2 or simple by looking at page 10 in Stinson, we find there are 7 numbers, 1, 3, 5, 7, 11, 17 and 25. Now we can start decyphering the text, and as a first guess, we might hypothesize that E encrypts to C and A encrypts to B, which implies $e_k(4)=2$ and $e_k(0)=1$, where $k\in\mathcal{K}$ being a key from the keyset and $e_k(\cdot)$ being the encryption function, using key $k$. We find this This yields two linear equiations with two unknows:
 	\begin{align*}
-	5*a+b=3 \\
-	1*a+b=2
+	4*a+b=2 \\
+	0*a+b=1
+	\intertext{which implies}
+	4a\equiv 1(mod 26)
 	\end{align*}
+	But this doesn't have a solution.
 
 \end{document}
