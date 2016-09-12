@@ -1,0 +1,36 @@
+Spam Filters
+
+Question 1: 	It's hard, needs to be vectors of some length, to 
+		use logistic regression. 
+		Use 'bank of words', vocabulary of words, Nigerian
+	    	prince, etc. Brug peceptron, der vægter ord som 
+		værende spam hårdere end andre
+
+Generalization
+
+Question 1:	Just guess 0, then we'll have a out of sample error
+		0.2. When 50/50 it's irrelevant
+
+Out of sample error for linear regression with noise
+
+Question 1:	Best classifier is w,
+Question 2:	The best out of sample error is 1. No way to get around 
+		'the noise'
+
+Break points and growth functions
+
+Question 1:	Breakpoint is Log_2(n)
+Question 2:	2^n
+Question 3:	3
+Question 4:	
+Question 5:	No
+
+Convex function
+
+Question 1:	Yes
+Question 2:	Yes
+Question 3:	No
+Question 4:	Yes
+
+Problem 1.12 in the book
+
