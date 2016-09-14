@@ -1,0 +1,105 @@
+\documentclass[paper=a4, fontsize=11pt]{scrartcl} % A4 paper and 11pt font size
+\usepackage[utf8]{inputenc}
+
+\usepackage[T1]{fontenc} % Use 8-bit encoding that has 256 glyphs
+\usepackage{fourier} % Use the Adobe Utopia font for the document - comment this line to return to the LaTeX default
+\usepackage[english]{babel} % English language/hyphenation
+\usepackage{amsmath,amsfonts,amsthm} % Math packages
+
+\usepackage{lipsum} % Used for inserting dummy 'Lorem ipsum' text into the template
+
+\usepackage{sectsty} % Allows customizing section commands
+\allsectionsfont{\centering \normalfont\scshape} % Make all sections centered, the default font and small caps
+
+\usepackage{fancyhdr} % Custom headers and footers
+\pagestyle{fancyplain} % Makes all pages in the document conform to the custom headers and footers
+\fancyhead{} % No page header - if you want one, create it in the same way as the footers below
+\fancyfoot[L]{} % Empty left footer
+\fancyfoot[C]{} % Empty center footer
+\fancyfoot[R]{\thepage} % Page numbering for right footer
+\renewcommand{\headrulewidth}{0pt} % Remove header underlines
+\renewcommand{\footrulewidth}{0pt} % Remove footer underlines
+\setlength{\headheight}{13.6pt} % Customize the height of the header
+
+\numberwithin{equation}{section} % Number equations within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+\numberwithin{figure}{section} % Number figures within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+\numberwithin{table}{section} % Number tables within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+
+\setlength\parindent{0pt} % Removes all indentation from paragraphs - comment this line for an assignment with lots of text
+
+%----------------------------------------------------------------------------------------
+%	TITLE SECTION
+%----------------------------------------------------------------------------------------
+
+\newcommand{\horrule}[1]{\rule{\linewidth}{#1}} % Create horizontal rule command with 1 argument of height
+
+\title{	
+	\normalfont \normalsize 
+	\textsc{Aarhus University, Computer Science} \\ [25pt] % Your university, school and/or department name(s)
+	\horrule{0.5pt} \\[0.4cm] % Thin top horizontal rule
+	\huge Crypthology Handin 2\\ % The assignment title
+	\horrule{2pt} \\[0.5cm] % Thick bottom horizontal rule
+}
+
+\author{Peter Burgaard - 201209175} % Your name
+
+\date{\normalsize\today} % Today's date or a custom date
+
+\begin{document}
+	
+	\maketitle % Print the title
+	
+	\section{Problem title}
+
+	You are shown N cards, each of which cover one letter. Each letter has been independently chosen from the same distribution, and you are given the distribution ($p_0, p_1,..., p_{25}$). You get to choose one letter from the alphabet, say you choose letter number i. Now every position in the hidden string where letter i occurs (if any) are uncovered. Your goal is to learn (on average) as much information as possible on the hidden string.
+	
+	People tend to choose the most frequent letter as their guesses. Let's try to see what information theory has to say about this. Suppose we adopt the convention that Shannon used when defining Entropy: if you know that some event occurs with probability p, and you learn that this event did indeed occur, you have learnt log(1/p) bits of information.
+	
+	\paragraph{Question 1: }Now, if your guess is letter nr. i, how many bits of information will you learn on average from playing the game?  \\%(as a function of pi and N) 
+	
+	From each guess, we can learn one of two things, either letter i's position(s), or that it's not present among the cards. This can be modeled as a random variable $\mathbf{X}\in\{True, False\}$, with $True$ being a correctly guessed letter i, and $False$ being an incorrect guess. This gives the simple distribution function:
+	\begin{align*}
+	P_r[\mathbf{X}]=
+	\begin{cases}
+	p_i &\text{if } True \\
+	1-p_i&\text{if } False
+	\end{cases}
+	\end{align*}
+	By definition 2.4 Stinson, we can calculate the entropy of \textbf{X} as
+	\begin{align*}
+	H(\mathbf{X})=-\sum_{x\in\mathbf{X}}Pr[x]\cdot log_2(Pr[x])=\sum_{x\in\mathbf{X}}Pr[x]\cdot log_2\left(\frac{1}{Pr[x]}\right)
+	\end{align*}
+	By inserting the  destribution of \textbf{X}
+	\begin{align*}
+	H(\mathbf{X})=p_i\cdot log_2\left(\frac{1}{p_i}\right)+(1-p_i)\cdot log_2\left(\frac{1}{1-p_i}\right)
+	\end{align*}
+	This is the entropy function if we only had one card, so we need to multiply by N, to get our entropy function f
+	\begin{align*}
+	f(\mathbf{X},N)=N\cdot(p_i\cdot log_2\left(\frac{1}{p_i}\right)+(1-p_i)\cdot log_2\left(\frac{1}{1-p_i}\right))
+	\end{align*}
+	%Hint: note that you learn s1omething for every position in the hidden string, namely either that letter i occurred here, or that it did not occur.
+	
+	\paragraph{Question 2: }What strategy does your result suggest  for choosing your guess, given frequencies $p_0,..,p_{25}$ as in English? \\
+
+	If we assume $p_0, p_1,..., p_{25}$ have the same probability distribution of the english language, we see:\footnote{Statistics are gathered from https://en.wikipedia.org/wiki/Letter\_frequency}
+	\begin{align*}
+	f(N,E)=N\cdot (0.12702\cdot log_2(\frac{1}{0.12702}) + (1-0.12702)\cdot log_2\left(\frac{1}{1-0.12702}\right))\approx0.16532N \\
+	f(N,Z)=N\cdot (0.00074\cdot log_2(\frac{1}{0.00074}) + (1-0.00074)\cdot log_2\left(\frac{1}{1-0.12702}\right))\approx0.0.00263N
+	\end{align*}
+	
+	which implies guession on the most frequently used letters gets the most information.
+
+	\paragraph{Question 3: }Based on this, does it make sense that players in real life choose the most frequent letter(s)? why or why not? \\
+	
+	Based on the above example, it makes sense, if the N letters based like the english language. So in a case where these players are trying to guess words, it makes sense to choose the most used letters in the language of the word.
+
+	\paragraph{Question 4: }Would this be a good strategy no matter what the frequencies were?
+	
+	No, e.g.
+	\begin{align*}
+	f(N,0.5)=N\cdot (0.5\cdot log_2\left(\frac{1}{0.5}\right)+(1-0.5)\cdot log_2\left(\frac{1}{1-0.5}\right) = 0.301N \\
+	f(N,0.9)=N\cdot (0.9\cdot log_2\left(\frac{1}{0.9}\right)+(1-0.9)\cdot log_2\left(\frac{1}{1-0.9}\right) \approx 0.1411N 
+	\end{align*}
+
+	The information pr bit we gather is highest at 50\% chance of appreance, and decreases when more frequent than that. Therefore we might gather more information by guessing on more unfrequent letters, if there is e.g. one dominant letter which appears 90\% times or more.
+\end{document}

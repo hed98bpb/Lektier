@@ -1,9 +1,9 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2016.2.15)  7 SEP 2016 16:52
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2016.2.15)  14 SEP 2016 20:16
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
-**document.tex
-(./document.tex
+**Handin2.tex
+(./Handin2.tex
 LaTeX2e <2015/01/01>
 Babel <3.9l> and hyphenation patterns for 79 languages loaded.
 (/usr/local/texlive/2015/texmf-dist/tex/latex/koma-script/scrartcl.cls
@@ -705,8 +705,8 @@ Class scrartcl Warning: Usage of package `fancyhdr' together
 \f@ncyO@olf=\skip61
 \f@ncyO@orf=\skip62
 )
-(./document.aux)
-\openout1 = `document.aux'.
+(./Handin2.aux)
+\openout1 = `Handin2.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 48.
 LaTeX Font Info:    ... okay on input line 48.
@@ -789,98 +789,73 @@ LaTeX Font Info:    Try loading font information for U+msb on input line 51.
 (/usr/local/texlive/2015/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-Overfull \hbox (12.65933pt too wide) in paragraph at lines 57--57
- \T1/futs/m/n/10.95 KQEREJEBCPPCJCRKIEACUZBKRVPKRBCIBQCARBJCVFCUPKRIOFKPACUZQEP
-B 
- []
+LaTeX Font Info:    Font shape `FMX/futm/m/n' will be
+(Font)              scaled to size 10.07397pt on input line 54.
+LaTeX Font Info:    Font shape `FMX/futm/m/n' will be
+(Font)              scaled to size 7.63599pt on input line 54.
+LaTeX Font Info:    Font shape `FMX/futm/m/n' will be
+(Font)              scaled to size 5.51999pt on input line 54.
+LaTeX Font Info:    Font shape `U/futm/m/n' will be
+(Font)              scaled to size 10.07397pt on input line 54.
+LaTeX Font Info:    Font shape `U/futm/m/n' will be
+(Font)              scaled to size 7.63599pt on input line 54.
+LaTeX Font Info:    Font shape `U/futm/m/n' will be
+(Font)              scaled to size 5.51999pt on input line 54.
 
-
-Overfull \hbox (10.26126pt too wide) in paragraph at lines 58--58
- []\T1/futs/m/n/10.95 KRXPEIIEABDKPBCPFCDCCAFIEABDKPBCPFEQPKAZBKRHAIBKAPCCIBURC
-CD 
- []
-
-
-Overfull \hbox (9.99846pt too wide) in paragraph at lines 59--59
- []\T1/futs/m/n/10.95 KDCCJCIDFUIXPAFFERBICZDFKABICBBENEFCUPJCVKABPCYDCCDPKBCOC
-PE 
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 63--64
+Underfull \hbox (badness 10000) in paragraph at lines 58--59
 
  []
 
-LaTeX Font Info:    Font shape `FMX/futm/m/n' will be
-(Font)              scaled to size 10.07397pt on input line 65.
-LaTeX Font Info:    Font shape `FMX/futm/m/n' will be
-(Font)              scaled to size 7.63599pt on input line 65.
-LaTeX Font Info:    Font shape `FMX/futm/m/n' will be
-(Font)              scaled to size 5.51999pt on input line 65.
-LaTeX Font Info:    Font shape `U/futm/m/n' will be
-(Font)              scaled to size 10.07397pt on input line 65.
-LaTeX Font Info:    Font shape `U/futm/m/n' will be
-(Font)              scaled to size 7.63599pt on input line 65.
-LaTeX Font Info:    Font shape `U/futm/m/n' will be
-(Font)              scaled to size 5.51999pt on input line 65.
-LaTeX Font Info:    Font shape `FMX/futm/m/n' will be
-(Font)              scaled to size 8.27998pt on input line 65.
-LaTeX Font Info:    Font shape `FMX/futm/m/n' will be
-(Font)              scaled to size 6.99199pt on input line 65.
-LaTeX Font Info:    Font shape `U/futm/m/n' will be
-(Font)              scaled to size 8.27998pt on input line 65.
-LaTeX Font Info:    Font shape `U/futm/m/n' will be
-(Font)              scaled to size 6.99199pt on input line 65.
+LaTeX Font Info:    Font shape `T1/futs/bx/n' in size <10.95> not available
+(Font)              Font shape `T1/futs/b/n' tried instead on input line 60.
+LaTeX Font Info:    Font shape `T1/futs/bx/n' in size <8.3> not available
+(Font)              Font shape `T1/futs/b/n' tried instead on input line 60.
+LaTeX Font Info:    Font shape `T1/futs/bx/n' in size <6> not available
+(Font)              Font shape `T1/futs/b/n' tried instead on input line 60.
 [1
 
 
 {/usr/local/texlive/2015/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
-Underfull \hbox (badness 10000) in paragraph at lines 104--107
+Underfull \hbox (badness 10000) in paragraph at lines 82--83
 
  []
 
+LaTeX Font Info:    Font shape `FMX/futm/m/n' will be
+(Font)              scaled to size 8.27998pt on input line 84.
+LaTeX Font Info:    Font shape `FMX/futm/m/n' will be
+(Font)              scaled to size 6.99199pt on input line 84.
+LaTeX Font Info:    Font shape `T1/futs/bx/n' in size <9> not available
+(Font)              Font shape `T1/futs/b/n' tried instead on input line 84.
+LaTeX Font Info:    Font shape `T1/futs/bx/n' in size <7.6> not available
+(Font)              Font shape `T1/futs/b/n' tried instead on input line 84.
+LaTeX Font Info:    Font shape `U/futm/m/n' will be
+(Font)              scaled to size 8.27998pt on input line 84.
+LaTeX Font Info:    Font shape `U/futm/m/n' will be
+(Font)              scaled to size 6.99199pt on input line 84.
 
-Overfull \hbox (21.5946pt too wide) in paragraph at lines 119--119
- \T1/futs/m/n/10.95 QMUHUVUJERREVEHQAUOESTJQHNRQHJEAJMEOHJVENPESRQHAWPQROESTM 
+Underfull \hbox (badness 10000) in paragraph at lines 92--93
+
  []
 
-
-Overfull \hbox (21.49597pt too wide) in paragraph at lines 120--120
- []\T1/futs/m/n/10.95 URJQHDRUAAUOJZQRJERPEZEEOPAUOJZQRJERPUMRQOTJQHFOAJQOREEAJ
-SHE 
- []
-
-
-Overfull \hbox (29.62088pt too wide) in paragraph at lines 121--121
- []\T1/futs/m/n/10.95 EZQZEEVEAZPSADROPPUHJAETZPQOJAEJJUBUPESRVENQOJREYZEEZRQJE
-WERUH 
- []
-
-[2]
-Overfull \hbox (7.2719pt too wide) in paragraph at lines 138--138
- []\T1/futs/m/n/10.95 UNEEPOPEEDESPLUSBRILLANTSEXPLOITSETTAVALEURDEFOITREMPEEPR
-OT 
- []
-
-[3] (./document.aux) ) 
+[2] (./Handin2.aux) ) 
 Here is how much of TeX's memory you used:
- 4600 strings out of 493089
- 65248 string characters out of 6134842
- 282448 words of memory out of 5000000
- 7990 multiletter control sequences out of 15000+600000
- 92822 words of font info for 114 fonts, out of 8000000 for 9000
+ 4616 strings out of 493089
+ 65448 string characters out of 6134842
+ 280446 words of memory out of 5000000
+ 8000 multiletter control sequences out of 15000+600000
+ 114182 words of font info for 123 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 41i,11n,47p,540b,263s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/local/texlive/2015/texmf-dist/fonts/enc/dvips/base/
-8r.enc}</usr/local/texlive/2015/texmf-dist/fonts/type1/public/fourier/fourier-b
-b.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/fourier/fourier-mc
-l.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/fourier/fourier-ms
-.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/adobe/utopia/putr8a.pfb></
-usr/local/texlive/2015/texmf-dist/fonts/type1/adobe/utopia/putri8a.pfb>
-Output written on document.pdf (3 pages, 47593 bytes).
+ 41i,16n,47p,476b,228s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/local/texlive/2015/texmf-dist/fonts/enc/dvips/base/8
+r.enc}</usr/local/texlive/2015/texmf-dist/fonts/type1/public/fourier/fourier-me
+x.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/fourier/fourier-ms
+.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/adobe/utopia/putb8a.pfb></
+usr/local/texlive/2015/texmf-dist/fonts/type1/adobe/utopia/putr8a.pfb></usr/loc
+al/texlive/2015/texmf-dist/fonts/type1/adobe/utopia/putri8a.pfb>
+Output written on Handin2.pdf (2 pages, 52793 bytes).
 PDF statistics:
- 35 PDF objects out of 1000 (max. 8388607)
- 24 compressed objects within 1 object stream
+ 32 PDF objects out of 1000 (max. 8388607)
+ 22 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 
