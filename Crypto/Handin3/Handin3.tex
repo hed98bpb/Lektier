@@ -1,0 +1,98 @@
+\documentclass[paper=a4, fontsize=11pt]{scrartcl} % A4 paper and 11pt font size
+\usepackage[utf8]{inputenc}
+
+\usepackage[T1]{fontenc} % Use 8-bit encoding that has 256 glyphs
+\usepackage{fourier} % Use the Adobe Utopia font for the document - comment this line to return to the LaTeX default
+\usepackage[english]{babel} % English language/hyphenation
+\usepackage{amsmath,amsfonts,amsthm} % Math packages
+
+\usepackage{lipsum} % Used for inserting dummy 'Lorem ipsum' text into the template
+
+\usepackage{sectsty} % Allows customizing section commands
+\allsectionsfont{\centering \normalfont\scshape} % Make all sections centered, the default font and small caps
+
+\usepackage{fancyhdr} % Custom headers and footers
+\pagestyle{fancyplain} % Makes all pages in the document conform to the custom headers and footers
+\fancyhead{} % No page header - if you want one, create it in the same way as the footers below
+\fancyfoot[L]{} % Empty left footer
+\fancyfoot[C]{} % Empty center footer
+\fancyfoot[R]{\thepage} % Page numbering for right footer
+\renewcommand{\headrulewidth}{0pt} % Remove header underlines
+\renewcommand{\footrulewidth}{0pt} % Remove footer underlines
+\setlength{\headheight}{13.6pt} % Customize the height of the header
+
+\numberwithin{equation}{section} % Number equations within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+\numberwithin{figure}{section} % Number figures within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+\numberwithin{table}{section} % Number tables within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+
+\setlength\parindent{0pt} % Removes all indentation from paragraphs - comment this line for an assignment with lots of text
+
+%----------------------------------------------------------------------------------------
+%	TITLE SECTION
+%----------------------------------------------------------------------------------------
+
+\newcommand{\horrule}[1]{\rule{\linewidth}{#1}} % Create horizontal rule command with 1 argument of height
+
+\title{	
+	\normalfont \normalsize 
+	\textsc{Aarhus University - Computer Science department} \\ [25pt] % Your university, school and/or department name(s)
+	\horrule{0.5pt} \\[0.4cm] % Thin top horizontal rule
+	\huge Crypthology - Handin 3 \\ % The assignment title
+	\horrule{2pt} \\[0.5cm] % Thick bottom horizontal rule
+}
+
+\author{Peter Burgaard - 201209175} % Your name
+
+\date{\normalsize\today} % Today's date or a custom date
+
+\begin{document}
+	
+	\maketitle % Print the title
+	
+	\section{Crypto Systems - Problem 2}
+	
+	\section{Stinson - 2.12}
+	Prove that, in any cryptosystem $H(K|C)\geq H(P|C)$ \\ \\
+	Basicly we have to prove $H(K|C) - H(P|C) \geq 0 \implies H(K|C)\geq H(P|C)$. The proof is as follows
+	\begin{proof}
+	\begin{align*}
+	\intertext{By Stinson theorem 2.10}
+	H(K|C) - H(P|C) &= H(K) + H(P) - H(C) - H(P|C)
+	\intertext{From the proof section of 2.10 have}
+	H(K,P,C) = H(K,P) &= H(K) + H(P)
+	\intertext{Which implies}
+	H(K) + H(P) - H(C) - H(P|C) &= H(K,P,C) - H(C) - H(P|C)
+	\intertext{By theorem 2.8}  
+	H(K,P,C) - H(C) - H(P|C) &= H(K,P,C) -H(P,C)
+	\intertext{Again by theorem 2.8}
+	H(K,P,C) -H(P,C) &= H(K|P,C)
+	\intertext{Since entropy can never be negativ, we get}
+	H(K|C) - H(P|C) &= H(K|P,C) \geq 0
+	\end{align*}
+	\end{proof}
+	\section{Stinson - 2.14}
+	Compute $H(K|C)$ and $H(K|P,C)$ for the \textit{Affine Cipher}, assuming that keys are used equiprobably and the plaintext are equiprobable. \\ \\
+	Since $|\mathcal{P}|=26$, and the letters are equiprobably chosen, we get from Stinson p. 55 
+	\begin{align*}
+	H(P)=log_2(|\mathcal{P}|)=log_2(26)\approx 4.7
+	\end{align*}
+	Since a key $K$ is a pair $(a,b)$, where $a,b\in\mathbb{Z}$ and $gcd(a,26)=1$, we have 26 different b's and $\phi(26)=12$ a's. This implies 312 different, keypairs, which, again, are equiprobably chosen:
+	\begin{align*}
+	H(K)=log_2(|\mathcal{K}|)=log_2(312)\approx 8.285
+	\end{align*}
+	Becuase the plain text and the key are equiprobably chosen, and affine uniquely encodes every $x\in\mathcal{P}$ to $e_K(x)=y\in\mathcal{C}$ we see that, the probability of $y$ is the same as $x$, which implies:
+	\begin{align*}
+	H(C)=H(P)\approx4.7
+	\end{align*}
+	This gives us by theorem 2.10, Stinson:
+	\begin{align*}
+	H(K|C) = H(K) + H(P) - H(C) = H(K) \approx 8.285
+	\end{align*}
+	By exercise 2.12 Stinson, and theorem 2.8 
+	\begin{align*}
+	H(K|P,C) = H(K|C) - H(P|C) \approx 8.285 - 4.7  \approx 3.584\\
+	\end{align*}
+	
+	H(K|P)-H(P|C)=H(K)+H)P)-H(P)-H(C)
+	
+\end{document}

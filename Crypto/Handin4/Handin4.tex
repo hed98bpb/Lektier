@@ -1,0 +1,108 @@
+\documentclass[paper=a4, fontsize=11pt]{scrartcl} % A4 paper and 11pt font size
+\usepackage[utf8]{inputenc}
+
+\usepackage[T1]{fontenc} % Use 8-bit encoding that has 256 glyphs
+\usepackage{fourier} % Use the Adobe Utopia font for the document - comment this line to return to the LaTeX default
+\usepackage[english]{babel} % English language/hyphenation
+\usepackage{amsmath,amsfonts,amsthm} % Math packages
+
+\usepackage{lipsum} % Used for inserting dummy 'Lorem ipsum' text into the template
+
+\usepackage{sectsty} % Allows customizing section commands
+\allsectionsfont{\centering \normalfont\scshape} % Make all sections centered, the default font and small caps
+
+\usepackage{fancyhdr} % Custom headers and footers
+\pagestyle{fancyplain} % Makes all pages in the document conform to the custom headers and footers
+\fancyhead{} % No page header - if you want one, create it in the same way as the footers below
+\fancyfoot[L]{} % Empty left footer
+\fancyfoot[C]{} % Empty center footer
+\fancyfoot[R]{\thepage} % Page numbering for right footer
+\renewcommand{\headrulewidth}{0pt} % Remove header underlines
+\renewcommand{\footrulewidth}{0pt} % Remove footer underlines
+\setlength{\headheight}{13.6pt} % Customize the height of the header
+
+\numberwithin{equation}{section} % Number equations within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+\numberwithin{figure}{section} % Number figures within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+\numberwithin{table}{section} % Number tables within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+
+\setlength\parindent{0pt} % Removes all indentation from paragraphs - comment this line for an assignment with lots of text
+
+%----------------------------------------------------------------------------------------
+%	TITLE SECTION
+%----------------------------------------------------------------------------------------
+
+\newcommand{\horrule}[1]{\rule{\linewidth}{#1}} % Create horizontal rule command with 1 argument of height
+
+\title{	
+	\normalfont \normalsize 
+	\textsc{Aarhus University - Computer Science department} \\ [25pt] % Your university, school and/or department name(s)
+	\horrule{0.5pt} \\[0.4cm] % Thin top horizontal rule
+	\huge Crypthology - Handin 4 \\ % The assignment title
+	\horrule{2pt} \\[0.5cm] % Thick bottom horizontal rule
+}
+
+\author{Peter Burgaard - 201209175} % Your name
+
+\date{\normalsize\today} % Today's date or a custom date
+
+\begin{document}
+	
+	\maketitle % Print the title
+	
+	\section{Stinson 3.3}
+	Let $DES(x,K)$ represent the encryotion of plaintext $x$ with key $K$ using the DES cryptosystem. Suppose $y=DES(x,K)$ and $y'=DES(c(x),c(K))$ where $c(\cdot)$ denotes the bitwise complement of its argument. Prove that $y'=c(y)$.  \\ \\
+	The DES encryption makes use of the \textit{Feistel cipher}, described in section 3.5.1 as
+	\begin{align*}
+	L^i &= R^{i-1} \\
+	R^i &= L^{i-1}\oplus f(R^{i-1},K^i)
+	\end{align*}
+	To ease the notation from the exercise, let $x=L_0 R_0$ and $c(x)=L'_0 R'_0$ and $DES(L_0 R_0,K)=y$ and $DES(L'_0 R'_0, K')=y'$. To prove $y'=c(y)$ we have to show $L'_i=c(L_i)$ and $R'_i=c(R_i)$ for any step in the process. We will prove by induction
+	
+	\begin{proof} \hspace{1cm} \\ \\
+		For basecase i = 1\\ 
+		For $DES(L_0R_0,K)$, by definition
+		\begin{align*}
+		L_1 &= R_0 \\
+		R_1 &= L_0\oplus f(R_0,K_0)
+		\end{align*}
+		For $DES(L'_0R'_0,K')$
+		\begin{align*}
+		L'_1 &= R'_0 \\
+		&= c(R_0) \\
+		&= c(L_1) \\
+		R'_1 &= L'_0 \oplus f(R'_0,K'_0) \\
+		&= c(L_0) \oplus f(c(R_0),c(K_0))
+		\intertext{Pr step 2 on p. 96 Stinson, we know that f uses bitwise $\oplus$ on $c(R_0)$( after its expansion) and $K_i$ before permutation in the S-boxes, and by $\oplus$ being communitativ and associative, we get}
+		&= c(L_0) \oplus f(R_0,K_0) \\
+		&= c(L_0 \oplus f(R_0,K_0)) \\
+		&= c(R_1)
+		\end{align*}
+		Which proves the basecase.
+		\paragraph{Induction Hypothesis:} Assume the claims holds for all $i<n$. We will consider the case where $i=n$ \\ \\
+		For $DES(L_0R_0,K)$, by definition
+		\begin{align*}
+		L_n &= R_{n-1} \\
+		R_n &= L_{n-1} \oplus f(R_{n-1},K_{n-1})
+		\end{align*}
+		For $DES(L'_0R'_0,K')$
+		\begin{align*}
+		L'_n &= R'_{n-1} \\
+		&= c(R_{n-1}) \\
+		&= c(L_{n}) \\
+		R'_n &= L'_{n-1} \oplus f(R'_{n-1},K'_{n-1}) \\
+		&= c(L_{n-1}) \oplus f(c(R_{n-1}),c(K_{n-1})) \\
+		&= c(L_{n-1}) \oplus f(R_{n-1},K_{n-1}) \\
+		&= c(L_{n-1} \oplus f(R_{n-1},K_{n-1})) \\
+		&= c(R_n)
+		\end{align*}
+	\end{proof}
+	By Sting 3.5.1, we know DES uses 16 rounds of Feistel cipher, and there for, by the results above
+	\begin{align*}
+	y'=L'_{16}R'_{16}=c(L'_{16}R'_{16})=c(y)
+	\end{align*}
+	which is the wanted answer.
+	\section{Extra question}
+	Given a chosen plaintext attack, show that you can use the complementation property to do exhaustive key search in about half the time it would normally take. \\ \\
+	Since $y = DES(x,K)=DES(x',K')=y'$, we basicly check two for ones price, which is both $K$ and $K'$. So the amount of Keys we have to go through is halved, which implies we will spend half the time on an exhaustive key search.
+	
+\end{document}
