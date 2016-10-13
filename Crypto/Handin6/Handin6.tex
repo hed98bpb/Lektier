@@ -1,0 +1,96 @@
+\documentclass[paper=a4, fontsize=11pt]{scrartcl} % A4 paper and 11pt font size
+\usepackage[utf8]{inputenc}
+
+\usepackage[T1]{fontenc} % Use 8-bit encoding that has 256 glyphs
+\usepackage{fourier} % Use the Adobe Utopia font for the document - comment this line to return to the LaTeX default
+\usepackage[english]{babel} % English language/hyphenation
+\usepackage{amsmath,amsfonts,amsthm} % Math packages
+\usepackage{amssymb}
+
+\usepackage{subcaption}
+\usepackage{graphicx}
+\usepackage{lipsum} % Used for inserting dummy 'Lorem ipsum' text into the template
+
+\usepackage{sectsty} % Allows customizing section commands
+\allsectionsfont{\centering \normalfont\scshape} % Make all sections centered, the default font and small caps
+
+\usepackage{fancyhdr} % Custom headers and footers
+\pagestyle{fancyplain} % Makes all pages in the document conform to the custom headers and footers
+\fancyhead{} % No page header - if you want one, create it in the same way as the footers below
+\fancyfoot[L]{} % Empty left footer
+\fancyfoot[C]{} % Empty center footer
+\fancyfoot[R]{\thepage} % Page numbering for right footer
+\renewcommand{\headrulewidth}{0pt} % Remove header underlines
+\renewcommand{\footrulewidth}{0pt} % Remove footer underlines
+\setlength{\headheight}{13.6pt} % Customize the height of the header
+
+\numberwithin{equation}{section} % Number equations within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+\numberwithin{figure}{section} % Number figures within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+\numberwithin{table}{section} % Number tables within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+
+\setlength\parindent{0pt} % Removes all indentation from paragraphs - comment this line for an assignment with lots of text
+
+%----------------------------------------------------------------------------------------
+%	TITLE SECTION
+%----------------------------------------------------------------------------------------
+
+
+%----------------------------------------------------------------------------------------
+%	TITLE SECTION
+%----------------------------------------------------------------------------------------
+
+\newcommand{\horrule}[1]{\rule{\linewidth}{#1}} % Create horizontal rule command with 1 argument of height
+
+\title{	
+	\normalfont \normalsize 
+	\textsc{Aarhus Universitet, Science, Computer Science} \\ [25pt] % Your university, school and/or department name(s)
+	\horrule{0.5pt} \\[0.4cm] % Thin top horizontal rule
+	\huge Cryptography - Handin 6 \\ % The assignment title
+	\horrule{2pt} \\[0.5cm] % Thick bottom horizontal rule
+}
+
+\author{Peter Burgaard - 201209175} % Your name
+
+\date{\normalsize\today} % Today's date or a custom date
+
+\begin{document}
+
+\maketitle
+
+\section{Stinson 5.10}
+
+Prove that:
+\begin{align*}
+	 x\in \mathbb{Z}_n^*\implies d(e(x))=x
+\end{align*}
+We know that $e(x)=x^b\mod{n}$, and $d(y)=y^a\mod{n}$, from the exercise description. We know from Stinson, chapter 5, $n=pq$, where $p$ and $q$ are primes where $p\neq q$, and that $ab\equiv1\mod{(p-1)(q-1)}$. The exercise also mentions as a hint that $x_1\equiv x_2\mod{p\cdot q} \iff x_1\equiv x_2\mod{p}$ and $x_1\equiv x_2\mod{q}$ which follows from Stonson, Theorem 5.3. \\ \\
+
+Our goal is to show
+\begin{align*}
+	d(y)=d(e(x))\equiv \left( x^b\right) ^a\equiv x \mod{n}
+\end{align*}
+\begin{proof}
+We will approach this by first deciding on a divider of $x$. Let assume q is the divider. By Stinson 5.3
+\begin{align*}
+	\left( x^b\right) ^a\equiv x^{t\phi(n)+1}\mod{n}\equiv x^{t(p-1)(q-1)+1}\equiv x\cdot \left( x^{(p-1)}\right) ^{t(q-1)}
+\end{align*}
+for some integer $t\geq1$. Since $p$ pr. assumtion is a prime and $x\in\mathbb{Z}_n^*$, we can derive from Fermat little theorem\footnote{Suppose $p$ is a prime and $a\in\mathbb{Z}$ where $p\nmid a$, then $a^{p-1}\equiv 1\mod{p}$}:
+\begin{align*}
+	x\cdot\left( x^{(p-1)}\right) ^{t(q-1)}\equiv x\cdot 1^{t(q-1)}\mod{p} \implies \left( x^b\right) ^a\equiv x \mod{p}
+\end{align*}
+The same proof can be done for  p as a divider, and by the clue in the exercise we get
+\begin{align*}
+\left( x^b\right) ^a\equiv x \mod{p\cdot q} \iff
+\begin{cases}
+\left( x^b\right) ^a\equiv x \mod{p} \\
+\left( x^b\right) ^a\equiv x \mod{q} 
+\end{cases} 
+\end{align*}
+And since $p\cdot q=n$, then we are done.
+\end{proof}
+\section{Stinson 5.10 - continued}
+Prove:
+\begin{align*}
+	x \in \mathbb{Z}_n \implies d(e(x))=x
+\end{align*}
+\end{document}
