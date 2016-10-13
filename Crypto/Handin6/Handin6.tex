@@ -63,18 +63,19 @@ Prove that:
 \begin{align*}
 	 x\in \mathbb{Z}_n^*\implies d(e(x))=x
 \end{align*}
-We know that $e(x)=x^b\mod{n}$, and $d(y)=y^a\mod{n}$, from the exercise description. We know from Stinson, chapter 5, $n=pq$, where $p$ and $q$ are primes where $p\neq q$, and that $ab\equiv1\mod{(p-1)(q-1)}$. The exercise also mentions as a hint that $x_1\equiv x_2\mod{p\cdot q} \iff x_1\equiv x_2\mod{p}$ and $x_1\equiv x_2\mod{q}$ which follows from Stonson, Theorem 5.3. \\ \\
+We know that $e(x)=x^b\mod{n}$, and $d(y)=y^a\mod{n}$, from the exercise description. We know from Stinson, chapter 5, $n=pq$, where $p$ and $q$ are primes where $p\neq q$, and that $ab\equiv1\mod{(p-1)(q-1)}$. The exercise also mentions as a hint that $x_1\equiv x_2\mod{p\cdot q} \iff x_1\equiv x_2\mod{p}$ and $x_1\equiv x_2\mod{q}$ which follows from Stonson, Theorem 5.3. \\
 
 Our goal is to show
 \begin{align*}
 	d(y)=d(e(x))\equiv \left( x^b\right) ^a\equiv x \mod{n}
 \end{align*}
 \begin{proof}
-We will approach this by first deciding on a divider of $x$. Let assume q is the divider. By Stinson 5.3
+	\hspace{1cm} \\ \\
+We will approach this by dividing $x$ into an expression with an 'inner' exponent and an 'outer' exponent. Lets make p the 'inner'. By Stinson 5.3
 \begin{align*}
 	\left( x^b\right) ^a\equiv x^{t\phi(n)+1}\mod{n}\equiv x^{t(p-1)(q-1)+1}\equiv x\cdot \left( x^{(p-1)}\right) ^{t(q-1)}
 \end{align*}
-for some integer $t\geq1$. Since $p$ pr. assumtion is a prime and $x\in\mathbb{Z}_n^*$, we can derive from Fermat little theorem\footnote{Suppose $p$ is a prime and $a\in\mathbb{Z}$ where $p\nmid a$, then $a^{p-1}\equiv 1\mod{p}$}:
+for some integer $t\geq1$. Its obvious that if $p*q|x\implies p|x$. So, since $p$ is assumed to be a prime, we can derive from Fermat little theorem\footnote{Suppose $p$ is a prime and $a\in\mathbb{Z}$ where $p\nmid a$, then $a^{p-1}\equiv 1\mod{p}$}:
 \begin{align*}
 	x\cdot\left( x^{(p-1)}\right) ^{t(q-1)}\equiv x\cdot 1^{t(q-1)}\mod{p} \implies \left( x^b\right) ^a\equiv x \mod{p}
 \end{align*}
@@ -93,4 +94,8 @@ Prove:
 \begin{align*}
 	x \in \mathbb{Z}_n \implies d(e(x))=x
 \end{align*}
+\begin{proof}
+	\hspace{1cm}\\\\
+	Since we made no assumptions about $x\in \mathbb{Z}_n^*$, the proof above must also hold for $x\in\mathbb{Z}_n$
+\end{proof}
 \end{document}

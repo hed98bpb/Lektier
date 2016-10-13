@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2016.9.24)  13 OCT 2016 10:06
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2016.9.24)  13 OCT 2016 10:25
 entering extended mode
 **./Handin6.tex
 (Handin6.tex
@@ -1066,22 +1066,26 @@ Underfull \hbox (badness 10000) in paragraph at lines 65--67
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 65--67
+Underfull \hbox (badness 10000) in paragraph at lines 73--75
 
  []
 
 LaTeX Font Info:    Font shape `FMX/futm/m/n' will be
-(Font)              scaled to size 8.27998pt on input line 77.
+(Font)              scaled to size 8.27998pt on input line 78.
 LaTeX Font Info:    Font shape `FMX/futm/m/n' will be
-(Font)              scaled to size 6.99199pt on input line 77.
+(Font)              scaled to size 6.99199pt on input line 78.
 LaTeX Font Info:    Font shape `U/futm/m/n' will be
-(Font)              scaled to size 8.27998pt on input line 77.
+(Font)              scaled to size 8.27998pt on input line 78.
 LaTeX Font Info:    Font shape `U/futm/m/n' will be
-(Font)              scaled to size 6.99199pt on input line 77.
+(Font)              scaled to size 6.99199pt on input line 78.
 [1
 
 
 {C:/Users/hed98bpb/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}]
+Underfull \hbox (badness 10000) in paragraph at lines 98--100
+
+ []
+
 [2] (Handin6.aux) ) 
 Here is how much of TeX's memory you used:
  7712 strings out of 493334
@@ -1090,7 +1094,7 @@ Here is how much of TeX's memory you used:
  11062 multiletter control sequences out of 15000+200000
  99691 words of font info for 126 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 49i,14n,52p,8847b,276s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 49i,14n,52p,8847b,278s stack positions out of 5000i,500n,10000p,200000b,50000s
 {C:/Program Files/MiKTeX 2.9/fonts/enc/dvips/fontname/8r.enc
 }<C:/Users/hed98bpb/AppData/Roaming/MiKTeX/2.9/fonts/type1/public/fourier/fouri
 er-bb.pfb><C:/Users/hed98bpb/AppData/Roaming/MiKTeX/2.9/fonts/type1/public/four
@@ -1100,7 +1104,7 @@ nts/type1/public/fourier/fourier-ms.pfb><C:/Program Files/MiKTeX 2.9/fonts/type
 1/public/amsfonts/symbols/msbm10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/a
 dobe/utopia/putr8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/adobe/utopia/pu
 tri8a.pfb>
-Output written on Handin6.pdf (2 pages, 50874 bytes).
+Output written on Handin6.pdf (2 pages, 50843 bytes).
 PDF statistics:
  38 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
