@@ -1,0 +1,97 @@
+\documentclass[paper=a4, fontsize=11pt]{scrartcl} % A4 paper and 11pt font size
+\usepackage[utf8]{inputenc}
+
+\usepackage[T1]{fontenc} % Use 8-bit encoding that has 256 glyphs
+\usepackage{fourier} % Use the Adobe Utopia font for the document - comment this line to return to the LaTeX default
+\usepackage[english]{babel} % English language/hyphenation
+\usepackage{amsmath,amsfonts,amsthm} % Math packages
+
+\usepackage{lipsum} % Used for inserting dummy 'Lorem ipsum' text into the template
+
+\usepackage{sectsty} % Allows customizing section commands
+\allsectionsfont{\centering \normalfont\scshape} % Make all sections centered, the default font and small caps
+
+\usepackage{fancyhdr} % Custom headers and footers
+\pagestyle{fancyplain} % Makes all pages in the document conform to the custom headers and footers
+\fancyhead{} % No page header - if you want one, create it in the same way as the footers below
+\fancyfoot[L]{} % Empty left footer
+\fancyfoot[C]{} % Empty center footer
+\fancyfoot[R]{\thepage} % Page numbering for right footer
+\renewcommand{\headrulewidth}{0pt} % Remove header underlines
+\renewcommand{\footrulewidth}{0pt} % Remove footer underlines
+\setlength{\headheight}{13.6pt} % Customize the height of the header
+
+\numberwithin{equation}{section} % Number equations within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+\numberwithin{figure}{section} % Number figures within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+\numberwithin{table}{section} % Number tables within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+
+\setlength\parindent{0pt} % Removes all indentation from paragraphs - comment this line for an assignment with lots of text
+
+%----------------------------------------------------------------------------------------
+%	TITLE SECTION
+%----------------------------------------------------------------------------------------
+
+\newcommand{\horrule}[1]{\rule{\linewidth}{#1}} % Create horizontal rule command with 1 argument of height
+
+\title{	
+	\normalfont \normalsize 
+	\textsc{Aarhus University - Computer Science department} \\ [25pt] % Your university, school and/or department name(s)
+	\horrule{0.5pt} \\[0.4cm] % Thin top horizontal rule
+	\huge Crypthology - Handin 7 \\ % The assignment title
+	\horrule{2pt} \\[0.5cm] % Thick bottom horizontal rule
+}
+
+\author{Peter Burgaard - 201209175} % Your name
+
+\date{\normalsize\today} % Today's date or a custom date
+
+\begin{document}
+	
+	\maketitle % Print the title
+
+Let A be an algorithm that gets as input an RSA public key $(n,e)$ and a ciphertext $y$. A will either return the correct plaintext $x$, or will return "no answer". Suppose A is able to decrypt if and, and only if $y$ is in some subset $S$ of $Zn*$. Assume also that the size of S is $\epsilon \cdot (p-1)(q-1)$, for  $0< \epsilon < 1$.
+\\ \\
+Your task: construct a probabilistic algorithm B that uses A as a subrutine. B gets input public key (n,e) and ciphertext z, where z can be any number in Zn. We will assume that z is not 0, as 0 is easy to decrypt anyway. \\ \\
+You must construct B such that for ANY fixed z, B returns the correct plaintext for z with probability at least $\epsilon$.
+\section*{First part}
+We are given as a hint to: "first show that if z is non-zero, but not in Zn*, you can decrypt it easily without using A, by first computing the secret key. If z is in Zn*, you do need to use A."
+\\ \\
+When $z\in Zn$ but $z\not\in Zn^*$ this means $z$ has no inverse in $Zn$ which implies 
+\begin{align*}
+gcd(z,n)=x \hspace{1cm} \text{where } x\neq 1
+\end{align*}
+This means when we know one of the dividers of $n=p\cdot q$(where $p$ and $q$ are primes) we are done. By the above we know that $x$ must be either $p$ or $q$. So if we let $p=x$ we can easily compute $q$. Now that we know both primes which divide $n$ we can compute $d$ as
+\begin{align*}
+e^{-1}\equiv d \mod{\phi(n)}\equiv d \mod{(p-1)(q-1)}
+\end{align*}
+With the d we can now decode $z$ as $c=z^d$
+\section*{Second part}
+We are given another hint for this part: "You will need to use the multiplicative property of RSA stated in Stinson exercise 5.14. Note that you cannot simply run A on input (n,e) and z. If z is not in S, A would always return "no answer" so for such z the success probability would be 0 and not $\epsilon$ as required."
+\\ \\
+If we first assume $z\in S$, then we can just use A and we're done. If $z\not\in S$ then A returns no answer, and we will have to use the hint. Firstly we will review multiplicative property of RSA from Stinson:
+\begin{align*}
+e_K(x_1)e_K(x_2)\mod{n}=e_K(x_1\cdot x_2\mod{n})
+\end{align*}
+This will be used later. 
+\\ \\
+We will generate some new plain text $x$, and encrypt it with the public key $e$
+\begin{align*}
+e_K(x)=x^e\mod{n}=y
+\end{align*}
+By choosing a random string x we will have probability $\epsilon$ of choosing from subset $S$ since we are choosing from $Zn\supset Zn^*$ which is $\dfrac{\epsilon\cdot(p-1)(q-1)}{(p-1)(q-1)}=\epsilon$
+\\ \\ 
+Now we will use the multiplicative property of RSA. Let $e_K(z')=z$, then
+\begin{align*}
+e_K(z')e_K(x)\mod{n}=e_K(z'\cdot x\mod{n})=y'
+\end{align*}
+We can feed $y'$ to A and if it returns an answer, we will get $x\cdot z'\mod{n}$, where it would be trivial to extract the original $z'$.
+\section*{Probabilities}
+In the above we see that out algorithm has three cases when for input $z$. 
+\begin{itemize}
+\item if $z\in Zn$ and $z\not\in Zn^*$. The probability of $z$ being in this case is $Pr(\dfrac{|Zn|-|Zn^*|}{|Zn|})$, and probability of decoding the ciphertext $z$ in this case is $1$.
+\item if $z\in S$. The probability of $z$ being in this case is $Pr(\dfrac{|S|}{|Zn|})$, and probability of decoding the ciphertext $z$ in this case is $1$.
+\item if $z\not\in S$. The probability of $z$ being in this case is $Pr(\dfrac{|Zn|-|S|}{|Zn*|})$, and probability of decoding the ciphertext $z$ in this case is $\epsilon$.
+\end{itemize}
+As we can see, our algorithm fits the given criterias and we are done.
+
+\end{document}
