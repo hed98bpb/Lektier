@@ -1,0 +1,70 @@
+\documentclass[paper=a4, fontsize=11pt]{scrartcl} % A4 paper and 11pt font size
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc} % Use 8-bit encoding that has 256 glyphs
+\usepackage{fourier} % Use the Adobe Utopia font for the document - comment this line to return to the LaTeX default
+\usepackage[english]{babel} % English language/hyphenation
+\usepackage{amsmath,amsfonts,amsthm} % Math packages
+
+\usepackage{lipsum} % Used for inserting dummy 'Lorem ipsum' text into the template
+\usepackage{marvosym}
+\usepackage{sectsty} % Allows customizing section commands
+\allsectionsfont{\centering \normalfont\scshape} % Make all sections centered, the default font and small caps
+
+\usepackage{fancyhdr} % Custom headers and footers
+\pagestyle{fancyplain} % Makes all pages in the document conform to the custom headers and footers
+\fancyhead{} % No page header - if you want one, create it in the same way as the footers below
+\fancyfoot[L]{} % Empty left footer
+\fancyfoot[C]{} % Empty center footer
+\fancyfoot[R]{\thepage} % Page numbering for right footer
+\renewcommand{\headrulewidth}{0pt} % Remove header underlines
+\renewcommand{\footrulewidth}{0pt} % Remove footer underlines
+\setlength{\headheight}{13.6pt} % Customize the height of the header
+
+\numberwithin{equation}{section} % Number equations within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+\numberwithin{figure}{section} % Number figures within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+\numberwithin{table}{section} % Number tables within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+
+\setlength\parindent{0pt} % Removes all indentation from paragraphs - comment this line for an assignment with lots of text
+
+%----------------------------------------------------------------------------------------
+%	TITLE SECTION
+%----------------------------------------------------------------------------------------
+
+\newcommand{\horrule}[1]{\rule{\linewidth}{#1}} % Create horizontal rule command with 1 argument of height
+
+\title{	
+	\normalfont \normalsize 
+	\textsc{Aarhus University - Computer Science department} \\ [25pt] % Your university, school and/or department name(s)
+	\horrule{0.5pt} \\[0.4cm] % Thin top horizontal rule
+	\huge Crypthology - Handin 9 \\ % The assignment title
+	\horrule{2pt} \\[0.5cm] % Thick bottom horizontal rule
+}
+
+\author{Peter Burgaard - 201209175} % Your name
+
+\date{\normalsize\today} % Today's date or a custom date
+
+\begin{document}
+	
+	\maketitle % Print the title
+
+\section*{If the DDH problem is hard (w.r.t. GGen), then the El Gamal cryptosystem is CPA secure}
+\begin{proof}
+We will prove this by proof of contradiction. Assume the existence of an adversary \textit{Adv} with advantage greater than $\epsilon$ against the El Gamal cryptosystem. We will make a polynomial time reduction DDH$\leq$El Gamal. 
+\\ \\ 
+The reduction is as follows; \\
+The DDH is built on a group G, generator $\alpha$ and constants $a$ and $b$ which are used to generate $\alpha^a$, $\alpha^b$ and $\alpha^{a\cdot b}$. Given a DDH cryptosystem we built our El gamal cryptosystem as such:
+\begin{enumerate}
+\item Base the system on the same group as DDH, lets name it G'
+\item Base the system on the same generator as DDH, lets name it $\alpha'$
+\item Set $\beta:=\alpha'^a$, note that DDH's $\alpha^a=\alpha'^a$ in our El Gamal cryptosystem
+\item Encoding a messages is then based on the pair ($\alpha^b$, $\alpha'^{a\cdot b}\cdot m$)
+\end{enumerate}
+It is easily varified that none of these steps takes more than polynomial time. 
+\\ \\
+By construction \textit{Adv} would take ($\alpha^b$, $\alpha'^{a\cdot b}\cdot m$) and be able to decide whether he received the encrypted chosen message back from the oracle. Since this El gamal message is build on a reduction of DDH, the adversary can decide DDH with advantage greater than $\epsilon$ \Lightning.
+\\ \\
+No such adversary $Adv$ can exist, and El Gamal must be CPA secure.
+\end{proof}
+
+\end{document}

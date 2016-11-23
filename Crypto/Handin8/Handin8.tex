@@ -1,0 +1,108 @@
+\documentclass[paper=a4, fontsize=11pt]{scrartcl} % A4 paper and 11pt font size
+\usepackage[utf8]{inputenc}
+
+\usepackage[T1]{fontenc} % Use 8-bit encoding that has 256 glyphs
+\usepackage{fourier} % Use the Adobe Utopia font for the document - comment this line to return to the LaTeX default
+\usepackage[english]{babel} % English language/hyphenation
+\usepackage{amsmath,amsfonts,amsthm} % Math packages
+
+\usepackage{lipsum} % Used for inserting dummy 'Lorem ipsum' text into the template
+
+\usepackage{sectsty} % Allows customizing section commands
+\allsectionsfont{\centering \normalfont\scshape} % Make all sections centered, the default font and small caps
+
+\usepackage{fancyhdr} % Custom headers and footers
+\pagestyle{fancyplain} % Makes all pages in the document conform to the custom headers and footers
+\fancyhead{} % No page header - if you want one, create it in the same way as the footers below
+\fancyfoot[L]{} % Empty left footer
+\fancyfoot[C]{} % Empty center footer
+\fancyfoot[R]{\thepage} % Page numbering for right footer
+\renewcommand{\headrulewidth}{0pt} % Remove header underlines
+\renewcommand{\footrulewidth}{0pt} % Remove footer underlines
+\setlength{\headheight}{13.6pt} % Customize the height of the header
+
+\numberwithin{equation}{section} % Number equations within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+\numberwithin{figure}{section} % Number figures within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+\numberwithin{table}{section} % Number tables within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+
+\setlength\parindent{0pt} % Removes all indentation from paragraphs - comment this line for an assignment with lots of text
+
+%----------------------------------------------------------------------------------------
+%	TITLE SECTION
+%----------------------------------------------------------------------------------------
+
+\newcommand{\horrule}[1]{\rule{\linewidth}{#1}} % Create horizontal rule command with 1 argument of height
+
+\title{	
+	\normalfont \normalsize 
+	\textsc{Aarhus University - Computer Science department} \\ [25pt] % Your university, school and/or department name(s)
+	\horrule{0.5pt} \\[0.4cm] % Thin top horizontal rule
+	\huge Crypthology - Handin 8 \\ % The assignment title
+	\horrule{2pt} \\[0.5cm] % Thick bottom horizontal rule
+}
+
+\author{Peter Burgaard - 201209175} % Your name
+
+\date{\normalsize\today} % Today's date or a custom date
+
+\begin{document}
+	
+	\maketitle % Print the title
+
+The "Repeated squaring"-algorithm for exponentiation is essential for all known public-key crypto-systems. It comes in several variants, scanning the exponent from the least or the most significant end. This exercise shows that scanning from the most significant end has some advantages in terms of the available optimizations: \\
+Assume we want to compute $a^z\mod{n}$, where $z$ is a k-bit number, and where $z$ is $z_{k-1}z_{k-2}...z_0$ in binary notation (all $z_i$ are 0 or 1). \\ \\
+The algorithm does the following:
+\begin{enumerate}
+\item $x:=1$
+\item For $i=k-1,...,0$ do:
+\begin{enumerate}
+\item $x:=x^2\mod{n}$
+\item $x:=x\cdot a^{z_i}\mod{n}$ (note that this step is empty if $z_i=0$)
+\end{enumerate}
+\item return $x$
+\end{enumerate}
+Let $Z_i$ be the number which is binary notation is $z_{k_1}z_{k_2}...z_i$
+
+\subsection*{Show that after each execution of step 2, we have $x=a^{Z_i}\mod{n}$ and conclude that the algorithm return $x=a^z\mod{n}$}
+
+In step 2, we see that $x=1$ until the first 1-bit i encountered in $a$. At that point, $x=a$. From here on forward, $x$ is squared in each iteration. Squaring in binary, is basicly shifting the whole binary number one position to the left, and adding zero at the end. Now we are done with step a. \\ \\ 
+If the next number encountered in $Z_i$ is 0 we can skip step b, and we are done with this iteration. If not we have to multiply $x$ with another $a$. We see from previous steps that the exponent in binary ends with zero, since it have been squared, and the multiplication of a just flips the last bit of the exponent to 1. \\ \\
+We se that we have went through and iteration, and adjusted x accordingly.
+
+\subsection*{If the bits in $z$ are randomly chosen, what is the expected number of multiplications mod n done in the algorithm?}
+
+We always have to a multi-mod-n for all k iteration in step a. When the number of 1's are randomly chosen then $P(z_i=1)=\dfrac{1}{2}$. Since we only have to do step b if $z_i=1$, we see that the number of multi-mod-n's are $k+\dfrac{k}{2}$.
+
+\subsection*{The algorithm can be optimized: assume that we first compute the value $a^2\mod{n}$ and $a^3\mod{n}$, this can be done using 2 multiplications. So we now know $a^n\mod{v}$ for any value of $v$ that can be written with 2 bits. Describe a variant of the algorithm above which reads off 2 bits of the exponent in one step. Argue that it is correct and give the expected number of multiplications you need for a random exponent.}
+
+\begin{enumerate}
+\item $x:=1$
+\item For $i=k-1,k-3,..,0$ do
+\begin{enumerate}
+\item $x:=x^4\mod{n}$
+\item if $z_iz_{i-1} = 11$ then
+\begin{enumerate}
+\item $x:=x\cdot a^3$
+\end{enumerate}
+\item if $z_iz_{i-1} = 10$ then
+\begin{enumerate}
+\item $x:=x\cdot a^2$
+\end{enumerate}
+\item if $z_iz_{i-1} = 01$ then
+\begin{enumerate}
+\item $x:=x\cdot a$
+\end{enumerate}
+\item if $z_iz_{i-1} = 00$ then
+\begin{enumerate}
+\item $x:=x$
+\end{enumerate}
+\end{enumerate}
+\end{enumerate}
+
+\begin{proof}
+The loop in step 2 now runs over 2 bits at a time, so we modify the previous algorithm, and add additional cases. In step 2a we set $x:=x^4\mod{n}$, since this is equivalent to shifting the binary $x$ two bits, which is what we want since we are looking two bits forward in $z$. Now follows a case for each outcome of two bits in $z$, where $x$ is multiplied by the base 10 version of the binary number from $z$. By the same concept of the original algorithm, this returns the wanted result.  
+\end{proof}
+
+Since we only set $x:=x^4\mod{n}$ half the times of the original algorithm, we perfom $\dfrac{k}{2}$ multi-mod-n's here. The chance of entering a case with a multi-mod-n is $P(z_iz_{i-1}\not=00)=\dfrac{3}{4}$, and since the loop iterates $\dfrac{k}{2}$ times, this step has $\dfrac{3k}{8}$. Last place is in the precomputations of $a^2\mod{n}$ and $a^3\mod{n}$ which gives us two additonal multi-mod-n's, which gives a total of $2+\dfrac{k}{2}+\dfrac{3k}{8}$ multi-mod-n's.
+
+\end{document}
