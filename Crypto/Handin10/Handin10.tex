@@ -1,0 +1,74 @@
+\documentclass[paper=a4, fontsize=11pt]{scrartcl} % A4 paper and 11pt font size
+\usepackage[utf8]{inputenc}
+
+\usepackage[T1]{fontenc} % Use 8-bit encoding that has 256 glyphs
+\usepackage{fourier} % Use the Adobe Utopia font for the document - comment this line to return to the LaTeX default
+\usepackage[english]{babel} % English language/hyphenation
+\usepackage{amsmath,amsfonts,amsthm} % Math packages
+
+\usepackage{lipsum} % Used for inserting dummy 'Lorem ipsum' text into the template
+
+\usepackage{sectsty} % Allows customizing section commands
+\allsectionsfont{\centering \normalfont\scshape} % Make all sections centered, the default font and small caps
+
+\usepackage{fancyhdr} % Custom headers and footers
+\pagestyle{fancyplain} % Makes all pages in the document conform to the custom headers and footers
+\fancyhead{} % No page header - if you want one, create it in the same way as the footers below
+\fancyfoot[L]{} % Empty left footer
+\fancyfoot[C]{} % Empty center footer
+\fancyfoot[R]{\thepage} % Page numbering for right footer
+\renewcommand{\headrulewidth}{0pt} % Remove header underlines
+\renewcommand{\footrulewidth}{0pt} % Remove footer underlines
+\setlength{\headheight}{13.6pt} % Customize the height of the header
+
+\numberwithin{equation}{section} % Number equations within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+\numberwithin{figure}{section} % Number figures within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+\numberwithin{table}{section} % Number tables within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+
+\setlength\parindent{0pt} % Removes all indentation from paragraphs - comment this line for an assignment with lots of text
+
+%----------------------------------------------------------------------------------------
+%	TITLE SECTION
+%----------------------------------------------------------------------------------------
+
+\newcommand{\horrule}[1]{\rule{\linewidth}{#1}} % Create horizontal rule command with 1 argument of height
+
+\title{	
+	\normalfont \normalsize 
+	\textsc{Aarhus University, Computer science} \\ [25pt] % Your university, school and/or department name(s)
+	\horrule{0.5pt} \\[0.4cm] % Thin top horizontal rule
+	\huge Crytography Handin 10 \\ % The assignment title
+	\horrule{2pt} \\[0.5cm] % Thick bottom horizontal rule
+}
+
+\author{Peter Burgaard 201209175} % Your name
+
+\date{\normalsize\today} % Today's date or a custom date
+
+\begin{document}
+	
+	\maketitle % Print the title
+	
+	\subsection*{Part 1}
+	
+	Using only the public key, one can transform an El Gamal ciphertext that encrypts message m efficiently into a different ciphertext that also encrypts m. Use this to show that the El Gamal cryptosystem is not CCA secure. \\ 
+	
+	\textit{Adv} is given a ciphertext $c$ and a public key $Pk$, such that $c=E_{Pk}(m)$ for $m\in P$. To prove the El Gamal is not CCA secure \textit{Adv} does the following: \\ 
+	
+	 \textit{Adv} choses two new different plaint texts $m', m''\in P$ and produces two ciphertexts $c'=E_{Pk}(m')$ and $c''=E_{Pk}(m'')$. These are used to construct two new ciphertexts $c_1=c\cdot c'=E_{Pk}(m)\cdot E_{Pk}(m')=E_{Pk}(m\cdot m')$ and $c_1=c\cdot c''=E_{Pk}(m)\cdot E_{Pk}(m'')=E_{Pk}(m\cdot m'')$. \\
+	 
+	 \textit{Adv} sends $c_1$ and $c_2$ to the oracle and receives $m_1$ and $m_2$, and can now check if $\dfrac{m_1}{m'}=m=\dfrac{m_2}{m''}$. If so, then we are in the real case, else we are in the ideal case.
+	 
+	 \subsection*{Part 2}
+	 
+	 Suppose we change the cryptosysten as follows: say we are given an injective and easy invert function $f:\{  0,1\} ^t\rightarrow G$. To encrypt a bit string $m$, we encrypt $w=f(m)$ using El Gamal. The decryption first does El Gamal decryption to get $w$. If $w\in Im(f)$, outputs $f^{-1}(w)$, and outputs an error if $w\not\in Im(f)$. \\
+	 
+	Show that this cryptosystem us not CCA secure either, regardless of which funcition $f$ we use. \\
+	
+	We are given a ciphertext $c$ and a public key$Pk$, such that $c=E_{Pk}(w)=E_{Pk}(f(m))$ for $m\in P$ and $w\in Im(f)$. \\ 
+	
+	The \textit{Adv} starts out by finding the identity element for space $G$, which is easily done since the function $f$ is easy to invert. Let this element be $I$ and $f^{-1}(I)=I'$. We give the oracle message $m'=I'$ and receive $c'$. We see that if we give the oracle the ciphertext $c''=c\cdot c'=E_{Pk}(f(m))\cdot E_{Pk}(f(I'))=E_{Pk}(f(m)\cdot I)=E_{Pk}(f(m))$, we would get $f^{-1}(m)$ back, since $f(m)=w\in Im(f)$. \\
+	
+	The \textit{Adv} send $c''$ to the oracle an receives $m''$. The \textit{Adv} can then gives $m''$ to the oracle an receives $c'''$. If $c=c'''$ then we are in the real case, and if not the we are in the ideal case.
+
+\end{document}
