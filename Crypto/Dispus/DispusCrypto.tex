@@ -2,6 +2,7 @@
 
 \usepackage[utf8]{inputenc}
 \usepackage{mdframed}
+\usepackage[]{algorithm2e}
 
 \usepackage[T1]{fontenc} % Use 8-bit encoding that has 256 glyphs
 \usepackage{fourier} % Use the Adobe Utopia font for the document - comment this line to return to the LaTeX default
@@ -173,14 +174,375 @@
 	Adv_A(O_0,O_1)=|p(A,0)-p(A,1)
 	\end{align*}
 	Hvis tæt på 0 eller lig 0, har $A$ svært ved at differentiere imellem at være i de to scenarier og vores cryptering i \textit{real} scenariet syntes at være tilfældig valgt, og hvis stor(tæt på 1), vil $A$ med stor sikkerhed kunne afgører hvilket scenarie han er i.
+	
+	\paragraph{\textbf{Definition 1 (PRF security):}} Vi siger $\{f_K|K\in\{0,1\}^k\}$ er $(t,q,\epsilon)$-sikker pseudorandom function familiy \textit{(PRF)}, hvis, for en vilkårlig adversary $A$ som højt bergener i $t$ tid, og laver $q$ kald til oraklerne, det holder at $Adv_A(O_{Real},O_{Ideal})\leq\epsilon$
 		
-		
+	Den samme form for spil findes i det tilfælde at vi har med et probabilistisk system at gøre. I dette tilfælde skal $A$ dog \textit{kun} kunne se forskel på om han får sin egenkrypteret streng tilbage, eller en helt tilfældig valgt streng. Vi ser på et kryptosystem $(G,E,D)$ hvor $A$ skal afgøre om han er i et, af to scenarier:
+	
+	\paragraph{\textbf{The ideal world:}} $A$ får adgang til $O_{Ideal}$ som på input $x\in\mathcal{P}$, svarer med $E_K(r)$, hvor $K$ er produceret af $G$ og fixed for helheden af angrabet, og $r$ er en tilfældig valgt streng med samme længde som $x$.
+	\paragraph{\textbf{The real world:}} $A$ får adgang til et normalt \textit{chosen message attack:} $O_{Real}$ får input $x\in\mathcal{P}$, og svarer med $E_K(x)$, hvor $K$ er genereret af $G$ og fixed for helheden af angrebet.
+	\paragraph{\textbf{Definition 2 (Chosen-Plaintext Attack(CPA)-security):}} Vi siger kryptosystemet $(G,E,D)$ er $(t,q,\mu,\epsilon)$-sikkert, hvis, for en vilkårlig adversary $A$ som beregner i højst $t$ tid, med $q$ calls til oraklet, med plaintext af længde $\mu$-bits, så holder det at $Adv_A(O_{Real},O_{Ideal})\leq\epsilon$.
+	
+	Grunden til parameter $\mu$ er at disse systemer kan håndtere strenge af forskellige længer, så for at se hvor meget information $A$ har fået fra $O$, må vi også kigge på længden af hans spørgsmål til $O$
+	
+	Med disse definitioner kan man vise at, det er muligt at lave CPA-sikre schemes, ved at tage udgangspunkt i en block cipher som er PRF-sikker. Et sådan scheme er CBC encryption.
+	
+	\begin{mdframed}
+		\paragraph{\textbf{CBC Encryption}} Lad $(G',E',D')$ være et PRK-sikkert deterministisk kryptosystem, hvor $\mathcal{P},\mathcal{C}$ er fixed og $\mathcal{P}=\mathcal{C}=\{0,1\}^n$ for et vilkårligt $n$. CBC er $(G,E,D)$ konstruere fra ovenstående block cipher. Lad $G'=G$. Lad plaintext i CBC være alle strenge af længe $n$. Denne restriktion er kun for at simplificere da system vil kunne tage strenge af vilkårlig længe med visse modifikationer. For at kryptere en streng vælger vi en $n$-bit streng $y_0$, og splitter input $x$ i $n$-bit strenge $x_1,...,x_t$. Vi definere, for $i>0$ at $y_i=E_K(y_i\oplus x_i)$. Outputtet er ciphertexten $y_0,y_1,...,y_t$. Decryption er lige så.
+	\end{mdframed}
+	
+	\paragraph{\textbf{Theorem 1}} Antag $(G',E',D')$ er en $(t',q',\epsilon')$-sikker PRF. Så er CBC encryption baseret på dette system CPA $(t,q,\mu,\epsilon)$-sikkert for et vilkårligt q, og for
+	\begin{align*}
+	\epsilon=\epsilon'+\left(\dfrac{\mu}{n}\right)^2 \cdot \dfrac{1}{2^n} 
+	\intertext{givet at}
+	t\leq t', \hspace{1cm}\dfrac{\mu}{n}\leq q'
+	\end{align*}
+	
+	Vi ser at resultatet siger forskellen imellem $\epsilon$ og $\epsilon'$ er antallet af block vi krypterer divideret med $2^n$. Grundet til dette er basicly birthday paradox, med at der med stor nok sandsynlighed vil komme 2 blokke som er ens efter krypteringen, hvor med det gfølger at:
+	\begin{align*}
+	E_{K_e}(y_{i-1}\oplus x_i)=y_i=y_j=E_{K_e}(y_{j-1}\oplus x_j)\hspace{0.5cm}i,j>0 \implies y_{i-1}\oplus y_{j-1}=x_i\oplus x_j
+	\end{align*}
+	Altså hvis vi sørger for at kryptere noget mindre en $2^{n/2}$ inden vi skifter nøgle så er cirka samme sikkerhed som kryptosystemet CBC-krypteringen bliver baseret på. Beviset for ovenstående foregår ved at, definere et game med real, ideal og et nyt hybrid scenarie, og ser hvad sandsynligheden for en collision er. \\
+	
+	Ovenstående Theorem 1 findes også som Theorem 2, for counter (CTR) mode, hvor man hvor encryption blot er $y_i=E_K(y_0+i)\oplus x_i$, hvor $y_0+i$ er taget i mod $2^n$  
+	
+	\newpage
+	
  	\section{Public-key Crypto based on Factoring}
+ 	
+ 	Imodsætning til symmetric crypto systems, hvor der bruges den samme key til både encryption og decryption, er der to forskellige key i public-key crypto systems. En public og som gives åbent ud til alle, så de kan cryptere text, og en secret som bruges til decrypte texten, som kun kendes af dem der skal kunne decrypte text. Vi definere et sådanne system med en 3-tupel $(G,E,D)$ som defineres som følger: 
+ 	
+ 	\paragraph{\textbf{$G$, algoritme til at generere keys:}} denne algoritme er probabilistisk, tager et input $k$ og giver altid et nøgle par $(pk,sk)$. Udfra $pk$ kan man udlede hvorlede $\mathcal{P}$ og$\mathcal{C}$ skal udformes. Disse behøver ikke at gælde for alle nøgler.
+ 	\paragraph{\textbf{$E$, algoritme til at encrypte:}} algoritmen tager som input $pk$ og $x\in\mathcal{P}$ producere $E_{pk}(x)\in\mathcal{C}$. $E$ kan være probabilistisk, og producere forskellige ciphertexts ud fra samme $x$ og $pk$, og konstruere derfor ciphertext udfra en sandsynlighedsfordeling, baseret på $x$ og $K$.
+ 	\paragraph{\textbf{$D$, algoritme til at decrypte:}} Algoritmen tager som input $sk$ og $y\in\mathcal{C}$ og producere et output $D_{sk}(y)\mathcal{P}$. Kan være probabilisk, men er, i de fleste tilfælde, deterministisk. \\
+ 	
+ 	Vi vil altid kræve af et public key system, at $\forall x\in\mathcal{P}:D_{sk}(E_{pk}(x))=x$.\\
+ 	
+ 	Disse krypto systemer gør brug af en såkaldt trapdoor one way function, som har den egenskab at den er injective og hurtigt at beregne, men vanskelig at inverte, med mindre man har noget information, vores secret key. Disse functioner er samlet i en function family som mapper fra alle par af keys, til alle encryptions i det pågældende kryptosystem. Disse er defineret som følger:
+ 	
+ 	\paragraph{\textbf{Definition 3.}} Vi siger at en system $(G,E,D)$ danner en familie af trapdoor one-way functions er følgende gøre sig gældende:
+ 	\begin{enumerate}
+ 		\item Algoritmerne $(G,E,D)$ definere et kryptosystem, som tidligere nævnt, som alle kører i polynomisk tid, ift det givne $k$. Yderligere er $E$ deterministisk, altså $E$ er injektive fra sin inputsmængde til sin outputsmængde.
+ 		\item Lad en vilkårlig probabilistisk polynomieltids algoritme $A$ være givet. Lad $G$ med input $k$, give $(pk,sk)$. Vælge et vilkårligt $x\in\mathcal{P}$, og lad $A$ kører med input $pk, E_{pk}(x)$. Så er sandsynligheden $p(A,k)$, sandsynligheden for at $A$ outputter $x$ ubetydelig lille.
+ 		\begin{itemize}
+ 			\item En sandsynlighed $\epsilon(k)$ er ubetydelig, hvis, for et vilkårligt polynomie $f$, gælder $\forall k:\epsilon\leq\dfrac{1}{f(k)}$. Sandsynligheden går asymptotisk i $k$, mod $0$.
+ 		\end{itemize}
+ 	\end{enumerate}
+ 	
+ 	Et sådanne deterministisk kryptosystem er RSA, vi gør os derfor følgende antagelse:
+
+ 	\paragraph{\textbf{RSA assumption:}} den basale RSA algoritme, fefinerer en familie af trapdoor one-way-permutations.
+ 	
+ 	\begin{mdframed}
+ 		\paragraph{\textbf{Cryptosystem 5.1:} RSA Cryptosystem} Lad $n=pq$ hvor $p$ og $q$ er primtal, samt $\mathcal{P}=\mathcal{C}=\mathbb{Z}_n$. Lad $\mathcal{P}=\mathcal{C}=\mathbb{Z}_n$, og definer 
+ 		\begin{align*}
+ 		\mathcal{K}=\{(n,p,q,e,d):ab\equiv1\mod{\phi(n})\}
+ 		\end{align*}
+ 		For $K=(n,p,q,e,d)$, definer
+ 		\begin{align*}
+ 		e_K(x)=x^e\mod{n}
+ 		\intertext{og}
+ 		d_K(y)=y^d\mod{n}
+ 		\end{align*}
+ 		$(x,y\in\mathbb{Z}_n)$. Public keyen består af værdierne $n$ og $e$, og secret keyen består af værdierne $n$ og $d$. 
+ 	\end{mdframed}
+ 	
+ 	For at kunne bruge dette, og ligende krypto systemer, kræver det, at vi har nogle (meget) store primtal. Disse genereres lave store "\textit{random primes}" og derefter checke med randomized polynomialtime Monte Carlo algoritmer, ved gentagende test, at det er et rigtigt primtal vi har fundet. 
+ 	
+ 	\paragraph{\textbf{Definition 5.1:}} En \textit{yes-biased Monte Carlo algoritme} er en randomized algoritme for et afgørligheds problem, hvor, hvis svaret er "ja", er det altid korrekt, men ved svaret "nej" kan svaret være ukorrekt ... vi siger yes-biased Monte Carlo algoritmer har en \textit{error probability} lig $\epsilon$, hvis sandsynligheden for fejl i nej-svar er højst $\epsilon$. \\
+ 	
+ 	En sådanne algoritme er Miller-Rabin algoritmen (The strong pseudo-prime test). Denne algoritmer har kompleksitet $O((logn)^3)$ samt et $\epsilon=\dfrac{1}{4}$.
+ 	
+ 	\begin{mdframed}
+ 		\begin{algorithm}[H]
+ 		write $n-1=2^km$, hvor $m$ er ulige\;
+ 		vælge et tilfældigt heltal a, $1\leq a\leq n-1$\;
+ 		$b\leftarrow a^m\mod{n}$\;
+ 		\If{$b\equiv1\mod{n}$}{\textbf{return} ("$n$ is prime")}
+ 		\For{$i\leftarrow 0$ to $k-1$}{\eIf{$b\equiv -1\mod{n}$}{\textbf{return} "$n$ is prime"}{$b\leftarrow b^2\mod{n}$}}
+ 	 	\textbf{return} ("$n$ if composite")
+ 		\end{algorithm}
+ 	\end{mdframed}
+ 	
+ 	Et public key system som RSA lider den last, at da man giver alle en public key, kan de selv kryptere data, og begynde en exhaustive search efter den unikke secret key. Der kræves det, hvis systemet skal være sikkert at nøglerne har en hvis størrelse. Stinson foreslår 512kb for e, og 1024kb for n.  \\
+ 	
+ 	Noget andet er, at hvis en skulle få fat i $a$, er det ikke nok kun at finde et nyt $e$, men at skifte hele system ud, med et nyt $n$, man vil kunne factorisere $n$ ud fra $e$, ved hjælp af \textbf{Algorithm 5.10}. RSA factor algoritmen er en Las Vegas algoritme, med en worst-case sandsynlighed for succes på $1-\epsilon$. Altså forventes det, at man skal køre algoritmen $\dfrac{1}{1-\epsilon}$ gange, for at få det rigtige resultat. \\
+ 	
+ 	Problemet med determistisk encryption, som er det RSA benytter sig af, er hvis en adversary ved jeg sender en af to beskeder af sted, så kan han kryptere begge systemer på forhånd, og sammenligne med det man sender. Derfor er det nødvendigt, for større sikkerhed, at overveje probabilistiske kryptosystemer. Vi siger et probabilistisk kryptosystemer sematisk sikkert hvis en adversary, ikke kan skelne imellem disse to scenarier:
+ 	
+ 	\paragraph{\textbf{The ideal world:}} $A$ og $O_{Ideal}$ får begge input $k$. $O_{ideal}$ kører $G(k)$ og får $(pk,sk)$, og giver $pk$ til $A$. $A$ laver $x\in\mathcal{P}$ og giver det til $O_{Ideal}$, som returnere $E_{pk}(r)$, hvor $r\in\mathcal{P}$ er tilfældigt valgt, med samme længde som $x$. $A$ ouputter bit $b$.
+ 	\paragraph{\textbf{The real world:}} $A$ og $O_{Ideal}$ får begget input $k$. $O_{Real}$ kører $G(k)$ og modtager $(pk,sk)$ og giver $pk$ til $A$. $A$ laver $x\in\mathcal{P}$ og giver det til $O_{Real}$, som returnere $E_{pk}(x)$. $A$ outputter bit $b$.
+ 	
+ 	\paragraph{\textbf{Definition 4.}} Vi siger $(G,E,D)$ er CPA(sematisk)-sikkert, hvis for alle probabiliske polynomiel tids adversaries $A$, det holder at $Adv_A(O_{real},O_{Ideal})$ er ubetydeligt ift $k$. \\
+ 	
+ 	Definition 4 viser tydeligt, at intet deterministisk public key kryptosystem er CPA-sikkert, da $A$ blot kan kryptere $x$ selv, og sammenligne det outputtet fra $O$. Dog kan de bruges til, at konstruere nye systemer der er CPA-sikre. Dette ses med
+ 	
+ 	\paragraph{\textbf{Theorem 4.}} Hvis en familie af one-way trapdoor perfmutationes findes, så findes et semantisk sikker probabilistisk public key system.
+ 	
+ 	Et ligende sikkerhedskritere man kan opstille er for chosen ciphertexts:
+ 	
+ 	\paragraph{\textbf{The ideal world:}} $A$ og $O_{Ideal}$ får input $k$. $O_{Ideal}$ kører $G(k)$ og får $(pk,sk)$, tilbage, og giver $pk$ til $A$. $A$ kan nu sende input streng $y$ til $O_{Ideal}$, og vil modtage $D_{sk}(y)$. $A$ kan gentage dette sålænge ønsket. Derefter konstruere $A$ $x\in\mathcal{P}$ og sender til $O_{Ideal}$, som svarer med $y_0=E_{pk}(r)$, hvor $r$ er en vilkårlig streng, med samme længde som $x$. $A$ må igen spørge $O_{Ideal}$ med et nyt $y\not=y_0$, hvor $O_{Ideal}$ svarer med $D_{sk}(y)$. Ovenstående gentages sålænge det ønskes af $A$. Til sidst outputter $A$ med bit $b$.
+ 	\paragraph{\textbf{The real world:}} $A$ og $O_{Real}$ får input $k$. $O_{Real}$ kører $G(k)$ og får $(pk,sk)$, tilbage, og giver $pk$ til $A$. $A$ kan nu sende input streng $y$ til $O_{Real}$, og vil modtage $D_{sk}(y)$. $A$ kan gentage dette sålænge ønsket. Derefter konstruere $A$ $x\in\mathcal{P}$ og sender til $O_{Real}$, som svarer med $y_0=E_{pk}(x)$. $A$ må igen spørge $O_{Real}$ med et nyt $y\not=y_0$, hvor $O_{Real}$ svarer med $D_{sk}(y)$. Ovenstående gentages sålænge det ønskes af $A$. Til sidst outputter $A$ med bit $b$.
+ 	
+ 	\paragraph{\textbf{Definition 5.}} Vi siger $(G,E,D)$ er chosen ciphertext (CCA)-sikker, hvis for alle probabilistiske polynomial tids adversaries $A$, det holder at $Adv_A(O_{Real},O_{Ideal})$ er ubetydeligt ift. k.
+ 	
+ 	\paragraph{\textbf{Theorem 5.}} Hvis der findes en familie af trapdoor one-way permutationer, så findes der et chosen ciphertext sikkert probabilistisk public-key system.
+ 	
+ 	\newpage
 	
 	\section{Public-key Crypto based on Discrete Log and LWE}
 	
+	Vi ser nærmere på 3 forskellige beregningsmæssige problemer:
+	
+	\paragraph{\textbf{The discrete log (DL) problem}} Givet en gruppe $G$, en generator $\alpha$ og et $\beta\in G$, find et heltal $a$, så $\alpha^a=\beta$
+	
+	\paragraph{\textbf{The Diffie-Hellman (DH) problem}} Givet en gruppe $G$, en generator $\alpha$ og $\alpha^a,\alpha^b$ hvor $a,b$ er tilfældigt og uafhængigt valg fra $\mathbb{Z}_t$, beregn $\alpha^{ab}$
+	
+	\paragraph{\textbf{The Decisional Diffie-Hellman (DDH) problem}} Given en gruppe $G$, en generator $\alpha$ og $\alpha^a, \alpha^b,\alpha^c$, hvor $a,b$ er tilfældigt og udafhængigt valgt fra $\mathbf{Z}_t$, og $c$ er enten $c=ab$ eller uniformt tilfældigt valgt fra $\mathbb{Z}_t$, gæt hvilken case vi er i. \\
+	
+	Nogle ting der binder disse problemer sammen, er deres komplesitet. F.eks. er det let, at se, hvis vi kan finde $a$ i $\alpha^a$ for DL, så kan vi løse DH for $b=0$
+	
+	\paragraph{\textbf{Lemma 1}} DH problemet er ikke \textit{svære} end DL problemet \\
+	
+	på samme måde er det oplagt at, hvis man kan løse DH, så kan man løse DDH, ved at beregne $\alpha^{ab}$ og sammenligne dette med $\alpha^c$, altså
+	
+	\paragraph{\textbf{Lemma 2}} DDH problemet er ikke \textit{svære} end DH problemet \\
+	
+	Dog er det for begge lemmaer, ikke lykkedes at vise, at de to problemer er helt ækvivalent. \\
+	
+	Men hvorledes definere vi at, \textit{et problem er svære end et andet problem?}. Til det må vi først formalisere en \textit{group generator} - $GGen$. $GGen$ er en efficient probabilistisk algoritme some tager et $k$ som input og outputter en gruppe $G$ og et elementer $\alpha\in G$, som er generator for $G$. En generator kan findes ved hjælp fra lemma 4:
+	
+	\paragraph{\textbf{Lemma 4}} $\alpha\in\mathbb{Z}_p^*$ er en generator $\iff \alpha^{(p-1)/q}\not=1$ for alle primtal $q$ som deler $p-1$ \\
+	
+	Pointen med dette er, at hvis vi vil arbejde i en gruppe $\mathbb{Z}_p^*$, så er det muligt, at vælge et $p$ så ingen af vores problemer er \textit{svære}. Derfor kan vi se, at problemer har kun det \textit{hardhed} vi behøver/giver dem, ift. de algoritmer der vælger hvilken gruppe vi er i.
+	
+	\paragraph{\textbf{Definition 1 (DL)}} DL problemet er svært (ift $GGen$) hvis, for en hvilkårlig polynomiel tids(i $k$) algoritme $A$, at sandsynligheden for at $A$ outputter $a$ er ubetydelig ift $k$.
+	
+	\paragraph{\textbf{Definition 2 (DH)}} DH problemet er svært (ift $GGen$) hvis, for en hvilkårlig polynomiel tids(i $k$) algoritme $A$, at sandsynligheden for at $A$ outputter $\alpha{ab}$ er ubetydelig ift $k$.
+	
+	\paragraph{\textbf{Definition 3 (DDH)}} DDH problemet er svært (ift $GGen$) hvis, for en hvilkårlig polynomiel tids(i $k$) algoritme $A$, at sandsynligheden for at $A$ har fordel $Adv_A(k)=|p_{A,0}(k)-p_{A,1}(k)|$ er ubetydelig ift $k$. \\
+	
+	Grundet til at netop disse problem er interesant er at de danner grundlag for Diffie og Hellmans foreslag, om et kryptosystem, hvor der var behov for udveksling af nøgler inden kommunikation. Denne idé dannede grundlaget for El Gamal kryptosystemet
+	
+	\begin{mdframed}
+		\paragraph{\textbf{El Gamel Kryptosystem:}} På input parameter $k$, generere $GGen$ specifikationerne for gruppen $G$ og genratoren $\alpha$. Vælg et tilfældigt tal $a\mathbb{Z}_t$, så er vores public key $\beta=\alpha^a$, mens vores secret key er $a$. Plaintext space er $G$ men ciphertext space er $G \times G$ 
+		
+		\paragraph{\textbf{Encryption}} for at encrypte $m\in G$, så vælg et tilfældigt $r\in\mathbb{Z}_t$, og ciphertexten er $(\alpha^r,\beta^rm)$
+		
+		\paragraph{\textbf{Decryption}} For at decrypte en ciphertext $(c,d)$, udregne
+		\begin{align*}
+			c^{-a}d=\alpha^{-ar}\beta^rm=\alpha^{ar-ar}m=m
+		\end{align*} 
+	\end{mdframed}		
+	El Gamal er semantisk (CPA)sikkert, hvilket vi ser med
+	
+	\paragraph{\textbf{Lemma 3}} Problemet med at decrypte en El Gamal ciphertet (uden sk) er ækvivalent til at læse DH problemet.
+	
+	og da DH er lige så svært som DL som er lige så svært som DDH har vi
+	
+	\paragraph{\textbf{Theorem 1}} Hvis DDH problemet er svært (ift. $GGen$), så er El Gamal CPA sikkert. \\
+
+	Her er det vigtigt, at det kun er sikkert ift. $GGen$. Vælges en gruppe $\mathbb{Z_p^*}$, hvor $p=2q+1$, hvor $p$ og $q$ er primtal, så har vi at
+	
+	\paragraph{\textbf{Lemma 6}} I gruppen $\mathbb{Z}_p^*$ er DDH problemet aldrig svært \\
+	
+	Hvilket skyldes vi kan regne parity af $ab$, om det er lige eller ulige. Derfor kan man opsætte et spil, hvor $A$ altid gætte rigtigt i real-case, og $50/50$ i ideal case, på random streng. Dette resultat skyldes.
+	
+	\paragraph{\textbf{Lemma 5}} Lad $\alpha$ være en generator for $\mathbb{Z}_p^*$. Sp er $(\alpha^i)^{(p-1)/2}\mod{p}=1$, hvis og kun hvis $i$ er lige, og $-1$ ellers. \\
+	
+	Da $(\alpha^i)^{(p-1)/2}\mod{p}=(\alpha^{(p-1)/2})^i\mod{p}=(-1)^i$
+	
+	Men selv RSA med en gruppe der giver CPA sikkerhed, ville kunne brydes, teoretisk set, af en kvante computer. Derfor må vi komme på alternative metoder til, at beskytte vores data. En sådan metode ville være Learning with error
+	
+	\begin{mdframed}
+		\paragraph{\textbf{Learning With Error (LWE):}} Der generes to nøgler. Secret key, som er en tilfældig vektor $\mathbf{s}\in F^n_q$. Public key som er en række $\{c_i\}^m_{i=1}$, hvor $c_i=(\mathbf{a}_i,\mathbf{a}_i\cdot\mathbf{s}+e_i)$, hvor $\mathbf{a}_i$ er uniformly random, og $e_i$ er valgt ift fordeling $D_e$ 
+		
+		\paragraph{\textbf{Encryption}} Beskeden er en bit $w$. Vælg tilfældige bits $b_1,...,b_m$ og lad ciphertexten være $\sum_{i=1}^{m}b_ic_i+(0,\left\lceil \dfrac{q}{2}\right\rceil w)$
+		
+		\paragraph{\textbf{Decryption}} For at decrypte $(u,v)$, bergn $v-\mathbf{s}\cdot\mathbf{u}$, og output $0$ hvis værdien er tættere på $0$ end $\left\lceil\dfrac{q}{2}\right\rceil$. Ellers output 1.
+	\end{mdframed}
+	
+	Hvis det antages at decision LWE er svært, så kan man erstatte $c_i$'erne med public keys, som har formen $(\mathbf{a}_i,u_i)$, hvor $u_i$ er tilfældigt valg, og en adversary ville ikke afgøre dem fra hinanden. Så kan man bevise, at hvis $m$ er stort nok, vil encryptionen af $w$, med disse nye public keys, stort set ikke have informationer om $w$ i sig
+	
+	\paragraph{\textbf{Lemma 7}} Hvis $m\geq n+(n+1)\log_2(q)$, så vil følgende to fordelinger ikke kunne kendes fra hinanden, med kunen ubetydelig, i $n$, fordel(selv for en unbounded adversary):
+	\begin{align*}
+	\{(\mathbf{a}_i,u_i)\}^m_{i=1}\vspace{1cm}\sum_{i=1}^{m}b_i(\mathbf{a}_i,u_i) \\
+	\{(\mathbf{a}_i,u_i)\}^m_{i=1}\vspace{1cm}\mathbf{r}
+	\end{align*}
+	hvor $\mathbf{r}\in F^{n+1}_q$ er valgt uniformt og uafhængigt fra noget andet. \\
+	
+	Dog skal der bruges et $q$ på omkring 1000 og $n$ på nogle hundrede, hvilket giver en ciphertext for $n=500$, på $(n+1)\log(q)=5000$bits, hvilket er gangske meget ciphertext for én bit!
+	
+	\newpage
+	
 	\section{Symmetric (secret-key) Authentication and Hash Functions}
 	
+	Vi kigger på, fx en situation hvor to parter skal sende data igennem en channel, hvor en adversary kan modificere dataen som han ønsker det. Systemerne vi bruger til, gøre denne kommunikation så sikker som muligt, sender data/message $m$ og muligvis en secret key,  eller authentication value $s$.Her kan vi befinde os i to situationer
+	
+	\paragraph{\textbf{Adversary kan kun ændre i message}} En typisk løsning på dette, ville være, at have $m$ et usikkert sted, og have authenticator $s$ et sikkert sted, fx chipcard, også checke at data er intakt, med $s$. Disse løsninger kan bygges fra \textit{cryptographic hash functions}.
+	
+	\paragraph{\textbf{Adversary kan ændre både message og authenticator}} Dette er tilfældet hvor der kommunikeres over en sikker channel. Vi har to tilfælde i dette
+	\begin{itemize}
+		\item \textbf{Sender og receiver deler en secret key}\hspace{0.3cm}I dette tilfælde, er authenticator $s$, lavet på både $m$ og en hemmelig nøgle $k$. $m,s$ er sendt og vi modtager $m',s'$. Modtageren kan så ved brug af $k$, checke om det modtaget ser ok ud. Vi håber at $m,s=m',s'$ og adversarien ikke, har fundet et par andet par $m',s'$, som $k$ vil godtage. Et sådanne system kan bygges på \textit{Message Authentication Codes} (MAC's), også kendte som \textit{Keyed Hash Functions}.
+		\item \textbf{Sender og receiver deler på forhånd ingen secret keys} Senderen har en secret key $sk$, og offentlig gøre en $pk$. Senderen kommunikere en authenticator $s$ lavet på $m$ og $sk$. Derefter sendes $m,s$ og $m',s'$ modtages. Nu bruger modtageren $pk$ til, at checke om det modtaget ser ok ud. Et sådanne system kan konstrueres ved brug af \textit{Digital Signature Schemes}.
+	\end{itemize}
+	 
+	 Vi starter med, at uddybe hashfunctioner. \\
+	 
+	 En hashfunction er defineret ved en \textit{generator} $\mathcal{H}$, som tager som input et sikkerheds parameter $k$, og outputter beskrivelsen af en function $h:\{0,1\}^*\rightarrow\{0,1\}^k$. Med beskrivelse mener vi informationerne, der tillader os, at lave den beregning effektivit, altså i polynomisk tid i $k$ og længden af strengen. Til dette bruges ingen $sk$, så Adversarien vil også kunne kende den function vi bruger. Praktisk ville vi beregne $h(m)$, som vi gemmer sikkert, og gemme derefter vores message $m$. Når vi skal bruge vores message, som nu er $m'$, vil vi checke at $h(m)=h(m')$. Vi kalder også $h(m)$ for \textit{message digiest} eller \textit{message fingerprint}. \\
+	 
+	 En adversary kunne have flere angrebsmuligheder mod dette system:
+	 \begin{itemize}
+	 	\item \textbf{Preimage attack:} Given et message fingerprint $h(x)$, finder $A$ en message $x$ så som producere fingerprintet. 
+	 	\item \textbf{Second preimage attack:} $A$ finder en message $m'$ så $h(m)=h(m')$.
+	 	\item \textbf{Collision attack:} $A$ finder to vilkårlige beskeder $m$ og $m'$, hvorom det gælder at $h(m)=h(m')$, og går brugeren af systemet til at gemme $m$, og tage fingerprint $h(m)$, hvorefter han erstatter $m$ med $m'$.
+	 \end{itemize}
+	
+	Det ses at hvis vi kan lave et secound preimage attack, og i nogle tilfælde, hvis vi kan lave et preimage attack, kan vi også lave et collision attack. Derfor er ville den bedste sikkerhed være givet, hvis vi kan sikre os imod collision attack.
+	
+	\paragraph{\textbf{Definition 1}} Overvej spiller hvor vi kører $\mathcal{H}$ på input $k$, og får $h$. Vi giver $h$ som input til $A$, som outter to strenge $m$ og $m'$. Vi siger, dette lykkedes hvis $m\not=m'$ go $h(m)=h(m')$. Vi siger $\mathcal{H}$ er \textit{collision intractable}, aka. \textit{collision-resistant}, hvis en vilkårlig polynomieltids algoritme $A$ lykkedes med ubetydelig sandsynlighed (som function af $k$). \\
+	
+	Sådanne functioner findes under \textit{intractability antagelsen}. Antag $\mathcal{H}$ er defineret som følger: vælg et primtal $p=2q+1$, hvor $q$ er et $k-1$bit primtal. Vælg $\alpha, \beta$ af orden $q$ i $\mathbb{Z}^*_p$. Definer functionen $h:\mathbb{Z}_q \times\mathbb{Z}_q\rightarrow \mathbb{Z_p^*}$, ved $h(m_1,m_2)=\alpha^{m_1}\beta^{m_2}\mod{p}$. Hvis man kan finde en kollision for $h$, betyder dette vi har $(m_1,m_2)\not=(m^{'}_1,m^{'}_2)$ så $\alpha^{m_1}\beta^{m_2}=\alpha^{m_1^{'}}\beta^{m_2^{'}}$. Vi har enten at $m_1\not=m_1^{'}$ eller $m_2\not=m_2^{'}$. Lad os antage, uden tab af generality, at vi har i første case. Dette betyder at $(m_1^{'}-m_1)^{-1}\mod{q}$ findes. Dette betyder at $\alpha=\beta^{(m_2-m_2^{'})(m_1^{'}-m_1)^{-1}\mod{q}}\mod{p}$, og vi har fundet the discrete logarithm for $\alpha$ base $\beta$. \\
+	
+	Denne konstruktion er dog ikke fuldendt, da den ikke kan håndtere vilkårlige længde af input, som vores definition siger. Dette redes dog af
+	
+	\paragraph{\textbf{Theorem 1}} Hvis der findes en collision-intractable hash function generator $\mathcal{H}'$ der producere functioner med endeligt input $m>k$ og med $t(k)$ og $\epsilon(k)$-sikkerhed, så findes der collision-interactable generator $\mathcal{H}$ som producere funktioner, der tager arbitrerer længder af input.
+	
+	Dette resultat følger af 
+	
+	\paragraph{\textbf{Theorem 4.8}} Antag \textbf{compress} $:\{0,1\}^{m+t}\rightarrow\{0,1\}^m$ er en collision resistant compression function, hvor $y\geq 1$. Så findes der en collusion resistant hash function
+	\begin{align*}
+	h:\bigcup^{\infty}_{i=m+t+1}\{0,1\}^i\rightarrow \{0,1\}^m
+	\end{align*}
+	Hvor antallet af gang \textbf{compress} beregnes i beregningen af $h$ er højst
+	\begin{align*}
+	& 1+\left\lceil\dfrac{n}{t-1}\right\rceil && \text{hvis } t\geq2 \\
+	& 2n+2  && \text{hvis } t=1
+	\end{align*}
+	hvor $IxI=n$
+	
+	Vi forsætter med at uddybe MACs \\
+	
+	Et \textit{secret-key authentication system}, eller message authentication code(MAC) scheme, består af tre probabilistiske algoritmer $(G,A,V)$. 
+	\begin{itemize}
+		\item \textbf{G} - outputter key $K$, som oftes blot er en tilfædig bit streng af en hvis længde
+		\item \textbf{A} - tager en input message $m$ og en key $K$ og producere authenticator value $s=A_K(m)$. $s$ kaldes også for MAC
+		\item \textbf{V} -tager som input en authenticator værdi $s$, en besked $m$ og en key $K$, og outputter $V_K(s,m)$ som enten er \textit{accept} eller \textit{reject}.
+		\begin{itemize}
+			\item det må altid gælde at $V_K(A_K(m),m)=accept$
+		\end{itemize}
+	\end{itemize}
+	
+	\paragraph{\textbf{Definition 2(CMA Security for MACs)}} Vi siger at et MAC scheme er $(t,q,\epsilon)$ CMA-sikkert, hvis, for en hvilkårlig adversary kører højst i tid $t$ og laver højst $q$ queries, vinder et spil, hvor adversary kan spørge et oracle om resultater for $A_K(m)$ og $V_M(a,m)$, for vilkårlige messages $m$, og hvor han til sidst skal give en message $m_0$, som oracle ikke har authenticated før og får resultatet $V_K(a_0,m_0)=accept$.
+	
+	Et af de mest kendte MAC scheme er CBC-MAC, som er baseret på konventionelle kryptosystemer: given et system, fx DES, så kan man blot encrypte data  på input message i CBC mode, med $IV=0$, og lade MAC'en være den sidste block af ciphertext. Hvis man laver sig nogle antagelser om hvilket kryptosystem vi basere CBC-MAC på, fx at det skaber en god familie af pseudorandom funktioner, så vil den resulterende MAC også være godt, til en hvis grad.
+	
+	\paragraph{\textbf{"Theorem}} Antage $(G,E,D)$ er et $(t',q',\epsilon')$-sikkert PRF, så, for en vilkårlig message af hjøst længde $n$, antaget ingen message er et prefix an en anden message, og $n<2^{k/3}$, så vil en CBC-MAC baseret på dette system være $(t,q,\epsilon)$ CMA-sikkert MAC scheme, hvor
+	\begin{align*}
+	t=t' \hspace{3cm} t\leq q' \hspace{3cm} \epsilon=\epsilon' +\dfrac{20nq'^{2}}{2^k}
+	\end{align*}
+	og hvor $t$ er det totale antal blokke sendt af adversary igennem angrebet. \\
+	
+	Hovedkonklusionen på dette theorem er, så længe vi ikke bruger systemer på for stor mængde data, vil det \textit{arve} mange af de gode styrker fra den original kryptering.
+	
+	\newpage
+	
 	\section{Digital Signature Schemes}
-
+	
+	Vi definere et digital signature scheme ved en tretupel $(G,S,V)$
+	\begin{itemize}
+		\item \textbf{G:} En probabilistisk key generation algoritme $G$, som tager et sikkerheds parameter $k$ som input, og producere et key pair $(pk,sk)$. Jo større $k$, jo, forhåbenlig, bedre sikkerhed.
+		\item \textbf{S:} En algoritme $A$ får input, en message $m$ og en secret key $sk$, og producere en signatur $S_{sk}(m)$.
+		\item \textbf{V:} $V$ tager input, signatur $s$, en message $m$ og en public key $pk$, og ouputter $V_{pk}(A_{sk}(m),m)=accept$ eller $reject$. 
+		\begin{itemize}
+			\item Pr def. skal det altid gælde at $V_{pk}(A_{sk}(m),m)=accept$. 
+		\end{itemize}
+	\end{itemize}
+	
+	Det ses, at imodsætning til MACs, hvor begge parter kende $sk$, er det kun en bruger der har $sk$ i digital signature schemes.
+	
+	\paragraph{\textbf{Definition 3 (Sikkerhed for signature schemes)}} Vi sgier et signature scheme er \textit{CMA}-sikkert, hvis for en vilkårlig probabilistisk polynomieltids adversary $E$, kan vinde spillet med en $Adv_E(k)$, der er ubetydelig ift $k$: $G$ får input $k$ og producere $(pk,sk)$, og $E$ får $pk$. $E$ kan quere vilkårligt mange messages $m$ til oraclet $O$, og får $S_{sk}(m)$ tilbage. $E$ vinder spillet hvis han kan producere et par $m_0,s_0$ så $V_{pk}(m_0,s_0)=accept$, og $O$ ikke har set $m_0$ før. Sandsyngliheden for at $E$ vinder er en function over $k$, $Adv_E(k)$. Denne sikkerhed, er den stærkested der kan gives ift signature schemes. \\
+	
+	Et sådanne system er fx ElGamal Signature Scheme
+	
+	\begin{mdframed}
+		\paragraph{\textbf{Kryptosystem 7.2 (ElGamal Signature Scheme):}} Lad $p$ være et primtal så det discrete log problem i $\mathbb{Z}_p$ er intractable, og lad $\alpha\in\mathbb{Z}_p^*$ være et primitivt elemet. Lad $\mathcal{P}=\mathbb{Z}_p^*, \mathcal{A}=\mathbb{Z}_p^* \times \mathbb{Z}_{p-1}$ og definer
+		\begin{align*}
+		\mathcal{K}=\{(p,\alpha,a,\beta):\beta\equiv\alpha^a\mod{p}\}
+		\end{align*} 
+		værdierne $p,\alpha$ og $\beta$ er vores public key, og $a$ er vores private key. \\
+		
+		For $\mathcal{K}=(p,\alpha,a,\beta)$ er for et (hemmelig) tilfældigt tal $k\in\mathbb{Z}_{p-1}^*$, definer
+		\begin{align*}
+		\mathbf{sig}_K(x,k)=(\gamma,\delta)
+		\intertext{hvor}
+		\gamma=\alpha^k\mod{p}
+		\intertext{og}
+		\delta=(x-a\gamma)k^{-1}\mod{p-1}
+		\end{align*}
+		For $x,y\in\mathbb{Z}_p^*$ og $\delta\in\mathbb{Z}_{p-1}$, definer
+		\begin{align*}
+		\mathbb{ver}_K(x,(\gamma,\delta))=sandt \iff \beta^\gamma\gamma^\delta\equiv\alpha^x\mod{p}
+		\end{align*}
+	\end{mdframed}
+	
+	Det er muligt i dettei dette system at lave existential forgery ved et key-only attack, hvor der vælge $\gamma,\delta$ og $x$ på samme tid. Derved vides der ikke hvad der underskrives på forhånd, men det vil ikke desto mindre være underskrevet. \\
+	
+	Antag $0\leq i\leq p-2$ og $0\leq j\leq p-2$ er heltal, og antag $\gamma=\alpha^i\beta^j\mod{p}$. Vi verificerr ved 
+	\begin{align*}
+	\alpha\equiv\beta^\gamma(\alpha^i\beta^j)^\delta\mod{p}
+	\intertext{som er ækvivalent til}
+	\alpha^{x-i\delta}\equiv\beta^{\gamma+j\delta}\mod{p}
+	\end{align*}
+	Hvor den sidste congruence opfylder
+	\begin{align*}
+	x-i\delta\equiv0\mod{(p-1)} \hspace{1cm}\text{ og }\hspace{1cm} \gamma+j\delta\equiv0\mod{p-1}
+	\end{align*}
+	Given $i$ og $j$, så kan vi let l'se disse to congruencer modulo $p-1$ for $\delta$ og $x$, givet at $\gcd(j,p-1)=1$, hvormed vi får følgende
+	\begin{align*}
+	\gamma&=\alpha^i\beta^j\mod{p} \\
+	\delta&=-\gamma j^{-1}\mod{(p-1)} \hspace{1cm} \text{og} \\
+	x&=-\gamma ij^{-1}\mod{(p-1)}
+	\end{align*}
+	Som danner vores konstruede signerede message $x$. \\
+	
+	Det er også vigtigt at understrege, at hvis $k$ bliver kendt og $\gcd(\gamma,p-1)$, så følger det at
+	\begin{align*}
+	a=(a-xk\delta)\gamma^{-1}\mod{(p-1)}
+	\end{align*}
+	og systemet vil være fuldstændigt brudt. \\
+	
+	En anden fejl er at bruge det samme $k$ for to forskellige messages $m$, da man så vil kunne beregne $a$. Det følger sålede: antag $(\gamma,\delta_1)$ er signatur for $x_1$ og $(\gamma,\delta_2)$ er signatur for $x_2$, så
+	\begin{align*}
+	\beta^\gamma\gamma^{\delta_1}\equiv\alpha^{x_1}\mod{p}\hspace{1cm}\text{og}\hspace{1cm}	\beta^\gamma\gamma^{\delta_2}\equiv\alpha^{x_2}\mod{p}
+	\end{align*}
+	så
+	\begin{align*}
+	\alpha^{x_1-x_2}\equiv\gamma^{\delta_1-\delta_2}\mod{p}
+	\intertext{som er ækvivalent med}
+	x_1-x_2\equiv k(\delta_1-\delta_2)\mod{(p-1)}
+	\end{align*}
+	Lad $d=\gcd(\delta_1-\delta_2,p-1)$. Da $d|(p-1)$ og $d|(\delta_1-\delta_2)$, følger det at $d|(x_1-x_2)$. Definer
+	\begin{align*}
+	x'=\dfrac{x_1-x_2}{d}\hspace{2cm}\delta'=\dfrac{\delta_1-\delta_2}{d}\hspace{2cm}p'=\dfrac{p-1}{d}
+	\end{align*}
+	så bliver congruencen
+	\begin{align*}
+	x'=xk\delta'\mod{p'}
+	\intertext{og da $\gcd(\delta',p')=1$, beregner vi}
+	\epsilon=(\delta')^{-1}\mod{p'}
+	\intertext{hvor vi kan bestemme $k$ modulo $p'$ til}
+	k=x'\epsilon\mod{p'}
+	\intertext{hvilket giver $d$ kandidater for $k$}
+	k=x'\epsilon+ip'\mod{p'}
+	\end{align*}
+	for et $0\leq i\leq d-1$. Af disse $d$ kandidater, er det én unik korrekt kandidat, der kan findes ved at udregne
+	\[\gamma\equiv\alpha^k\mod{p}\]
+	En afart af ElGamal signature er Schnoor Signature scheme, Cryptosystem 7.3, som kan laves med kortere keys, ved at integrere en hash function ind i krypteringen. En sådan integration hjælpe også på El Gamal, delen da den lidt midste sin multiplicative egenskab. Desværre har vi ikke andet hjælp ift at bevise sikkerhed med hash funktioner end random oracle proof. Det bedste vi kan håbe på er
+	
+	\paragraph{\textbf{Theorem 3}} Hvis hash functions generator $\mathcal{H}$ er kollision interactable og signature scheme $\Sigma$ er sikkert, så er det kombinerede scheme $\Sigma'$ sikkert. \\
+	
+	Nogle oplagte problemr med signature schemes er, at godt nok kan vi underskrive data, men vi kan ikke se hvornår. Dette åbner dåren for replay attacks. Dette kan undgås ved at ikke sende den samme besked mere end en gang, numerere sin beskeder, timestamps eller modtageren kan sende et tilfældigt tal $R$, hvor vi så sender en MAC af R med tilbage. Dette $R$ kan selfølgelig ikke genbruges heller.
+	
+	
 \end{document}

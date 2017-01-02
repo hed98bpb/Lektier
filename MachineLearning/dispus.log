@@ -2,8 +2,8 @@ This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
-**DispusCrypto.tex
-(./DispusCrypto.tex
+**dispus.tex
+(./dispus.tex
 LaTeX2e <2015/01/01>
 Babel <3.9l> and hyphenation patterns for 79 languages loaded.
 (/usr/local/texlive/2015/texmf-dist/tex/latex/koma-script/scrartcl.cls
@@ -610,60 +610,7 @@ File: md-frame-0.mdf 2013/07/01\ 1.9b: md-frame-0
 \c@mdf@zref@counter=\count124
 Package zref Info: New property: mdf@pagevalue on input line 895.
 )
-(/usr/local/texlive/2015/texmf-dist/tex/latex/algorithm2e/algorithm2e.sty
-Package: algorithm2e 2013/01/06 v5.00 algorithms environments
-\c@AlgoLine=\count125
-
-(/usr/local/texlive/2015/texmf-dist/tex/latex/base/ifthen.sty
-Package: ifthen 2014/09/29 v1.1c Standard LaTeX ifthen package (DPC)
-)
-(/usr/local/texlive/2015/texmf-dist/tex/latex/tools/xspace.sty
-Package: xspace 2014/10/28 v1.13 Space after command names (DPC,MH)
-)
-(/usr/local/texlive/2015/texmf-dist/tex/latex/relsize/relsize.sty
-Package: relsize 2013/03/29 ver 4.1
-)
-********************************************************
-Package `algorithm2e' Release 5.0 -- january 06 2013 --
-- algorithm2e-announce@lirmm.fr mailing list for announcement about releases
-- algorithm2e-discussion@lirmm.fr mailing list for discussion about package
-subscribe by emailing sympa@lirmm.fr with 'subscribe <list> <firstname name>'
-- Author: Christophe Fiorio (cfiorio@um2.fr)
-********************************************************
-\skiptotal=\skip121
-\skiplinenumber=\skip122
-\skiprule=\skip123
-\skiphlne=\skip124
-\skiptext=\skip125
-\skiplength=\skip126
-\algomargin=\skip127
-\skipalgocfslide=\skip128
-\algowidth=\dimen134
-\inoutsize=\dimen135
-\inoutindent=\dimen136
-\interspacetitleruled=\dimen137
-\interspacealgoruled=\dimen138
-\interspacetitleboxruled=\dimen139
-\algocf@inoutbox=\box47
-\algocf@inputbox=\box48
-\AlCapSkip=\skip129
-\AlCapHSkip=\skip130
-\algoskipindent=\skip131
-\algocf@nlbox=\box49
-\algocf@hangingbox=\box50
-\algocf@untilbox=\box51
-\algocf@skipuntil=\skip132
-\algocf@capbox=\box52
-\algoheightruledefault=\skip133
-\algoheightrule=\skip134
-\algotitleheightruledefault=\skip135
-\algotitleheightrule=\skip136
-\c@algocfline=\count126
-\c@algocfproc=\count127
-\c@algocf=\count128
-\algocf@algoframe=\box53
-\algocf@algobox=\box54
-) (/usr/local/texlive/2015/texmf-dist/tex/latex/base/fontenc.sty
+(/usr/local/texlive/2015/texmf-dist/tex/latex/base/fontenc.sty
 Package: fontenc 2005/09/27 v1.99g Standard LaTeX package
 
 (/usr/local/texlive/2015/texmf-dist/tex/latex/base/t1enc.def
@@ -949,8 +896,8 @@ Language: english 2012/08/20 v3.3p English support from the babel system
 
 (/usr/local/texlive/2015/texmf-dist/tex/generic/babel/babel.def
 File: babel.def 2014/09/25 3.9l Babel common definitions
-\babel@savecnt=\count129
-\U@D=\dimen140
+\babel@savecnt=\count125
+\U@D=\dimen134
 )
 \l@canadian = a dialect from \language\l@american 
 \l@australian = a dialect from \language\l@british 
@@ -958,7 +905,7 @@ File: babel.def 2014/09/25 3.9l Babel common definitions
 ))
 (/usr/local/texlive/2015/texmf-dist/tex/latex/amsmath/amsmath.sty
 Package: amsmath 2013/01/14 v2.14 AMS math features
-\@mathmargin=\skip137
+\@mathmargin=\skip121
 
 For additional information on amsmath, use the `?' option.
 (/usr/local/texlive/2015/texmf-dist/tex/latex/amsmath/amstext.sty
@@ -967,49 +914,49 @@ Package: amstext 2000/06/29 v2.01
 (/usr/local/texlive/2015/texmf-dist/tex/latex/amsmath/amsgen.sty
 File: amsgen.sty 1999/11/30 v2.0
 \@emptytoks=\toks17
-\ex@=\dimen141
+\ex@=\dimen135
 ))
 (/usr/local/texlive/2015/texmf-dist/tex/latex/amsmath/amsbsy.sty
 Package: amsbsy 1999/11/29 v1.2d
-\pmbraise@=\dimen142
+\pmbraise@=\dimen136
 )
 (/usr/local/texlive/2015/texmf-dist/tex/latex/amsmath/amsopn.sty
 Package: amsopn 1999/12/14 v2.01 operator names
 )
-\inf@bad=\count130
+\inf@bad=\count126
 LaTeX Info: Redefining \frac on input line 210.
-\uproot@=\count131
-\leftroot@=\count132
+\uproot@=\count127
+\leftroot@=\count128
 LaTeX Info: Redefining \overline on input line 306.
-\classnum@=\count133
-\DOTSCASE@=\count134
+\classnum@=\count129
+\DOTSCASE@=\count130
 LaTeX Info: Redefining \ldots on input line 378.
 LaTeX Info: Redefining \dots on input line 381.
 LaTeX Info: Redefining \cdots on input line 466.
-\Mathstrutbox@=\box55
-\strutbox@=\box56
-\big@size=\dimen143
+\Mathstrutbox@=\box47
+\strutbox@=\box48
+\big@size=\dimen137
 LaTeX Font Info:    Redeclaring font encoding OML on input line 566.
 LaTeX Font Info:    Redeclaring font encoding OMS on input line 567.
-\macc@depth=\count135
-\c@MaxMatrixCols=\count136
+\macc@depth=\count131
+\c@MaxMatrixCols=\count132
 \dotsspace@=\muskip16
-\c@parentequation=\count137
-\dspbrk@lvl=\count138
+\c@parentequation=\count133
+\dspbrk@lvl=\count134
 \tag@help=\toks18
-\row@=\count139
-\column@=\count140
-\maxfields@=\count141
+\row@=\count135
+\column@=\count136
+\maxfields@=\count137
 \andhelp@=\toks19
-\eqnshift@=\dimen144
-\alignsep@=\dimen145
-\tagshift@=\dimen146
-\tagwidth@=\dimen147
-\totwidth@=\dimen148
-\lineht@=\dimen149
+\eqnshift@=\dimen138
+\alignsep@=\dimen139
+\tagshift@=\dimen140
+\tagwidth@=\dimen141
+\totwidth@=\dimen142
+\lineht@=\dimen143
 \@envbody=\toks20
-\multlinegap=\skip138
-\multlinetaggap=\skip139
+\multlinegap=\skip122
+\multlinetaggap=\skip123
 \mathdisplay@stack=\toks21
 LaTeX Info: Redefining \[ on input line 2665.
 LaTeX Info: Redefining \] on input line 2666.
@@ -1029,14 +976,14 @@ Package: amsthm 2015/03/04 v2.20.2
 \thm@headfont=\toks24
 \thm@notefont=\toks25
 \thm@headpunct=\toks26
-\thm@preskip=\skip140
-\thm@postskip=\skip141
-\thm@headsep=\skip142
+\thm@preskip=\skip124
+\thm@postskip=\skip125
+\thm@headsep=\skip126
 \dth@everypar=\toks27
 )
 (/usr/local/texlive/2015/texmf-dist/tex/latex/lipsum/lipsum.sty
 Package: lipsum 2014/07/27 v1.3 150 paragraphs of Lorem Ipsum dummy text
-\c@lips@count=\count142
+\c@lips@count=\count138
 )
 (/usr/local/texlive/2015/texmf-dist/tex/latex/sectsty/sectsty.sty
 Package: sectsty 2002/02/25 v2.0.2 Commands to change all sectional heading sty
@@ -1048,886 +995,231 @@ Class scrartcl Warning: Usage of package `fancyhdr' together
 (scrartcl)              I'd suggest to use 
 (scrartcl)              package `scrlayer-scrpage'.
 (scrartcl)              Nevertheless, using requested
-(scrartcl)              package `fancyhdr' on input line 18.
+(scrartcl)              package `fancyhdr' on input line 17.
 
 (/usr/local/texlive/2015/texmf-dist/tex/latex/fancyhdr/fancyhdr.sty
-\fancy@headwidth=\skip143
-\f@ncyO@elh=\skip144
-\f@ncyO@erh=\skip145
-\f@ncyO@olh=\skip146
-\f@ncyO@orh=\skip147
-\f@ncyO@elf=\skip148
-\f@ncyO@erf=\skip149
-\f@ncyO@olf=\skip150
-\f@ncyO@orf=\skip151
+\fancy@headwidth=\skip127
+\f@ncyO@elh=\skip128
+\f@ncyO@erh=\skip129
+\f@ncyO@olh=\skip130
+\f@ncyO@orh=\skip131
+\f@ncyO@elf=\skip132
+\f@ncyO@erf=\skip133
+\f@ncyO@olf=\skip134
+\f@ncyO@orf=\skip135
 )
-(./DispusCrypto.aux)
-\openout1 = `DispusCrypto.aux'.
+(./dispus.aux)
+\openout1 = `dispus.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 51.
-LaTeX Font Info:    ... okay on input line 51.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 51.
-LaTeX Font Info:    ... okay on input line 51.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 51.
-LaTeX Font Info:    ... okay on input line 51.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 51.
-LaTeX Font Info:    ... okay on input line 51.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 51.
-LaTeX Font Info:    ... okay on input line 51.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 51.
-LaTeX Font Info:    ... okay on input line 51.
-LaTeX Font Info:    Checking defaults for FML/futm/m/it on input line 51.
-LaTeX Font Info:    Try loading font information for FML+futm on input line 51.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 50.
+LaTeX Font Info:    ... okay on input line 50.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 50.
+LaTeX Font Info:    ... okay on input line 50.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 50.
+LaTeX Font Info:    ... okay on input line 50.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 50.
+LaTeX Font Info:    ... okay on input line 50.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 50.
+LaTeX Font Info:    ... okay on input line 50.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 50.
+LaTeX Font Info:    ... okay on input line 50.
+LaTeX Font Info:    Checking defaults for FML/futm/m/it on input line 50.
+LaTeX Font Info:    Try loading font information for FML+futm on input line 50.
 
-
-(/usr/local/texlive/2015/texmf-dist/tex/latex/fourier/fmlfutm.fd
+ (/usr/local/texlive/2015/texmf-dist/tex/latex/fourier/fmlfutm.fd
 File: fmlfutm.fd 2004/10/30 Fontinst v1.926 font definitions for FML/futm.
 )
-LaTeX Font Info:    ... okay on input line 51.
-LaTeX Font Info:    Checking defaults for FMS/futm/m/n on input line 51.
-LaTeX Font Info:    Try loading font information for FMS+futm on input line 51.
+LaTeX Font Info:    ... okay on input line 50.
+LaTeX Font Info:    Checking defaults for FMS/futm/m/n on input line 50.
+LaTeX Font Info:    Try loading font information for FMS+futm on input line 50.
 
-
-(/usr/local/texlive/2015/texmf-dist/tex/latex/fourier/fmsfutm.fd
+ (/usr/local/texlive/2015/texmf-dist/tex/latex/fourier/fmsfutm.fd
 File: fmsfutm.fd 2004/10/30 Fontinst v1.926 font definitions for FMS/futm.
 )
-LaTeX Font Info:    ... okay on input line 51.
-LaTeX Font Info:    Checking defaults for FMX/futm/m/n on input line 51.
-LaTeX Font Info:    Try loading font information for FMX+futm on input line 51.
+LaTeX Font Info:    ... okay on input line 50.
+LaTeX Font Info:    Checking defaults for FMX/futm/m/n on input line 50.
+LaTeX Font Info:    Try loading font information for FMX+futm on input line 50.
 
 
 (/usr/local/texlive/2015/texmf-dist/tex/latex/fourier/fmxfutm.fd
 File: fmxfutm.fd futm-extension
 )
-LaTeX Font Info:    ... okay on input line 51.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 51.
-LaTeX Font Info:    Try loading font information for TS1+cmr on input line 51.
+LaTeX Font Info:    ... okay on input line 50.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 50.
+LaTeX Font Info:    Try loading font information for TS1+cmr on input line 50.
 
 (/usr/local/texlive/2015/texmf-dist/tex/latex/base/ts1cmr.fd
 File: ts1cmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
-LaTeX Font Info:    ... okay on input line 51.
-LaTeX Font Info:    Try loading font information for T1+futs on input line 51.
+LaTeX Font Info:    ... okay on input line 50.
+LaTeX Font Info:    Try loading font information for T1+futs on input line 50.
 
 (/usr/local/texlive/2015/texmf-dist/tex/latex/fourier/t1futs.fd
 File: t1futs.fd 2004/03/02 Fontinst v1.926 font definitions for T1/futs.
 )
-\AtBeginShipoutBox=\box57
+\AtBeginShipoutBox=\box49
 
 (/usr/local/texlive/2015/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count143
-\scratchdimen=\dimen150
-\scratchbox=\box58
-\nofMPsegments=\count144
-\nofMParguments=\count145
+\scratchcounter=\count139
+\scratchdimen=\dimen144
+\scratchbox=\box50
+\nofMPsegments=\count140
+\nofMParguments=\count141
 \everyMPshowfont=\toks28
-\MPscratchCnt=\count146
-\MPscratchDim=\dimen151
-\MPnumerator=\count147
-\makeMPintoPDFobject=\count148
+\MPscratchCnt=\count142
+\MPscratchDim=\dimen145
+\MPnumerator=\count143
+\makeMPintoPDFobject=\count144
 \everyMPtoPDFconversion=\toks29
 )
-LaTeX Font Info:    Try loading font information for T1+cmss on input line 53.
+LaTeX Font Info:    Try loading font information for T1+cmss on input line 52.
  (/usr/local/texlive/2015/texmf-dist/tex/latex/base/t1cmss.fd
 File: t1cmss.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
-LaTeX Font Info:    Font shape `T1/futs/bx/sc' in size <10.95> not available
-(Font)              Font shape `T1/futs/b/sc' tried instead on input line 55.
-LaTeX Font Info:    Try loading font information for FML+futmi on input line 55
+LaTeX Font Info:    Try loading font information for FML+futmi on input line 54
 .
 
 (/usr/local/texlive/2015/texmf-dist/tex/latex/fourier/fmlfutmi.fd
 File: fmlfutmi.fd 2004/10/30 Fontinst v1.926 font definitions for FML/futmi.
 )
 LaTeX Font Info:    Font shape `FMX/futm/m/n' will be
-(Font)              scaled to size 10.07397pt on input line 55.
+(Font)              scaled to size 10.07397pt on input line 54.
 LaTeX Font Info:    Font shape `FMX/futm/m/n' will be
-(Font)              scaled to size 7.63599pt on input line 55.
+(Font)              scaled to size 7.63599pt on input line 54.
 LaTeX Font Info:    Font shape `FMX/futm/m/n' will be
-(Font)              scaled to size 5.51999pt on input line 55.
+(Font)              scaled to size 5.51999pt on input line 54.
 LaTeX Font Info:    Font shape `U/futm/m/n' will be
-(Font)              scaled to size 10.07397pt on input line 55.
+(Font)              scaled to size 10.07397pt on input line 54.
 LaTeX Font Info:    Font shape `U/futm/m/n' will be
-(Font)              scaled to size 7.63599pt on input line 55.
+(Font)              scaled to size 7.63599pt on input line 54.
 LaTeX Font Info:    Font shape `U/futm/m/n' will be
-(Font)              scaled to size 5.51999pt on input line 55.
-LaTeX Font Info:    Try loading font information for U+msa on input line 55.
+(Font)              scaled to size 5.51999pt on input line 54.
+LaTeX Font Info:    Try loading font information for U+msa on input line 54.
 
 (/usr/local/texlive/2015/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 55.
+LaTeX Font Info:    Try loading font information for U+msb on input line 54.
 
 (/usr/local/texlive/2015/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-Underfull \hbox (badness 10000) in paragraph at lines 55--56
+Underfull \hbox (badness 10000) in paragraph at lines 54--55
 
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 59--60
-
- []
-
-Package mdframed Info: mdframed detected package amsthm 
- changed the theorem header of amsthm
-(mdframed)              on input line 64.
-LaTeX Font Info:    Try loading font information for TS1+futs on input line 64.
-
-(/usr/local/texlive/2015/texmf-dist/tex/latex/fourier/ts1futs.fd
-File: ts1futs.fd 2004/03/26 Fontinst v1.926 font definitions for TS1/futs.
-)
-Overfull \hbox (0.41946pt too wide) in paragraph at lines 64--65
-\T1/futs/m/n/10.95 equiv-a-lent, den exclusive-or af de to bit strenge). S\TS1/
-futs/m/n/10.95 ®\T1/futs/m/n/10.95 , hvis $\FML/futmi/m/it/10.95 x \FMS/futm/m/
-n/10.95 Å \T1/futs/m/n/10.95 (\FML/futmi/m/it/10.95 x[]; :::; x[]\T1/futs/m/n/1
-0.95 )$ og $\FML/futmi/m/it/10.95 K \FMS/futm/m/n/10.95 Å \T1/futs/m/n/10.95 (\
-FML/futmi/m/it/10.95 K[]; :::; K[]\T1/futs/m/n/10.95 )$,
  []
 
 LaTeX Font Info:    Font shape `T1/futs/bx/n' in size <10.95> not available
-(Font)              Font shape `T1/futs/b/n' tried instead on input line 76.
+(Font)              Font shape `T1/futs/b/n' tried instead on input line 56.
 LaTeX Font Info:    Font shape `T1/futs/bx/n' in size <8.3> not available
-(Font)              Font shape `T1/futs/b/n' tried instead on input line 76.
+(Font)              Font shape `T1/futs/b/n' tried instead on input line 56.
 LaTeX Font Info:    Font shape `T1/futs/bx/n' in size <6> not available
-(Font)              Font shape `T1/futs/b/n' tried instead on input line 76.
+(Font)              Font shape `T1/futs/b/n' tried instead on input line 56.
+Missing character: There is no x in font fourier-bb!
+Missing character: There is no x in font fourier-bb!
 
-Underfull \hbox (badness 10000) in paragraph at lines 81--82
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 83--84
+Underfull \hbox (badness 10000) in paragraph at lines 83--85
 
  []
 
 [1
 
 {/usr/local/texlive/2015/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
-Underfull \hbox (badness 10000) in paragraph at lines 94--96
+Underfull \hbox (badness 10000) in paragraph at lines 95--96
 
  []
 
 
-Overfull \hbox (9.56357pt too wide) in paragraph at lines 97--98
-[]\T1/futs/m/n/10.95 Der ex-is-tere fun-da-men-tale forhold en-tropyer og com-p
-o-nen-ter i et cryp-tosys-tem. Den betingede
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 104--105
+Underfull \hbox (badness 10000) in paragraph at lines 97--98
 
  []
 
+Missing character: There is no w in font fourier-bb!
 
-Underfull \hbox (badness 10000) in paragraph at lines 115--116
+Underfull \hbox (badness 10000) in paragraph at lines 110--112
 
  []
 
 [2]
-Underfull \hbox (badness 10000) in paragraph at lines 137--138
+Underfull \hbox (badness 10000) in paragraph at lines 119--120
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 124--126
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 141--143
 
  []
 
 [3]
-Underfull \hbox (badness 10000) in paragraph at lines 149--150
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 151--152
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 156--157
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 161--162
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 165--166
-
- []
-
-[4] [5]
-Overfull \hbox (21.68167pt too wide) in paragraph at lines 184--185
-[] \T1/futs/b/sc/10.95 Def-i-ni-tion 2 (Chosen-Plaintext Attack(CPA)-security):
-[][] \T1/futs/m/n/10.95 Vi siger kryp-tosys-temet $(\FML/futmi/m/it/10.95 G; E;
- D\T1/futs/m/n/10.95 )$
- []
-
 Package mdframed Info: mdframed detected package amsthm 
  changed the theorem header of amsthm
-(mdframed)              on input line 191.
+(mdframed)              on input line 152.
 
-Overfull \hbox (5.58685pt too wide) in paragraph at lines 191--192
-[] \T1/futs/b/sc/10.95 CBC En-cryp-tion[][] \T1/futs/m/n/10.95 Lad $(\FML/futmi
-/m/it/10.95 G[]; E[]; D[]\T1/futs/m/n/10.95 )$ vÊre et PRK-sikkert de-ter-min-i
-s-tisk kryp-tosys-tem, hvor
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 204--206
-
- []
-
-[6]
-Overfull \hbox (3.32402pt too wide) in paragraph at lines 216--217
-[] $\FML/futmi/m/it/10.95 E$\T1/futs/b/sc/10.95 , al-go-ritme til at en-crypte:
-[][] \T1/futs/m/n/10.95 al-go-rit-men tager som in-put $\FML/futmi/m/it/10.95 p
-k$ \T1/futs/m/n/10.95 og $\FML/futmi/m/it/10.95 x \FMS/futm/m/n/10.95 2 P$ \T1/
-futs/m/n/10.95 pro-duc-ere $\FML/futmi/m/it/10.95 E[]\T1/futs/m/n/10.95 (\FML/f
-utmi/m/it/10.95 x\T1/futs/m/n/10.95 ) \FMS/futm/m/n/10.95 2
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 217--218
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 219--220
-
- []
-
-
-Overfull \hbox (40.91766pt too wide) in paragraph at lines 234--235
-[] \T1/futs/b/sc/10.95 RSA as-sump-tion:[][] \T1/futs/m/n/10.95 den basale RSA 
-al-go-ritme, fe-finerer en fam-i-lie af trap-door one-way-permutations. 
- []
-
-Package mdframed Info: mdframed detected package amsthm 
- changed the theorem header of amsthm
-(mdframed)              on input line 237.
-[7]
-Underfull \hbox (badness 10000) in paragraph at lines 252--253
-
- []
-
-Package mdframed Info: mdframed detected package amsthm 
- changed the theorem header of amsthm
-(mdframed)              on input line 257.
-
-Overfull \vbox (24.6475pt too high) detected at line 265
- []
-
-Package mdframed Info: Box was splittet wrong
- starting loop to iterate the splitting point
-(mdframed)              on input line 265.
-
-Overfull \vbox (25.6475pt too high) detected at line 265
- []
-
-
-Overfull \vbox (26.6475pt too high) detected at line 265
- []
-
-
-Overfull \vbox (27.6475pt too high) detected at line 265
- []
-
-
-Overfull \vbox (28.6475pt too high) detected at line 265
- []
-
-
-Overfull \vbox (29.6475pt too high) detected at line 265
- []
-
-
-Overfull \vbox (30.6475pt too high) detected at line 265
- []
-
-
-Overfull \vbox (31.6475pt too high) detected at line 265
- []
-
-
-Overfull \vbox (32.6475pt too high) detected at line 265
- []
-
-
-Overfull \vbox (33.6475pt too high) detected at line 265
- []
-
-
-Overfull \vbox (34.6475pt too high) detected at line 265
- []
-
-
-Overfull \vbox (35.6475pt too high) detected at line 265
- []
-
-
-Overfull \vbox (36.6475pt too high) detected at line 265
- []
-
-
-Overfull \vbox (37.6475pt too high) detected at line 265
- []
-
-
-Overfull \vbox (38.6475pt too high) detected at line 265
- []
-
-
-Overfull \vbox (39.6475pt too high) detected at line 265
- []
-
-
-Overfull \vbox (40.6475pt too high) detected at line 265
- []
-
-
-Overfull \vbox (41.6475pt too high) detected at line 265
- []
-
-
-Overfull \vbox (42.6475pt too high) detected at line 265
- []
-
-
-Overfull \vbox (43.6475pt too high) detected at line 265
- []
-
-
-Overfull \vbox (44.6475pt too high) detected at line 265
- []
-
-
-Overfull \vbox (45.6475pt too high) detected at line 265
- []
-
-
-Overfull \vbox (46.6475pt too high) detected at line 265
- []
-
-
-Overfull \vbox (47.6475pt too high) detected at line 265
- []
-
-
-Overfull \vbox (48.6475pt too high) detected at line 265
- []
-
-
-Overfull \vbox (49.6475pt too high) detected at line 265
- []
-
-
-Overfull \vbox (50.6475pt too high) detected at line 265
- []
-
-
-Overfull \vbox (51.6475pt too high) detected at line 265
- []
-
-
-Overfull \vbox (52.6475pt too high) detected at line 265
- []
-
-
-Overfull \vbox (53.6475pt too high) detected at line 265
- []
-
-
-Overfull \vbox (54.6475pt too high) detected at line 265
- []
-
-
-Overfull \vbox (55.6475pt too high) detected at line 265
- []
-
-
-Overfull \vbox (56.6475pt too high) detected at line 265
- []
-
-
-Overfull \vbox (57.6475pt too high) detected at line 265
- []
-
-
-Overfull \vbox (58.6475pt too high) detected at line 265
- []
-
-
-Overfull \vbox (59.6475pt too high) detected at line 265
- []
-
-
-Overfull \vbox (60.6475pt too high) detected at line 265
- []
-
-
-Overfull \vbox (61.6475pt too high) detected at line 265
- []
-
-
-Overfull \vbox (62.6475pt too high) detected at line 265
- []
-
-
-Overfull \vbox (63.6475pt too high) detected at line 265
- []
-
-
-Overfull \vbox (64.6475pt too high) detected at line 265
- []
-
-
-Overfull \vbox (65.6475pt too high) detected at line 265
- []
-
-
-Overfull \vbox (66.6475pt too high) detected at line 265
- []
-
-
-Overfull \vbox (67.6475pt too high) detected at line 265
- []
-
-
-Overfull \vbox (68.6475pt too high) detected at line 265
- []
-
-
-Overfull \vbox (69.6475pt too high) detected at line 265
- []
-
-
-Overfull \vbox (70.6475pt too high) detected at line 265
- []
-
-
-Overfull \vbox (71.6475pt too high) detected at line 265
- []
-
-
-Overfull \vbox (72.6475pt too high) detected at line 265
- []
-
-
-Overfull \vbox (73.6475pt too high) detected at line 265
- []
-
-
-Overfull \vbox (74.6475pt too high) detected at line 265
- []
-
-
-Overfull \vbox (75.6475pt too high) detected at line 265
- []
-
-
-Overfull \vbox (76.6475pt too high) detected at line 265
- []
-
-
-Overfull \vbox (77.6475pt too high) detected at line 265
- []
-
-
-Overfull \vbox (78.6475pt too high) detected at line 265
- []
-
-
-Overfull \vbox (79.6475pt too high) detected at line 265
- []
-
-
-Overfull \vbox (80.6475pt too high) detected at line 265
- []
-
-
-Overfull \vbox (81.6475pt too high) detected at line 265
- []
-
-
-Overfull \vbox (82.6475pt too high) detected at line 265
- []
-
-
-Overfull \vbox (83.6475pt too high) detected at line 265
- []
-
-
-Overfull \vbox (84.6475pt too high) detected at line 265
- []
-
-
-Overfull \vbox (85.6475pt too high) detected at line 265
- []
-
-
-Overfull \vbox (86.6475pt too high) detected at line 265
- []
-
-
-Overfull \vbox (87.6475pt too high) detected at line 265
- []
-
-
-Overfull \vbox (88.6475pt too high) detected at line 265
- []
-
-
-Overfull \vbox (89.6475pt too high) detected at line 265
- []
-
-
-Overfull \vbox (90.6475pt too high) detected at line 265
- []
-
-
-Overfull \vbox (91.6475pt too high) detected at line 265
- []
-
-
-Overfull \vbox (92.6475pt too high) detected at line 265
- []
-
-
-Overfull \vbox (93.6475pt too high) detected at line 265
- []
-
-
-Overfull \vbox (94.6475pt too high) detected at line 265
- []
-
-
-Overfull \vbox (95.6475pt too high) detected at line 265
- []
-
-
-Overfull \vbox (96.6475pt too high) detected at line 265
- []
-
-
-Overfull \vbox (97.6475pt too high) detected at line 265
- []
-
-
-Overfull \vbox (98.6475pt too high) detected at line 265
- []
-
-
-Overfull \vbox (99.6475pt too high) detected at line 265
- []
-
-
-Overfull \vbox (100.6475pt too high) detected at line 265
- []
-
-
-Overfull \vbox (101.6475pt too high) detected at line 265
- []
-
-
-Overfull \vbox (102.6475pt too high) detected at line 265
- []
-
-
-Overfull \vbox (103.6475pt too high) detected at line 265
- []
-
-
-Overfull \vbox (104.6475pt too high) detected at line 265
- []
-
-
-Overfull \vbox (105.6475pt too high) detected at line 265
- []
-
-
-Overfull \vbox (106.6475pt too high) detected at line 265
- []
-
-
-Overfull \vbox (107.6475pt too high) detected at line 265
- []
-
-
-Overfull \vbox (108.6475pt too high) detected at line 265
- []
-
-
-Overfull \vbox (109.6475pt too high) detected at line 265
- []
-
-
-Overfull \vbox (110.6475pt too high) detected at line 265
- []
-
-
-Overfull \vbox (111.6475pt too high) detected at line 265
- []
-
-
-Overfull \vbox (112.6475pt too high) detected at line 265
- []
-
-
-Overfull \vbox (113.6475pt too high) detected at line 265
- []
-
-
-Overfull \vbox (114.6475pt too high) detected at line 265
- []
-
-
-Overfull \vbox (115.6475pt too high) detected at line 265
- []
-
-
-Overfull \vbox (116.6475pt too high) detected at line 265
- []
-
-
-Overfull \vbox (117.6475pt too high) detected at line 265
- []
-
-
-Overfull \vbox (118.6475pt too high) detected at line 265
- []
-
-
-Overfull \vbox (119.6475pt too high) detected at line 265
- []
-
-
-Overfull \vbox (120.6475pt too high) detected at line 265
- []
-
-
-Overfull \vbox (121.6475pt too high) detected at line 265
- []
-
-
-Overfull \vbox (122.6475pt too high) detected at line 265
- []
-
-
-Overfull \vbox (123.6475pt too high) detected at line 265
- []
-
-
-Overfull \vbox (124.6475pt too high) detected at line 265
- []
-
-
-Overfull \vbox (125.6475pt too high) detected at line 265
- []
-
-
-Package mdframed Warning: correct box splittet fails
- It seems you are using a non splittable contents
-(mdframed)                 on input line 265.
-
-Package mdframed Info: You first box width is to small
- mdframed fixed it
-(mdframed)              on input line 265.
-[8]
-Underfull \hbox (badness 10000) in paragraph at lines 267--268
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 269--270
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 276--277
-
- []
-
-[9] [10]
-Underfull \hbox (badness 10000) in paragraph at lines 301--302
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 305--306
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 309--310
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 311--312
-
- []
-
+Underfull \hbox (badness 10000) in paragraph at lines 167--168
 
-Underfull \hbox (badness 10000) in paragraph at lines 315--316
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 323--324
-
- []
-
-[11]
-Package mdframed Info: mdframed detected package amsthm 
- changed the theorem header of amsthm
-(mdframed)              on input line 328.
-
-Underfull \hbox (badness 10000) in paragraph at lines 343--344
-
- []
-
-Missing character: There is no p in font fourier-bb!
-
-Underfull \hbox (badness 10000) in paragraph at lines 347--348
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 351--352
-
- []
-
-Package mdframed Info: mdframed detected package amsthm 
- changed the theorem header of amsthm
-(mdframed)              on input line 358.
-[12]
-Package mdframed Info: Not enough space on this page on input line 363.
-
-Underfull \hbox (badness 10000) in paragraph at lines 371--373
-
- []
-
-[13]
-Overfull \hbox (0.78429pt too wide) in paragraph at lines 384--385
-[] \T1/futs/b/sc/10.95 Ad-ver-sary kan Ên-dre bÂde mes-sage og au-then-ti-ca-to
-r[][] \T1/futs/m/n/10.95 Dette er til-fÊldet hvor der kom-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 390--391
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 392--393
-
- []
-
-[14]
-Underfull \hbox (badness 10000) in paragraph at lines 403--404
-
- []
-
-Missing character: There is no p in font fourier-bb!
-
-Underfull \hbox (badness 10000) in paragraph at lines 405--406
-
  []
 
+[4]
+LaTeX Font Info:    Font shape `T1/futs/bx/sc' in size <10.95> not available
+(Font)              Font shape `T1/futs/b/sc' tried instead on input line 176.
 
-Underfull \hbox (badness 10000) in paragraph at lines 424--425
+Underfull \hbox (badness 10000) in paragraph at lines 186--187
 
  []
 
-[15]
-Overfull \hbox (4.19588pt too wide) in paragraph at lines 436--437
-[] \T1/futs/b/sc/10.95 Def-i-ni-tion 2(CMA Se-cu-rity for MACs)[][] \T1/futs/m/
-n/10.95 Vi siger at et MAC scheme er $(\FML/futmi/m/it/10.95 t; q; ^^O\T1/futs/
-m/n/10.95 )$ CMA-sikkert,
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 443--445
-
- []
-
-[16]
-Overfull \hbox (23.39383pt too wide) in paragraph at lines 456--457
-[]\T1/futs/b/n/10.95 V: $\FML/futmi/m/it/10.95 V$ \T1/futs/m/n/10.95 tager in-p
-ut, sig-natur $\FML/futmi/m/it/10.95 s$\T1/futs/m/n/10.95 , en mes-sage $\FML/f
-utmi/m/it/10.95 m$ \T1/futs/m/n/10.95 og en pub-lic key $\FML/futmi/m/it/10.95 
-pk$\T1/futs/m/n/10.95 , og ouput-ter $\FML/futmi/m/it/10.95 V[]\T1/futs/m/n/10.
-95 (\FML/futmi/m/it/10.95 A[]\T1/futs/m/n/10.95 (\FML/futmi/m/it/10.95 m\T1/fut
-s/m/n/10.95 )\FML/futmi/m/it/10.95 ; m\T1/futs/m/n/10.95 ) \FMS/futm/m/n/10.95 
-Å
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 464--465
 
- []
-
-Package mdframed Info: mdframed detected package amsthm 
- changed the theorem header of amsthm
-(mdframed)              on input line 469.
+Package amsmath Warning: Foreign command \atopwithdelims;
+(amsmath)                \frac or \genfrac should be used instead
+(amsmath)                 on input line 192.
 
-Underfull \hbox (badness 10000) in paragraph at lines 472--474
-
- []
 
-Missing character: There is no v in font fourier-bb!
-Missing character: There is no e in font fourier-bb!
-Missing character: There is no r in font fourier-bb!
-Missing character: There is no v in font fourier-bb!
-Missing character: There is no e in font fourier-bb!
-Missing character: There is no r in font fourier-bb!
-Package mdframed Info: Box was splittet wrong
- starting loop to iterate the splitting point
-(mdframed)              on input line 487.
-[17]
-Underfull \hbox (badness 10000) in paragraph at lines 489--490
+Underfull \hbox (badness 10000) in paragraph at lines 192--194
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 506--508
+Underfull \hbox (badness 10000) in paragraph at lines 196--197
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 512--514
+Underfull \hbox (badness 10000) in paragraph at lines 202--204
 
  []
 
-[18]
-Underfull \hbox (badness 10000) in paragraph at lines 543--544
+[5]
+Underfull \hbox (badness 10000) in paragraph at lines 205--206
 
  []
 
-[19] (./DispusCrypto.aux) ) 
+[6] [7] (./dispus.aux) ) 
 Here is how much of TeX's memory you used:
- 14084 strings out of 493089
- 245560 string characters out of 6134842
- 481220 words of memory out of 5000000
- 17359 multiletter control sequences out of 15000+600000
- 78580 words of font info for 86 fonts, out of 8000000 for 9000
+ 12640 strings out of 493089
+ 224935 string characters out of 6134842
+ 432486 words of memory out of 5000000
+ 15932 multiletter control sequences out of 15000+600000
+ 78546 words of font info for 86 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 53i,15n,54p,10427b,454s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/local/texlive/2015/texmf-dist/fonts/enc/dvips/
-base/8r.enc}</usr/local/texlive/2015/texmf-dist/fonts/type1/public/fourier/four
-ier-bb.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/fourier/fouri
-er-mcl.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/fourier/fouri
-er-mex.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/fourier/fouri
-er-ml.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/fourier/fourie
-r-mlit.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/fourier/fouri
-er-ms.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/adobe/utopia/putb8a.p
-fb></usr/local/texlive/2015/texmf-dist/fonts/type1/adobe/utopia/putr8a.pfb></us
-r/local/texlive/2015/texmf-dist/fonts/type1/adobe/utopia/putri8a.pfb>
-Output written on DispusCrypto.pdf (19 pages, 147419 bytes).
+ 53i,16n,54p,10395b,411s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/local/texlive/2015/texmf-dist/fonts/enc/dvips/bas
+e/8r.enc}</usr/local/texlive/2015/texmf-dist/fonts/type1/public/fourier/fourier
+-bb.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/fourier/fourier-
+mcl.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/fourier/fourier-
+mex.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/fourier/fourier-
+ml.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/fourier/fourier-m
+lit.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/fourier/fourier-
+ms.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/adobe/utopia/putb8a.pfb>
+</usr/local/texlive/2015/texmf-dist/fonts/type1/adobe/utopia/putr8a.pfb></usr/l
+ocal/texlive/2015/texmf-dist/fonts/type1/adobe/utopia/putri8a.pfb>
+Output written on dispus.pdf (7 pages, 89502 bytes).
 PDF statistics:
- 103 PDF objects out of 1000 (max. 8388607)
- 72 compressed objects within 1 object stream
+ 65 PDF objects out of 1000 (max. 8388607)
+ 46 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -1,0 +1,223 @@
+\documentclass[paper=a4, fontsize=11pt]{scrartcl} % A4 paper and 11pt font size
+\usepackage[utf8]{inputenc}
+
+\usepackage[framemethod=default]{mdframed}
+
+\usepackage[T1]{fontenc} % Use 8-bit encoding that has 256 glyphs
+\usepackage{fourier} % Use the Adobe Utopia font for the document - comment this line to return to the LaTeX default
+\usepackage[english]{babel} % English language/hyphenation
+\usepackage{amsmath,amsfonts,amsthm} % Math packages
+
+\usepackage{lipsum} % Used for inserting dummy 'Lorem ipsum' text into the template
+
+\usepackage{sectsty} % Allows customizing section commands
+\allsectionsfont{\centering \normalfont\scshape} % Make all sections centered, the default font and small caps
+
+\usepackage{fancyhdr} % Custom headers and footers
+\pagestyle{fancyplain} % Makes all pages in the document conform to the custom headers and footers
+\fancyhead{} % No page header - if you want one, create it in the same way as the footers below
+\fancyfoot[L]{} % Empty left footer
+\fancyfoot[C]{} % Empty center footer
+\fancyfoot[R]{\thepage} % Page numbering for right footer
+\renewcommand{\headrulewidth}{0pt} % Remove header underlines
+\renewcommand{\footrulewidth}{0pt} % Remove footer underlines
+\setlength{\headheight}{13.6pt} % Customize the height of the header
+
+\numberwithin{equation}{section} % Number equations within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+\numberwithin{figure}{section} % Number figures within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+\numberwithin{table}{section} % Number tables within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+
+\setlength\parindent{0pt} % Removes all indentation from paragraphs - comment this line for an assignment with lots of text
+
+%----------------------------------------------------------------------------------------
+%	TITLE SECTION
+%----------------------------------------------------------------------------------------
+
+\newcommand{\horrule}[1]{\rule{\linewidth}{#1}} % Create horizontal rule command with 1 argument of height
+
+\title{	
+	\normalfont \normalsize 
+	\textsc{university, school or department name} \\ [25pt] % Your university, school and/or department name(s)
+	\horrule{0.5pt} \\[0.4cm] % Thin top horizontal rule
+	\huge Assignment Title \\ % The assignment title
+	\horrule{2pt} \\[0.5cm] % Thick bottom horizontal rule
+}
+
+\author{John Smith} % Your name
+
+\date{\normalsize\today} % Today's date or a custom date
+
+\begin{document}
+	
+	\section*{Linear Models - Linear Regression}
+	
+	Linear regression er en linear model som forsøger, at finde en hyperplane i vore data, som fortæller os et tal givet en data vektor. Imodsætning til classification, hvor resultatet er binært, vil linear regression give os en $\mathbb{R}$ værdig. Dette kunne fx være hvor meget skal en bank låne en kunde. Antagelsen man skal gøre, for at bruge linear regression er, at der findes en linear kombination af informationer, som kan approximere, hvad vi gerne vil approximere. \\
+	
+	Denne form for læring bruger squared error imellem $h(\mathbf{x})$ og $y$ til at estimere $E_{out}$:
+	\begin{align*}
+	E_{out}(h)=\mathbb{E}\left[h(\mathbf{x}-y)^2\right]
+	\end{align*}
+	Hvor  den forventede værdi er taget ift. den forenede sandsynligheds fordeling $P(\mathbb{x},y)$. Mået er selfølgelig at opnå en så lille $E_{out}(h)$ som muligt. Vi finde $E_{in}(h)$ ved:
+	\begin{align*}
+	E_{in}(h)=\dfrac{1}{N}\sum_{n=1}^{N}(h(\mathbf{x_n})-y_n)^2
+	\end{align*}
+	hvor $x_0=1$ og $\mathbb{x}\in\{1\}\times\mathbb{R}^d$ og $\mathbf{w}\in\mathbb{R}^{d+1}$. Når vi har med et \textit{lineært} $h$ at gøre, er det meget brugbart at have en matrix repræsentation af $E_{in}(h)$. Definer $X\in\mathbb{R}^{N\times(d+1)}$, hvor hver row er et input $\mathbf{x}_n$ også har vi:
+	\begin{align*}
+	E_{in}(\mathbf{w})=\dfrac{1}{N}\sum_{n=1}^{N}(\mathbf{w}^T\mathbf{x}_n-y_n)^2=\dfrac{1}{N}||X\mathbf{w}-\mathbf{y}||^2=\dfrac{1}{N}(\mathbf{w}^TX^TX\mathbf{w}-2\mathbf{w}^TX^T\mathbf{y}+\mathbf{y}^T\mathbf{y})
+	\end{align*}
+	Linear regression algoritmen fås ved at minimere $E_{in}(\mathbf{w})$, og alle mulige $\mathbf{w}\in\mathbb{R}^{d+1}$. Derfor er vi interesseret i følgende optimeserings problem:
+	\begin{align*}
+		\mathbf{w}_{lin}=\underset{\mathbf{w}\in\mathbb{R}^{d+1}}{\arg\max}E_{in}(\mathbf{w})
+	\end{align*}
+	Siden $E_{in}(\mathbf{w})$ er differentiabel, kan vi finde dens gradient ved, og løse den for $\nabla E_{in}(\mathbf{w})=\mathbf{0}$
+	\begin{align*}
+	\nabla E_{in}(\mathbf{w})=\dfrac{2}{N}(X^TX\mathbf{w}-X^T\mathbf{y})
+	\end{align*}
+	For at løse $\nabla E_{in}(\mathbf{w})=\mathbf{0}$, finder vi et $\mathbf{w}$ der opfylder
+	\begin{align*}
+	X^TX\mathbf{w}=X^T\mathbf{y}
+	\end{align*}
+	Hvis $X^TX$ er invertible, hvilket det er i de fleste tilfælde er, kan vi finde den unikke optilmale løsning for $\mathbf{w}$ ved
+	\begin{align*}
+	\mathbf{w}=(X^TX)^{-1}X^T\mathbf{y}=X^\dagger\mathbf{y}
+	\end{align*} 
+	som er vores $\mathbf{w}_{lin}=X^\dagger\mathbf{y}$. Denne giver vores hypotese som esitmere $\mathbf{y}$, som $\hat{\mathbf{y}}=X\mathbf{w}_{lin}$, som afviger fra $\mathbf{y}$ grundet in-sample errors. \\
+	
+	Fører dette til en god $E_out$? Det korte svar er ja, hvor det gælder at
+	\begin{align}
+	E_{out}(g)=E_{in}(g)+O\left(\dfrac{d}{N}\right)
+	\end{align}
+	
+	\newpage
+	
+	\section*{Lienar Models - Perceptron Learning Algorithm}
+	
+	Perceptron er en learning algoritme der bruges tli linear clasification af data, igennem iterationer hvor man opdatere vægtninge af forskellige $d$-dimensionel data, så nogle dimensioner er vigtigere end andre. \\
+	
+	Vi bruger algoritmen til, at automatisere classification problemer, eller problemer hvor der skal afgøres noget med binære muligheder. \\
+	
+	Vi specificere en hypothese $\mathcal{H}$, og finder vores hypothese $h\in\mathcal{H}$. Denne defineres som
+	\begin{align*}
+	h(x)=sign\left(\left(\Sigma_{i=1}^d w_ix_i\right)+b\right)=sign(\mathbf{w}^T\mathbf{x})\in\{0,1\}
+	\end{align*}
+	Igennem $t=0,1,2,...$ iterationer, opdatere vi de forskellige weights for \textit{misclassified data} ved.
+	\begin{align*}
+	\mathbf{w}(t+1)=\mathbf{w}(t)+y(t)\mathbf{x}(t)
+	\end{align*}
+	Værdierne for $\mathbf{w}$ er initialiseret til at være forskellige \textit{tilfældige} værdiger. Vi har at $w_0=b$ og $\mathbf{w}=[w_0,w_1,...,w_d]^T\in\mathbb{R}^{d+1}$ og vores space for $x$ er
+	\begin{align*}
+	\mathcal{X}=\{1\}\times\mathbb{R}^d=\{[x_0,x_1,...,x_d]^T|x_0=1,x_1,...,x_d\in\mathbb{R}^\} 
+	\end{align*} 
+	Efter $t$ itertioner vil PLA stoppe og vi har at $E_{in}(\mathbf{w}_{PLA})=0$, \textit{hvis} dataen er linear seperable! Hvis dataen ikke er linear seprable skal vi approximere en løsning, fx igennem pocket algorithm, som for hver gang vi finder en$E_{in}(\hat{\mathbb{w}})<E_{in}(\mathbf{w})$, gemmer $\hat{\mathbf{w}}$, og iterere videre, hvor den efter et valgt $t$ iterationer stopper og returnerer den bedst observerede $\mathbf{w}$. Det man giver afkald på med pocket algorithm er ift PLA som opdatere værdier i $\mathbf{w}$ og checker for nogle exempler, de misclassified, bliver pocket algorithm nødt til, at checke for alle, for at kunne berenge $E_{in}(\mathbf{w})$. \\
+	
+	Det smarte ved PLA, er at den iterere igennem et uendeligt stort hypothese space, i (beviseligt) endelig tid. 
+	
+	\newpage
+	
+	\section*{Linear Models - Logistic regression}
+	
+	Logistic regression er en linear model som forsøger at fortælle os sandsynligheden for et given indput finder sted. Dette kunne være sandsynligheden for en patient får et hjertestop, givet hans journal. Grunden til denne form for model er, imodsætningen til linear classification som har en \textit{hard threshold} og linear regression som har \textit{no threshold}, så har linear regression et \textit{soft threshold}, mellem $[0-1]$. \\
+	
+	Vi definere vores hypothese $h$ i linear regression så ledes 
+	\begin{align*}
+	h(\mathbf{x})=\theta(\mathbf{w}^T\mathbf{x})
+	\end{align*}
+	hvor $\theta$ er en såkaldt logistisk function, fx $\theta(s)=\dfrac{e^s}{1+e^s}$ eller $\theta(s)=tanh(s)=\dfrac{e^s-e^{-s}}{e^s+e^{-s}}$. \\
+	
+	Vores target function vi prøver at ville lære er defineret som $f(\mathbf{x})=\mathbb{P}[y=+1|\mathbf{x}]$, men det vi kigger på er en mængde data, hvor vi kender udfaldet, som er generet af et \textit{noisy target} $P(y|\mathbf{x})$
+	\begin{align*}
+	P(y|\mathbf{x})=\begin{cases}
+	f(\mathbf{x}) & \text{for } y=+1 \\
+	1-f(\mathbf{x}) & \text{for } y=-1
+	\end{cases}
+	\end{align*}
+	Derfor må vi definere en \textit{error measure} som måler hvor tæt hypothese $h$ er på $f$, ift vores \textit{noisy} $\pm1$ eksempler. Måle formen for fejl er $e(h(\mathbf{x}),y)$ som er baseret på \textit{likelihood}, altså hvor sandsynligt $y$ er givet $\mathbf{x}$. Vi akn sunstituere $h(\mathbf{x})$ til $\theta(\mathbf{w}^T\mathbf{w})$ og bruger det faktum at $1-\theta(s)=\theta(-s)$ og får
+	\begin{align*}
+	P(y|\mathbf{x})=\theta(y\mathbf{w}^T\mathbf{w})
+	\end{align*}
+	Vi definere på samme tid vores $E_{in}(\mathbf{w})$ til
+	\begin{align*}
+	E_{in}(\mathbf{w})=\dfrac{1}{N}\sum_{n=1}^{N}\ln\left(1+e^{-y_n\mathbf{w}^T\mathbf{x}_n}\right)
+	\end{align*}
+	Dette betyder vores \textit{pointwise error measure} er $e(h(\mathbf{x}_n),y_n)=\ln(1+e^{-y_n\mathbf{w}^T\mathbf{x}_n})$, hvor vi kan se at vores \textit{error measure} er lille når $y_n\mathbf{w}^T\mathbf{x}_n$ er stor og \textit{positiv}, hvilket ville betyde at $sign(\mathbf{w}^T\mathbf{x}_n)=y_n$ \\
+	
+	For at træne logistisk regression vil vi forsøge at sette $\nabla E_{in}(\mathbf{w})=\mathbf{0}$, dette er dog et \textit{svært} problem. Derfor løses det med en iterativ algoritme \textit{gradient descent}. En stor fordel for denne tilgang er, grundet vores logistiske regression benytter cross-entropy error, er vores function vi skal descente ned af convex, og vi vil derfor altid gå mod et globalt minimum. Vi øsnker at descente ned, det stejleste vej, for at nå vores mål hurtigts, så vi definere $\eta$ til at være vores step-size, og $\hat{\mathbf{v}}$ til at være en enhedsvektor. Vi har derfor
+	\begin{align*}
+	\delta E_{in} &= E_{in}(\mathbf{w}(0)+\eta\hat{\mathbf{v}})-E_{in}(\mathbf{w}(0))\\
+	&=\eta\nabla E_{in}(\mathbf{w}(0))^T\hat{\mathbf{v}}+O(\eta^2) \\
+	&\geq -\eta||\nabla E_{in}(\mathbf{w}(0))||
+	\end{align*}
+	hvor der gælder lighedstegn i sidste linje $\iff \hat{\mathbf{v}}=\dfrac{\nabla E_{in}(\mathbf{w}(0))}{||\nabla E_{in}(\mathbf{w}(0))||}$. Det er dog ikke en god idé at fasthold $\eta$ igennem alle iterationer, da det giver god mening at tage mindre skridt, jo tættere vi kommer på det globale minimum, så denne kan justeres hen  af vejen. Dette fører os til algoritmen for logistik regression
+	\begin{mdframed}
+	\begin{enumerate}
+		\item initialiser weigths ved tid $t=0$ til $\mathbf{w}(0)$
+		\item \textbf{for} $t=0,1,2,.... \mathbf{do}$
+		\begin{enumerate}
+			\item beregn gradienten
+			\begin{align*}
+			\mathbf{g}_t =-\dfrac{1}{N}\sum_{n=1}^{N}\dfrac{y_n\mathbf{x}_n}{1+e^{y_n\mathbf{w}^T(t)\mathbf{x}_n}}
+			\end{align*}
+			\item sæt bevægelses retning, $\mathbf{v}_t=-\mathbf{g}_t$
+			\item updater weigths: $\mathbf{w}(t+1)=\mathbf{w}(t)+\eta\mathbf{v}_t$
+			\item iterer til næste step intil tiden stopper
+		\end{enumerate}
+		\item Returner final weigth $\mathbf{w}$.
+	\end{enumerate}
+	\end{mdframed}
+	Ved kørsel af algortimen sættet $\mathbf{w}(0)$ til tilfældige tal, for at undgå vi sidder fast på en symmetrisk top, og vi vælger selv tid $t$ for hvornår algoritmen skal stopper. Dette kan være når $||\mathbf{g}_t||$ er mindre end et bestemt kriterium, eller blot efter en arbitrær tid $t$. \\
+	
+	En anden udgave af gradient descent delen af vores algoritme er stochastic gradient descent, hvor der vælges et tilfældigt punkt, som vi opdatere vores $\mathbf{w}$ ud fra, is tedet for at gøre det på hele data mængden, hvilket gør den af algoritmen hurtigere. 
+	
+	\newpage
+	
+	\section*{Learning Theory - VC Dimension}
+			
+	Vi introducere ideen om \textit{growth function}, og til det skal vi bruge dichotomies
+	\paragraph{\textbf{Definition 2.1}.} Lad $\mathbf{x}_1,...,\mathbf{x}_N\in\mathcal{X}$. Dichotomies generaret af $\mathcal{H}$ for disse points er defineret som :
+	\begin{align*}
+	\mathcal{H}(\mathbf{x}_1,...,\mathbf{x}_N) =\{(h(\mathbf{x}_1),...,h(\mathbf{x}_N))|h\in\mathcal{H}\}	
+	\end{align*}
+	disse kan ses et par briller hvor igennem vi kigge på hele $\mathcal{H}$ rummet igennem $N$ punkter og kan se forskel på to $h$ hvis de er forskellige ift deres vurdering af $\mathbf{x}_1,...,\mathbf{x}_N$. En growth function er defineret på antallet af dichotomies
+	\paragraph{\textbf{Definition 2.2}.} Growth function er defineret for en hypothese mængde $\mathcal{H}$ ved
+	\begin{align*}
+	m_\mathcal{H}=\underset{\mathbf{x}_1,...,\mathbf{x}_N\in\mathcal{X}}{\max}|\mathcal{H}(\mathbf{x}_1,...,\mathbf{x}_N)|
+	\end{align*}
+	altså er $m_\mathcal{H}$ det største antal dichotomies der kan generes af $\mathcal{H}$ for alle $N$ points. Hvis $\mathcal{H}(\mathbf{x}_1,...,\mathbf{x}_N)=\{0,1\}^N \implies m_\mathcal{H}(N)=2^N$, og vi siger at $\mathcal{H}$ kan \textit{shatter} $\mathbf{x}_1,...,\mathbf{x}_N$.
+	\paragraph{\textbf{Definition 2.3}.} Hvis intet dataset af størrelse $k$ kan \textit{be shattered} af $\mathcal{H}$, så er $k$ et \textit{breakpoint} for $\mathcal{H}$. \\
+	
+	Hvis definition 2.3 gælder, så ser vi at $m_\mathcal{H}(k)<2^k$.
+	\paragraph{\textbf{Theorem 2.4}} Hvis $m_\mathcal{k}<2^k$ for en værdi $k$, så
+	\begin{align*}
+	m_\mathcal{H}(N\leq)\sum_{i=0}^{k-1} {{N}\choose{i}}
+	\end{align*}
+	for alle $N$. \\
+	
+	hvilket fører os til  
+	\paragraph{\textbf{Definition 2.5}} Vapnik-Chervonenkis dimensionen af en hypothese mængde $\mathcal{H}$, noteret ved $d_{VC}(\mathcal{H})$ eller $d_{VC}$, er den største værdi $N$, der gælder at $m_{\mathcal{H}}(N)=2^N$. Hvis $m_\mathcal{H}(N)=2^N$ for alle $N$, så er $d_{VC}(\mathcal{H})=\infty$. \\
+	
+	Grunden til at VC dimensioner er vigtige er, både at de angiver hvor mange \textit{degrees of freedom} vi har at arbejde med i vores hypothese mænde men også, at hvis vi ikke kan finde et data set der kan shatter $m_\mathcal{H}$ har vi
+	\paragraph{\textbf{Theorem 2.5} (VC generatlization bound).} For er vilkårlig tolerance $\delta>0$,
+	\begin{align*}
+	E_{out}(g)\leq E_{in}(g)+\sqrt{\dfrac{8}{N}\ln\dfrac{4m_\mathcal{H}(2N)}{\delta}}
+	\end{align*}
+	Med sandsynglihed $\geq 1-\delta$. Vi definere også $\sqrt{\dfrac{8}{N}\ln\dfrac{4m_\mathcal{H}(2N)}{\delta}}=\omega(N,\mathcal{H},\delta)$, som værende modellens complexitet, altså som en slags penalty for hvor complex vores model er, og som straffer os med ringere $E_{out}$. \\
+	
+	Vi ser hurtigt at hvis $m_\mathcal{H}=\infty$ har vi ingen garanti for at vi kan lære noget givet. \\
+	
+	Vi har altså fået givet med VC analyses, at vi skal vores valg af $\mathcal{H}$ skal finde en balance imellem at approximere $f$ på trænings daten, og generalisere over nyt data.
+	
+	\newpage
+	
+	\section*{Learning Theory - Bias Variance}
+	
+	Lad os definere $\bar{g}\approx\dfrac{1}{K}\sum_{k=1}^{K}g_k(\mathbf{x})$ for alle $\mathbf{x}$. Givet out of sample error på squared error, har vi
+	\begin{align*}
+	\mathbb{E}_\mathcal{D}[E_{out}(g^{(\mathcal{D})})] &= \mathbb{E}_\mathbf{x}[\mathbb{E}_\mathcal{D}[g^{(\mathcal{D})}(x)^2]-2\bar{g}(\mathbf{x})f(\mathbf{x})+f(\mathbf{x})^2] \\
+	&=\mathbb{E}_\mathbf{x}[\underbrace{\mathbb{E}_\mathcal{D}[g^{(\mathcal{D})}(\mathbf{x})^2]-\bar{g}(\mathbf{x})^2}_{\mathbb{E}_\mathcal{D}[(g^{(\mathcal{D})}-\bar{g}(\mathbf{x}))^2]} + \underbrace{\bar{g}(\mathbf{x})^2-2\bar{g}(\mathbf{x})f(\mathbf{x})+f(\mathbf{x})^2}_{(\bar{g}(\mathbf{x})-f(\mathbf{x}))^2}]  
+	\end{align*}
+	Det sidste term kalder vi for bias
+	\begin{align*}
+	\text{bias}(\mathbf{x})=(\bar{g}(\mathbf{x})-f(\mathbf{x}))^2
+	\end{align*}
+	
+	\end{document}
