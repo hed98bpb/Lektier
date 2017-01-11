@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2016.2.15)  2 JAN 2017 23:51
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2016.2.15)  7 JAN 2017 19:20
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1116,110 +1116,360 @@ LaTeX Font Info:    Font shape `T1/futs/bx/n' in size <8.3> not available
 LaTeX Font Info:    Font shape `T1/futs/bx/n' in size <6> not available
 (Font)              Font shape `T1/futs/b/n' tried instead on input line 56.
 Missing character: There is no x in font fourier-bb!
-Missing character: There is no x in font fourier-bb!
 
-Underfull \hbox (badness 10000) in paragraph at lines 83--85
+Underfull \hbox (badness 10000) in paragraph at lines 85--87
 
  []
 
 [1
 
 {/usr/local/texlive/2015/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
-Underfull \hbox (badness 10000) in paragraph at lines 95--96
-
- []
-
-
+[2]
 Underfull \hbox (badness 10000) in paragraph at lines 97--98
 
  []
 
-Missing character: There is no w in font fourier-bb!
 
-Underfull \hbox (badness 10000) in paragraph at lines 110--112
-
- []
-
-[2]
-Underfull \hbox (badness 10000) in paragraph at lines 119--120
+Underfull \hbox (badness 10000) in paragraph at lines 99--100
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 124--126
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 141--143
+Underfull \hbox (badness 10000) in paragraph at lines 112--114
 
  []
 
 [3]
-Package mdframed Info: mdframed detected package amsthm 
- changed the theorem header of amsthm
-(mdframed)              on input line 152.
-
-Underfull \hbox (badness 10000) in paragraph at lines 167--168
+Underfull \hbox (badness 10000) in paragraph at lines 121--122
 
  []
 
-[4]
-LaTeX Font Info:    Font shape `T1/futs/bx/sc' in size <10.95> not available
-(Font)              Font shape `T1/futs/b/sc' tried instead on input line 176.
 
-Underfull \hbox (badness 10000) in paragraph at lines 186--187
+Underfull \hbox (badness 10000) in paragraph at lines 126--128
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 143--145
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 146--147
+
+ []
+
+Package mdframed Info: mdframed detected package amsthm 
+ changed the theorem header of amsthm
+(mdframed)              on input line 150.
+[4]
+Package mdframed Info: Not enough space on this page on input line 164.
+
+Underfull \hbox (badness 10000) in paragraph at lines 165--166
+
+ []
+
+[5]
+LaTeX Font Info:    Font shape `T1/futs/bx/sc' in size <10.95> not available
+(Font)              Font shape `T1/futs/b/sc' tried instead on input line 174.
+
+Underfull \hbox (badness 10000) in paragraph at lines 184--185
 
  []
 
 
 Package amsmath Warning: Foreign command \atopwithdelims;
 (amsmath)                \frac or \genfrac should be used instead
-(amsmath)                 on input line 192.
+(amsmath)                 on input line 190.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 192--194
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 196--197
+Underfull \hbox (badness 10000) in paragraph at lines 190--192
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 202--204
+Underfull \hbox (badness 10000) in paragraph at lines 194--195
 
  []
 
-[5]
-Underfull \hbox (badness 10000) in paragraph at lines 205--206
+
+Underfull \hbox (badness 10000) in paragraph at lines 200--202
 
  []
 
-[6] [7] (./dispus.aux) ) 
+[6]
+Underfull \hbox (badness 10000) in paragraph at lines 203--204
+
+ []
+
+[7]
+LaTeX Font Info:    Font shape `T1/futs/bx/it' in size <10.95> not available
+(Font)              Font shape `T1/futs/b/it' tried instead on input line 220.
+
+Underfull \hbox (badness 10000) in paragraph at lines 223--225
+
+ []
+
+LaTeX Font Info:    Try loading font information for TS1+futs on input line 228
+.
+(/usr/local/texlive/2015/texmf-dist/tex/latex/fourier/ts1futs.fd
+File: ts1futs.fd 2004/03/26 Fontinst v1.926 font definitions for TS1/futs.
+) [8]
+Underfull \hbox (badness 10000) in paragraph at lines 237--238
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 239--240
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 241--242
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 247--249
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 250--251
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 255--257
+
+ []
+
+[9]
+Underfull \hbox (badness 10000) in paragraph at lines 281--282
+
+ []
+
+[10]
+Underfull \hbox (badness 10000) in paragraph at lines 300--302
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 306--308
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 312--314
+
+ []
+
+[11]
+Underfull \hbox (badness 10000) in paragraph at lines 330--332
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 333--334
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 338--340
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 344--346
+
+ []
+
+[12]
+Underfull \hbox (badness 10000) in paragraph at lines 350--352
+
+ []
+
+
+Overfull \hbox (28.96422pt too wide) in paragraph at lines 353--354
+\T1/futs/m/n/10.95 Hvis $\FML/futmi/m/it/10.95 K$ \T1/futs/m/n/10.95 var en val
+id kerne, sÂ f¯l-ger $\FML/futmi/m/it/10.95 K[] \FMS/futm/m/n/10.95 Å \FML/futm
+i/m/it/10.95 K\T1/futs/m/n/10.95 (\T1/futs/b/n/10.95 x[]\FML/futmi/m/it/10.95 ;
+ \T1/futs/b/n/10.95 z[]\T1/futs/m/n/10.95 ) \FMS/futm/m/n/10.95 Å \FML/futmi/m/
+it/10.95 ^^^\T1/futs/m/n/10.95 (\T1/futs/b/n/10.95 x[]\T1/futs/m/n/10.95 )[]\FM
+L/futmi/m/it/10.95 ^^^\T1/futs/m/n/10.95 (\T1/futs/b/n/10.95 x[]\T1/futs/m/n/10
+.95 ) \FMS/futm/m/n/10.95 Å \FML/futmi/m/it/10.95 ^^^\T1/futs/m/n/10.95 (\T1/fu
+ts/b/n/10.95 x[]\T1/futs/m/n/10.95 )[]\FML/futmi/m/it/10.95 ^^^\T1/futs/m/n/10.
+95 (\T1/futs/b/n/10.95 x[]\T1/futs/m/n/10.95 ) \FMS/futm/m/n/10.95 Å \FML/futmi
+/m/it/10.95 K\T1/futs/m/n/10.95 (\T1/futs/b/n/10.95 x[]\FML/futmi/m/it/10.95 ; 
+\T1/futs/b/n/10.95 z[]\T1/futs/m/n/10.95 ) \FMS/futm/m/n/10.95 Å
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 355--356
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 362--364
+
+ []
+
+[13]
+Underfull \hbox (badness 10000) in paragraph at lines 379--381
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 382--383
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 384--385
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 394--396
+
+ []
+
+[14]
+Overfull \hbox (38.38025pt too wide) in paragraph at lines 403--404
+[]\T1/futs/b/n/10.95 Backpropagation \T1/futs/m/n/10.95 er en al-go-ritme til, 
+ef-fek-tivt at beregne gra-di-ent de-scent for et neu-ral net.Intuitionen
+ []
+
+[15]
+Underfull \hbox (badness 10000) in paragraph at lines 427--428
+
+ []
+
+[16] [17] [18]
+Underfull \hbox (badness 10000) in paragraph at lines 479--480
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 500--502
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 509--511
+
+ []
+
+[19]
+Underfull \hbox (badness 10000) in paragraph at lines 517--519
+
+ []
+
+
+Overfull \hbox (3.51219pt too wide) in paragraph at lines 527--529
+\T1/futs/m/n/10.95 lighed $[]$ for data punk-ter $(\FML/futmi/m/it/10.95 x[]; y
+[]\T1/futs/m/n/10.95 )$, for $0 \FMS/futm/m/n/10.95 ^^T \FML/futmi/m/it/10.95 i
+ \FMS/futm/m/n/10.95 ^^T \FML/futmi/m/it/10.95 N \FMS/futm/m/n/10.95 ^^@ \T1/fu
+ts/m/n/10.95 1$, som har en "\T1/futs/m/it/10.95 true\T1/futs/m/n/10.95 " bag-g
+ing es-ti-mat $\FML/futmi/m/it/10.95 E[][]\T1/futs/m/n/10.95 (\FML/futmi/m/it/1
+0.95 x\T1/futs/m/n/10.95 )$.
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 527--529
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 530--531
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 537--539
+
+ []
+
+[20] [21]
+Underfull \hbox (badness 10000) in paragraph at lines 553--555
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 559--561
+
+ []
+
+
+Overfull \hbox (2.30945pt too wide) in paragraph at lines 562--563
+[]\T1/futs/m/n/10.95 Vi kan i stedet an-tage at der findes en un-der-liggende m
+odel, hvor hvert dat-a-punkt $\T1/futs/b/n/10.95 x[]$ \T1/futs/m/n/10.95 afhÊng
+er
+ []
+
+[22]
+Underfull \hbox (badness 10000) in paragraph at lines 581--583
+
+ []
+
+[23]
+Underfull \hbox (badness 10000) in paragraph at lines 634--636
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 637--638
+
+ []
+
+[24]
+Overfull \hbox (49.71347pt too wide) in paragraph at lines 650--652
+\T1/futs/m/n/10.95 At maximere di-rekte pÂ log-likelihood over $\FML/futmi/m/it
+/10.95 ^^R$ \T1/futs/m/n/10.95 er svÊrt, ist-edet benyt-ter vi \T1/futs/m/it/10
+.95 expectation-maximization\T1/futs/m/n/10.95 (EM).
+ []
+
+[25]
+Underfull \hbox (badness 10000) in paragraph at lines 675--676
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 684--686
+
+ []
+
+
+Overfull \hbox (1.47878pt too wide) in paragraph at lines 699--700
+\T1/futs/m/n/10.95 Til en-hver re-in-force-ment al-go-ritme, skal vi give en st
+rategi $\FML/futmi/m/it/10.95 ^^Y$\T1/futs/m/n/10.95 , som map-per fra state ti
+l sandsyn-
+ []
+
+[26] [27] (./dispus.aux) ) 
 Here is how much of TeX's memory you used:
- 12640 strings out of 493089
- 224935 string characters out of 6134842
- 432486 words of memory out of 5000000
- 15932 multiletter control sequences out of 15000+600000
- 78546 words of font info for 86 fonts, out of 8000000 for 9000
+ 12676 strings out of 493089
+ 225502 string characters out of 6134842
+ 434486 words of memory out of 5000000
+ 15958 multiletter control sequences out of 15000+600000
+ 84050 words of font info for 93 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  53i,16n,54p,10395b,411s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/local/texlive/2015/texmf-dist/fonts/enc/dvips/bas
-e/8r.enc}</usr/local/texlive/2015/texmf-dist/fonts/type1/public/fourier/fourier
--bb.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/fourier/fourier-
-mcl.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/fourier/fourier-
-mex.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/fourier/fourier-
-ml.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/fourier/fourier-m
-lit.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/fourier/fourier-
-ms.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/adobe/utopia/putb8a.pfb>
-</usr/local/texlive/2015/texmf-dist/fonts/type1/adobe/utopia/putr8a.pfb></usr/l
-ocal/texlive/2015/texmf-dist/fonts/type1/adobe/utopia/putri8a.pfb>
-Output written on dispus.pdf (7 pages, 89502 bytes).
+{/usr/local/texlive/2015/texmf-dist/fonts/enc/dvips/b
+ase/8r.enc}</usr/local/texlive/2015/texmf-dist/fonts/type1/public/fourier/fouri
+er-bb.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/fourier/fourie
+r-mcl.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/fourier/fourie
+r-mex.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/fourier/fourie
+r-ml.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/fourier/fourier
+-mlit.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/fourier/fourie
+r-ms.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/adobe/utopia/putb8a.pf
+b></usr/local/texlive/2015/texmf-dist/fonts/type1/adobe/utopia/putbi8a.pfb></us
+r/local/texlive/2015/texmf-dist/fonts/type1/adobe/utopia/putr8a.pfb></usr/local
+/texlive/2015/texmf-dist/fonts/type1/adobe/utopia/putri8a.pfb>
+Output written on dispus.pdf (27 pages, 171315 bytes).
 PDF statistics:
- 65 PDF objects out of 1000 (max. 8388607)
- 46 compressed objects within 1 object stream
+ 132 PDF objects out of 1000 (max. 8388607)
+ 92 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 

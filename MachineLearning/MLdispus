@@ -1,0 +1,59 @@
+Linear Models
+Perceptron 
+Linear Regression
+- E_in, E_out
+- Gradient, X^kors
+- Godt sample for E_out
+
+Learning Theory
+Regularization/Overfitting
+wight decay/constrained optimization
+Validation / E_val
+Crossvalidation
+Theorem 4.4
+
+Support Vector Machine
+g(z)
+funktional/geometrisk margin
+svm max
+Lagrangian / KKT
+Kernel /Theorem Mercer
+Regularization på SVM
+
+Neural Nets
+Deep nets
+CNN /convolution
+Sparseinteractions
+Parameter sharing
+Equivariant representation
+Convulutionn Detector Pooling stage
+
+Decision Trees and Ensemble Methods
+Regression tree ensemble, R_M, cm, R(j,s)
+Cost complexity pruning
+Impurity measure
+Bootstrap aggrigation /bagging
+
+Midden Markov Models
+Markov Model
+Latent - diskret
+Transition matrix
+Emission probability
+Evaluation - for eller back
+Decoding - viterbi decoding
+Træning af model - MLE, for/back, viterbi træning
+
+Clustering and outlier detection
+Representative-based clustering
+Stirling numbers of the secound kind
+kmean algo - sse
+Hard vs soft assignment
+Maximum log likelihood estimation
+init-expect-max
+
+Reinforcement Learning
+Agent, Environment, G_t
+Markov property
+MPD(S,A,P_sa,y,R)
+Value function
+Value iteration

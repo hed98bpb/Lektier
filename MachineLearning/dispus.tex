@@ -55,11 +55,13 @@
 	
 	Denne form for læring bruger squared error imellem $h(\mathbf{x})$ og $y$ til at estimere $E_{out}$:
 	\begin{align*}
-	E_{out}(h)=\mathbb{E}\left[h(\mathbf{x}-y)^2\right]
+	E_{out}(h)=\mathbb{E}\left[(h(\mathbf{x})-y)^2\right]
 	\end{align*}
-	Hvor  den forventede værdi er taget ift. den forenede sandsynligheds fordeling $P(\mathbb{x},y)$. Mået er selfølgelig at opnå en så lille $E_{out}(h)$ som muligt. Vi finde $E_{in}(h)$ ved:
+	Hvor  den forventede værdi er taget ift. den forenede sandsynligheds fordeling $P(\mathbf{x},y)$. Målet er selfølgelig at opnå en så lille $E_{out}(h)$ som muligt. Vi finde $E_{in}(h)$ ved:
 	\begin{align*}
 	E_{in}(h)=\dfrac{1}{N}\sum_{n=1}^{N}(h(\mathbf{x_n})-y_n)^2
+	\intertext{hvor}
+	h(\mathbf{x})=\sum_{i=0}^{d}w_ix_i=\mathbf{w}^T\mathbf{x}
 	\end{align*}
 	hvor $x_0=1$ og $\mathbb{x}\in\{1\}\times\mathbb{R}^d$ og $\mathbf{w}\in\mathbb{R}^{d+1}$. Når vi har med et \textit{lineært} $h$ at gøre, er det meget brugbart at have en matrix repræsentation af $E_{in}(h)$. Definer $X\in\mathbb{R}^{N\times(d+1)}$, hvor hver row er et input $\mathbf{x}_n$ også har vi:
 	\begin{align*}
@@ -67,7 +69,7 @@
 	\end{align*}
 	Linear regression algoritmen fås ved at minimere $E_{in}(\mathbf{w})$, og alle mulige $\mathbf{w}\in\mathbb{R}^{d+1}$. Derfor er vi interesseret i følgende optimeserings problem:
 	\begin{align*}
-		\mathbf{w}_{lin}=\underset{\mathbf{w}\in\mathbb{R}^{d+1}}{\arg\max}E_{in}(\mathbf{w})
+		\mathbf{w}_{lin}=\underset{\mathbf{w}\in\mathbb{R}^{d+1}}{\arg\min}E_{in}(\mathbf{w})
 	\end{align*}
 	Siden $E_{in}(\mathbf{w})$ er differentiabel, kan vi finde dens gradient ved, og løse den for $\nabla E_{in}(\mathbf{w})=\mathbf{0}$
 	\begin{align*}
@@ -83,16 +85,16 @@
 	\end{align*} 
 	som er vores $\mathbf{w}_{lin}=X^\dagger\mathbf{y}$. Denne giver vores hypotese som esitmere $\mathbf{y}$, som $\hat{\mathbf{y}}=X\mathbf{w}_{lin}$, som afviger fra $\mathbf{y}$ grundet in-sample errors. \\
 	
-	Fører dette til en god $E_out$? Det korte svar er ja, hvor det gælder at
-	\begin{align}
-	E_{out}(g)=E_{in}(g)+O\left(\dfrac{d}{N}\right)
-	\end{align}
+	Fører dette til en god $E_{out}$? Det korte svar er ja, hvor det gælder at
+	\begin{align*}
+	E_{out}(h)=E_{in}(h)+O\left(\dfrac{d}{N}\right)
+	\end{align*}
 	
 	\newpage
 	
 	\section*{Lienar Models - Perceptron Learning Algorithm}
 	
-	Perceptron er en learning algoritme der bruges tli linear clasification af data, igennem iterationer hvor man opdatere vægtninge af forskellige $d$-dimensionel data, så nogle dimensioner er vigtigere end andre. \\
+	Perceptron er en learning algoritme der bruges til linear clasification af data, igennem iterationer hvor man opdatere vægtninge af forskellige $d$-dimensionel data, så nogle dimensioner er vigtigere end andre. \\
 	
 	Vi bruger algoritmen til, at automatisere classification problemer, eller problemer hvor der skal afgøres noget med binære muligheder. \\
 	
@@ -106,9 +108,9 @@
 	\end{align*}
 	Værdierne for $\mathbf{w}$ er initialiseret til at være forskellige \textit{tilfældige} værdiger. Vi har at $w_0=b$ og $\mathbf{w}=[w_0,w_1,...,w_d]^T\in\mathbb{R}^{d+1}$ og vores space for $x$ er
 	\begin{align*}
-	\mathcal{X}=\{1\}\times\mathbb{R}^d=\{[x_0,x_1,...,x_d]^T|x_0=1,x_1,...,x_d\in\mathbb{R}^\} 
+	\mathcal{X}=\{1\}\times\mathbb{R}^d=\{[x_0,x_1,...,x_d]^T|x_0=1,x_1,...,x_d\in\mathbb{R}\} 
 	\end{align*} 
-	Efter $t$ itertioner vil PLA stoppe og vi har at $E_{in}(\mathbf{w}_{PLA})=0$, \textit{hvis} dataen er linear seperable! Hvis dataen ikke er linear seprable skal vi approximere en løsning, fx igennem pocket algorithm, som for hver gang vi finder en$E_{in}(\hat{\mathbb{w}})<E_{in}(\mathbf{w})$, gemmer $\hat{\mathbf{w}}$, og iterere videre, hvor den efter et valgt $t$ iterationer stopper og returnerer den bedst observerede $\mathbf{w}$. Det man giver afkald på med pocket algorithm er ift PLA som opdatere værdier i $\mathbf{w}$ og checker for nogle exempler, de misclassified, bliver pocket algorithm nødt til, at checke for alle, for at kunne berenge $E_{in}(\mathbf{w})$. \\
+	Efter $t$ itertioner vil PLA stoppe og vi har at $E_{in}(\mathbf{w}_{PLA})=0$, \textit{hvis} dataen er linear seperable! Hvis dataen ikke er linear seprable skal vi approximere en løsning, fx igennem pocket algorithm, som for hver gang vi finder en$E_{in}(\hat{\mathbf{w}})<E_{in}(\mathbf{w})$, gemmer $\hat{\mathbf{w}}$, og iterere videre, hvor den efter et valgt $t$ iterationer stopper og returnerer den bedst observerede $\mathbf{w}$. Det man giver afkald på med pocket algorithm er ift PLA som opdatere værdier i $\mathbf{w}$ og checker for nogle exempler, de misclassified, bliver pocket algorithm nødt til, at checke for alle, for at kunne berenge $E_{in}(\mathbf{w})$. \\
 	
 	Det smarte ved PLA, er at den iterere igennem et uendeligt stort hypothese space, i (beviseligt) endelig tid. 
 	
@@ -116,22 +118,22 @@
 	
 	\section*{Linear Models - Logistic regression}
 	
-	Logistic regression er en linear model som forsøger at fortælle os sandsynligheden for et given indput finder sted. Dette kunne være sandsynligheden for en patient får et hjertestop, givet hans journal. Grunden til denne form for model er, imodsætningen til linear classification som har en \textit{hard threshold} og linear regression som har \textit{no threshold}, så har linear regression et \textit{soft threshold}, mellem $[0-1]$. \\
+	Logistic regression er en linear model som forsøger at fortælle os sandsynligheden for et given indput finder sted. Dette kunne være sandsynligheden for en patient får et hjertestop, givet hans journal. Grunden til denne form for model er, imodsætningen til linear classification som har en \textit{hard threshold} og linear regression som har \textit{no threshold}, så har logistic regression et \textit{soft threshold}, mellem $[0-1]$. \\
 	
-	Vi definere vores hypothese $h$ i linear regression så ledes 
+	Vi definere vores hypothese $h$ i linear regression således 
 	\begin{align*}
 	h(\mathbf{x})=\theta(\mathbf{w}^T\mathbf{x})
 	\end{align*}
 	hvor $\theta$ er en såkaldt logistisk function, fx $\theta(s)=\dfrac{e^s}{1+e^s}$ eller $\theta(s)=tanh(s)=\dfrac{e^s-e^{-s}}{e^s+e^{-s}}$. \\
 	
-	Vores target function vi prøver at ville lære er defineret som $f(\mathbf{x})=\mathbb{P}[y=+1|\mathbf{x}]$, men det vi kigger på er en mængde data, hvor vi kender udfaldet, som er generet af et \textit{noisy target} $P(y|\mathbf{x})$
+	Vores target function vi prøver at ville lære er defineret som $f(\mathbf{x})=P[y=1|\mathbf{x}]$, men det vi kigger på er en mængde data, hvor vi kender udfaldet, som er generet af et \textit{noisy target} $P(y|\mathbf{x})$
 	\begin{align*}
 	P(y|\mathbf{x})=\begin{cases}
 	f(\mathbf{x}) & \text{for } y=+1 \\
 	1-f(\mathbf{x}) & \text{for } y=-1
 	\end{cases}
 	\end{align*}
-	Derfor må vi definere en \textit{error measure} som måler hvor tæt hypothese $h$ er på $f$, ift vores \textit{noisy} $\pm1$ eksempler. Måle formen for fejl er $e(h(\mathbf{x}),y)$ som er baseret på \textit{likelihood}, altså hvor sandsynligt $y$ er givet $\mathbf{x}$. Vi akn sunstituere $h(\mathbf{x})$ til $\theta(\mathbf{w}^T\mathbf{w})$ og bruger det faktum at $1-\theta(s)=\theta(-s)$ og får
+	Derfor må vi definere en \textit{error measure} som måler hvor tæt hypothese $h$ er på $f$, ift vores \textit{noisy} $\pm1$ eksempler. Måle formen for fejl er $e(h(\mathbf{x}),y)$ som er baseret på \textit{likelihood}, altså hvor sandsynligt $y$ er givet $\mathbf{x}$. Vi kan sunstituere $h(\mathbf{x})$ til $\theta(\mathbf{w}^T\mathbf{w})$ og bruger det faktum at $1-\theta(s)=\theta(-s)$ og får
 	\begin{align*}
 	P(y|\mathbf{x})=\theta(y\mathbf{w}^T\mathbf{w})
 	\end{align*}
@@ -141,13 +143,9 @@
 	\end{align*}
 	Dette betyder vores \textit{pointwise error measure} er $e(h(\mathbf{x}_n),y_n)=\ln(1+e^{-y_n\mathbf{w}^T\mathbf{x}_n})$, hvor vi kan se at vores \textit{error measure} er lille når $y_n\mathbf{w}^T\mathbf{x}_n$ er stor og \textit{positiv}, hvilket ville betyde at $sign(\mathbf{w}^T\mathbf{x}_n)=y_n$ \\
 	
-	For at træne logistisk regression vil vi forsøge at sette $\nabla E_{in}(\mathbf{w})=\mathbf{0}$, dette er dog et \textit{svært} problem. Derfor løses det med en iterativ algoritme \textit{gradient descent}. En stor fordel for denne tilgang er, grundet vores logistiske regression benytter cross-entropy error, er vores function vi skal descente ned af convex, og vi vil derfor altid gå mod et globalt minimum. Vi øsnker at descente ned, det stejleste vej, for at nå vores mål hurtigts, så vi definere $\eta$ til at være vores step-size, og $\hat{\mathbf{v}}$ til at være en enhedsvektor. Vi har derfor
-	\begin{align*}
-	\delta E_{in} &= E_{in}(\mathbf{w}(0)+\eta\hat{\mathbf{v}})-E_{in}(\mathbf{w}(0))\\
-	&=\eta\nabla E_{in}(\mathbf{w}(0))^T\hat{\mathbf{v}}+O(\eta^2) \\
-	&\geq -\eta||\nabla E_{in}(\mathbf{w}(0))||
-	\end{align*}
-	hvor der gælder lighedstegn i sidste linje $\iff \hat{\mathbf{v}}=\dfrac{\nabla E_{in}(\mathbf{w}(0))}{||\nabla E_{in}(\mathbf{w}(0))||}$. Det er dog ikke en god idé at fasthold $\eta$ igennem alle iterationer, da det giver god mening at tage mindre skridt, jo tættere vi kommer på det globale minimum, så denne kan justeres hen  af vejen. Dette fører os til algoritmen for logistik regression
+	For at træne logistisk regression vil vi forsøge at sette $\nabla E_{in}(\mathbf{w})=\mathbf{0}$, dette er dog et \textit{svært} problem. Derfor løses det med en iterativ algoritme \textit{gradient descent}. En stor fordel ved denne tilgang er, grundet vores logistiske regression benytter cross-entropy error, at den function vi skal descente ned af convex, og vi vil derfor altid gå mod et globalt minimum. Vi øsnker at descente ned af, den stejleste vej, for at nå vores mål hurtigts. Så vi definere $\eta$ til at være vores step-size, og $\hat{\mathbf{v}}$ til at være en enhedsvektor. Vores nye wieght er da $\mathbf{w}(0)+\eta\hat{\mathbf{v}}$ Det er dog ikke en god idé at fasthold $\eta$ igennem alle iterationer, da det giver god mening at tage mindre skridt, jo tættere vi kommer på det globale minimum, så denne kan justeres hen af vejen. \\
+	
+	Dette fører os til algoritmen for logistik regression
 	\begin{mdframed}
 	\begin{enumerate}
 		\item initialiser weigths ved tid $t=0$ til $\mathbf{w}(0)$
@@ -195,7 +193,7 @@
 	hvilket fører os til  
 	\paragraph{\textbf{Definition 2.5}} Vapnik-Chervonenkis dimensionen af en hypothese mængde $\mathcal{H}$, noteret ved $d_{VC}(\mathcal{H})$ eller $d_{VC}$, er den største værdi $N$, der gælder at $m_{\mathcal{H}}(N)=2^N$. Hvis $m_\mathcal{H}(N)=2^N$ for alle $N$, så er $d_{VC}(\mathcal{H})=\infty$. \\
 	
-	Grunden til at VC dimensioner er vigtige er, både at de angiver hvor mange \textit{degrees of freedom} vi har at arbejde med i vores hypothese mænde men også, at hvis vi ikke kan finde et data set der kan shatter $m_\mathcal{H}$ har vi
+	Grunden til at VC dimensioner er vigtige er, både at de angiver hvor mange \textit{degrees of freedom} vi har at arbejde med i vores hyperplane men også, at hvis vi ikke kan finde et data set der kan shatter $m_\mathcal{H}$ har vi
 	\paragraph{\textbf{Theorem 2.5} (VC generatlization bound).} For er vilkårlig tolerance $\delta>0$,
 	\begin{align*}
 	E_{out}(g)\leq E_{in}(g)+\sqrt{\dfrac{8}{N}\ln\dfrac{4m_\mathcal{H}(2N)}{\delta}}
@@ -219,5 +217,507 @@
 	\begin{align*}
 	\text{bias}(\mathbf{x})=(\bar{g}(\mathbf{x})-f(\mathbf{x}))^2
 	\end{align*}
+	\textbf{Bias er et mål for hvor \textit{skæv} vores læringsmodel ift vores target function.} Hvor godt kan vi rent faktiske \textit{fit} vores data, i gennesnit(fejl ift idel $h$). På samme måde definere vi
+	\begin{align*}
+	\text{var}(\mathbf{x})=\mathbb{E}_\mathcal{D}[(g^{(\mathcal{D})}(x)-\bar{g}(\mathbf{x}))^2]
+	\end{align*}
+	\textbf{Variance måler hvor meget vores endelige hypothese variere ift vores data set.} Hvor meget vi data i gennemsnit lede mig væk fra $f$. \\
+	
+	Lærings algortimen spiller en roller ift bias-variance analyse som den ikke gør med fx VC analyse. Her er der specielt to ting at vore opmærksom på 
+	\begin{itemize}
+		\item I modsætning til VC analys som er baseret kun på hypthese mængden $\mathcal{H}$, uafhængigt af lærings algoritmen $\mathcal{A}$, er bias variance analyse baseret på både $\mathcal{H}$ og $\mathcal{A}$. Med det samme $\mathcal{H}$, ved at bruge forskellige $\mathcal{A}$, kan vi producere forskellige $g^\mathcal{D}$, og siden $g^\mathcal{D}$ er byggestenen for bias-variance analyse, giver dette forskellige bias og var værdier
+		\item Selvom bias og var analyse er baseret på squared error measure, behøve $\mathcal{A}$ ikke selv være baseret på minimeringen af denne. Den kan producere $g^\mathcal{D}$ som den ønsker, men når den er færdig vurdere vi bias og var udfra squared error.
+	\end{itemize}
+	Beklageligvis kan vi ikke beregne bias og variance i praksis, siden de afhængde af vores target funktions og inputtet sandsynligheds fordeling, som vi ingen af delene kender. Dermed er bias-variance kun et konceptuelt værktøj, som er brugbart når vi skal udvikle en model. Vi vil gerne opnå en lav variance og en lav bias. Disse kan opnås med heuristiske tiltag som regularisering. 
+	
+	\newpage
+	
+	\section*{Learning Theory - Regularization and Validation}
+	
+	Regularization er en måde, at ændre på inlærings algoritmen, hvor ved man kan bekæmpe overfitting, ved at \textit{straffe} inlærings algoritme for at øge kompleksiteten af den hypothese, og dermed \textit{foretrække} mindre komplekse hypotheser.\\
+	
+	 Overfitting er hvis vores hypothese tilpasser sig vores test data så meget, så $E_{in}$ er meget lav, men $E_{out}$ vil stige. Dette skyldes, at vi begynder at lære \textit{noice} i vores test data. En af grundene til, at vi vil overflødig kompleksitet til live, er at mængden af testdata krævet for, at få ordenlig lærings resultater, bliver størrer med mængden af dimensioner, som vi ved fra VC analyse. \\
+	 
+	 En brugt metode indenfor regularization er ved brug af weight decay, hvor vi vil minimere $E_{in}+\omega(h)$, hvor vi vil opnå optimale resultater med så små weights som muligt. Vi definere $\omega(h(\mathbf{w}))=\lambda||\mathbf{w}||_2^2: \lambda>0$. \\
+	 
+	 En anden brugt metode er constrained optimization, hvor vi forsøger at 
+	 \begin{align*}
+	 &\text{minimize} &&\dfrac{1}{|D}\sum_{x,y\in D}(\mathbf{w}^T\mathbf{x}-y)^2 \\
+	 &\text{subject to} &&\lambda||\mathbf{w}||^2_2\leq C
+	 \end{align*}
+	Denne form for constrain kaldes for soft order constraint, fordi den kun \textit{opfordre} alle weights til at være små, uden at ændre på ordenen af polynomiet ved at sætte visse indgange i $\mathbf{w}$ til $0$. Disse constraints sætte så ift en \textit{budget} $C$, hvor et større $C$ giver mindre regularization, og et mindre $C$ giver mere regularization. Vi har yderliger med denne form for constraint at $\mathcal{H}_{Constraint}\subseteq \mathcal{H} \implies d_{VC}(\mathcal{H}_{Constrained}) \leq d_{VC}$. \\
+	
+	Det skal understreges, at, som bogen siger det, regularization er et nødvendigt onde. Det er mere en kunst end videnskab, og er derfor meget præget af heuristik. Men hele humlen ift de to regularization metoder vi har snakket om, falder på valget af det korrekte $\lambda$, som validation, bl.a., kan hjælpe os med. \\
+	
+	Hvis vi ser på hvad regularization og validation forsøger at beskrive kan det ses som
+	\begin{align*}
+	\underbrace{E_{out}(h)}_{\text{validation estimere dette}}=E_{in}(h)+\underbrace{\omega(h)}_{\text{regularization estimere dette}}
+	\end{align*}
+	Til validation bruger vi \textit{validation sets}, som kan tænkes på som udpluk af vores test data, som vi gemme fra inlærings algoritmen, for så senere, at se hvordan den præstere på dette data. Det er vigtigt at dataen tages fra, inden vi begynder algoritmen, da den eller ville have lært fra dataen, som vi bruger som et \textit{uafhængigt} estimat af $E_{out}$. \\
+	
+	Lad vores test data være $N-K$ og validation mængden være $K$. Vi definere
+	\begin{align*}
+	E_{val}(g^-)=\dfrac{1}{K}\sum_{\mathbf{x}_n \in\mathcal{D_{\text{val}}}}e(g^-(\mathbf{x}_n),y_n)
+	\end{align*}
+	Og kan beviser med VC bound for en endelig model med en hypothese is sig, og se med højsandsynlighed at
+	\begin{align*}
+	&\text{Hvis classification} && E_{out}(g^-)\leq E_{val}(g^-)+O\left(\dfrac{1}{\sqrt{K}}\right) \\
+	&\text{hvis regressin} && E_{out}(g^-)\leq E_{val}(g^-)\pm O\left(\dfrac{\sigma}{\sqrt{K}}\right)
+	\end{align*}
+	Så validation kan hjælpe os, med at give et but på hvad $E_out$ vil blive, hvilket er uhyggelig vigtigt, da dette giver os en måde at vurdere vores model, og alle de valg vi har truffet igennem processen med at lave den, ved at give os et sammenligningsgrundlag. Men denne egenskab stiller os bos i et dilemma, da jo bedre estimat vi skal have, jo mere data skal vi tage til siden, til validation mængder, som så ikke kan bliver brugt på læring. Dette er beskrevet i bogen som
+	\begin{align*}
+	E_{out}(g)\underset{(\text{lille K})}{\approx} E_{out}(g^-)\underset{(\text{Stort K})}{\approx} E_{val}(g^-)
+	\end{align*}
+	En måde at afhjælpe dette dilemma på er igennem cross validation, vi tager et udtræk af dataen,fx 1 point, og beregner 
+	\begin{align*}
+	E_{CV}=\dfrac{1}{N}\sum_{n=1}^{N}e_n
+	\end{align*}
+	hvor $e_n=e(g^-_n(\mathbf{x}_n),y_n)$, altså fejlen lavet for det udtrukkede punkt $x_n$. Vi lader nu 
+	\begin{align*}
+	\bar{E}_{out}(N)=\mathbb{E}_\mathcal{D}[E_{out}(g)]
+	\end{align*}
+	være det forventede, over data sets $\mathcal{D}$ af størrelse $N$, af out-of-sample error lavet af modellen. Så har vi
+	
+	\paragraph{\textbf{Theorem 4.4}} $E_{CV}$ er et unbiased estimat af $\bar{E}_{out}(N-1)$. Den forventede model performance, $\mathbb{E}[E_{out}]$, over data sets af størrelse $N-1$. \\
+	
+	Så fx ift vores $\lambda$ kan vi nu, laver en mængde $\lambda$'er og prøve dem af, og ved hjælp af cross validation, vælge de bedste $\lambda$, for så til sidst at træne modellem på hele data mængden.
+	
+	\newpage
+	
+	\section*{Support Vector Machines - Kernels}
+	
+	Support vector machines, er blandt de bedste, "of the shelf" supervised learning algorihtms, der findes. SVM's bruges til classification, og vi følgende notation, hvor $y\in\{0,1\}$ og bruge en $w,b$ notation til, betegne vores hyperplane. Vores klassifier er så ledes
+	\begin{align*}
+	h_{w,b}(\mathbf{x})=g(\mathbf{w}^T\mathbf{x}+b)
+	\end{align*}
+	Dermed er $g(z)=\implies\begin{cases}
+	1 & z\geq0 \\
+	-1 & z<0
+	\end{cases}$
+	Til SVM benytter vi en margin begreb, både i en functionel og en geometrisk forstand. vi definere \textbf{functionel margin} for $(w,b)$ til
+	\begin{align*}
+	\hat{\gamma}^{(i)}=y^{(i)}(\mathbf{w}^T\mathbf{x}+b)
+	\end{align*}
+	Så jo mere sikkert vi er på $y=1$ højere bliver vores margin, og ligeså for $y=-1$. Funktionel margin har dog den lidt uheldige egenskab af fx $g(\mathbf{w}^T\mathbf{x}+b)=g(2\mathbf{w}^T\mathbf{x}+b)$, hvilket betyder, at $h_{(w,b)}$ kun afhænger af fortegnet og ikke størrelsen af $\mathbf{w}^T\mathbf{x}+b$. Intuitivt vil det derfor give mening af lave en normaliserings condition. \\
+	
+	På samme tid vil vi også definere en \textbf{geometrisk margin}. Denne skal ses som den orthogonale længde fra vores hyperplane til hvert punkt. Det klart som med den functionelle margin, at jo større margin, jo mere sikker er vi på, at data punktet er klassificeret korrekt. Vi definere den geometriske margin sålede
+	\begin{align*}
+	\gamma^{(i)}=y^{(i)}\left(\left(\dfrac{w}{||w||}\right)^Tx^{(i)}+\dfrac{b}{||w||}\right)
+	\end{align*}
+	Vi ser at hvis $||w||=1$ er den geometriske margin, den samme som den functionelle. \\
+	
+	For begge marginer definere vi, givet et træningssæt $S=\{(x^{(i)},y^{(i)});i=1,...,m\}$ 
+	\begin{align*}
+	\hat{\gamma}=\underset{i=1,...,m}{\min}\hat{\gamma}^{(i)}
+	\end{align*}
+	som værende den mindste margin i træningssettet. \\
+	
+	Det vi reelt ønsker af vores SVM er at maximere længden fra de nærmeste punkter til vores hyperplane, så vi har den "mest sikre" klassificering af dataen, dette giver følger optimerings problem
+	\begin{align}
+	&\underset{\gamma,w,b}{\max}&&\gamma\\
+	&\text{s.t.} &&y^{(i)}(\mathbf{w}^T\mathbf{x}^{(i)}+b)\geq\gamma \hspace{1cm}i=1,...,m \\
+	& &&||w||=1
+	\end{align}
+	men grundet $||w||=1$ ikke er en convex function, kan dette lade sige gøre, så vi omskrive problemet
+	\begin{align}
+	&\underset{\gamma,w,b}{\max}&&\dfrac{\hat{\gamma}}{||w||}\\
+	&\text{s.t.} && y^{(i)}(\mathbf{w}^T\mathbf{x}^{(i)}+b)\geq\hat{\gamma} \hspace{1cm}i=1,...,m \\
+	\end{align}
+	men nu har vi at $\dfrac{\hat{\gamma}}{||w||}$ ikke er convex, derfor omskriver vi igen så
+	\begin{align}
+	&\underset{\gamma,w,b}{\max}&&\dfrac{1}{2}||\mathbf{w}||^2 \\
+	&\text{s.t.} && y^{(i)}(\mathbf{w}^T\mathbf{x}^{(i)}+b)\geq1\hspace{1cm}i=1,...,m \\
+	\end{align}
+	hvilket vi kan fundet den vilkårlige skalering af $(w,b)$ ikker havde nogen indflydelse, hvorved vi kan sætte $\hat{\gamma}=1$, og resultatet følger, derfra. \\
+	
+	Vi kunne stoppe her, og løser problemet med quadratic programming, men der er flere ting der kan gøres bedre, fx hvad hvis dataen ikke er lineær seperable, eller vi ønsker en ikke linear opdeling af dataen? \\
+	
+	Vi ser med ovenstående maximerings problem at vi kan skrive en konstraint for hvert training exempel
+	\begin{align*}
+	g_i(\mathbf{w})=-y^{(i)}(\mathbf{w}^T\mathbf{x}^{(i)}+b)+1\leq 0
+	\end{align*}
+	Fra KKT dual complementarity condition, vil vi så have at $\alpha_i >0$, kun for de træning exempler som har en functions margin, som er præcis lig $0$, altså $g_i(\mathbf{w})=-y^{(i)}(\mathbf{w}^T\mathbf{x}^{(i)}+b)+1=0$. Altså vil de exampler med en optimal løsning være de punkter der er tættest på vores hyper plan. Disse kaldes for \textbf{support vectore}. \\
+	
+	Efter en længere udredning vil vi se at man i langrage dual problemet vil kunne funde $\alpha_i$, at vi kan beregne 
+	\begin{align*}
+	\mathbf{w}^T\mathbf{x}+b=\left(\sum_{i=1}^{m}\alpha_iy^{(i)}\mathbf{x}^{(i)}\right)^T\mathbf{x}+b=\sum_{i=1}^{m}\alpha_i y^{(i)}\langle\mathbf{x}^{(i)},\mathbf{x}\rangle+b
+	\end{align*}
+	Hvor største delen af $\alpha_i$ vil være $0$ på nær dem som er vores support vectorer, og derfor vil mange af ledende være $0$ i ligningen. Dette er det som er kendt som support vector machines. \\
+	
+	Givet at vi ønsker at checke vores data for en nogle bestemte feautre givet ved $\phi(\mathbf{x})\left[\begin{matrix} \mathbf{x} \\ \mathbf{x^2} \\ \mathbf{x^3} \end{matrix}\right]$ kan vi, da vores SVM algoritme er opbygget af indreprodukter $\langle \mathbf{x},\mathbf{z}\rangle$, og udskifte disse med $\langle \phi(\mathbf{x}),\phi(\mathbf{z})\rangle$. Mere specifikt, given en feature mapping $\phi$, definere vi Kernel
+	\begin{align*}
+	K(x,z)=\phi(\mathbf{x})^T\phi(\mathbf{z})
+	\end{align*}
+	Denne kerne udskifter blot alle de indre produkter i vores algoritme. En interessant egenskab ved vores Kernel, er at selvom $\phi(\mathbf{x})$ kan være meget \textit{dyr} at udregne kan, Kernel være meget \textit{billig}. Dermed kan vi med en effektiv måde at udregne $K(\mathbf{x},\mathbf{z})$ på, lære high dimensional feature space, givet $\phi$, uden explicit at udregne $\phi(\mathbf{x})$. Faktisk kan vi se at et high dimensional $\phi(\mathbf{x})$ kræver $O(n^2)$ tid, hvorimod, at finde $K(\mathbf{x},\mathbf{z})$ kun tager $O(n)$ tid, altså linear tid. \\
+	
+	Men hvornår er en kernel en valid kernel? Lad os starte med at definere en Kernel matrix, som er en $m\times m$ matrix $K$ for et træningsset $\{\mathbf{x}_1,..,\mathbf{x}_m\}$, med indgang $i,j$ givet ved $K_{ij}=(\mathbf{x}^{(i)},\mathbf{x}^{(j)})$. Hvis $K$ var en valid kerne, så følger $K_{ij}=K(\mathbf{x}^{(i)},\mathbf{z}^{(j)})=\phi(\mathbf{x}^{(i)})^T\phi(\mathbf{x}^{(j)})=\phi(\mathbf{x}^{(j)})^T\phi(\mathbf{x}^{(i)})=K(\mathbf{x}^{(j)},\mathbf{z}^{(i)})=K_{ji}$ hvilket betyder at $K$ er symmetrisk. Yderlige har vi brug for at $K$ er semi-definite, altså for en arbitrær vektor $\mathbf{z}$ gælder, $\mathbf{z}^TK\mathbf{z}\geq0$.
+	
+	\paragraph{\textbf{Theorem (Mercer)}} Lad $K:\mathbb{R}^n\times\mathbb{R}^n\mapsto\mathbb{R}$ være givet. For at $K$ er en valid (Mercer) kernel, er det nødvendigt, og tilstrækkeligt at for vilkårlig $\{\mathbf{x}^{(1)},...,\mathbf{x}^{(m)}\}, (m<\infty)$, er den tilsvarende kernel matrix symmetrisk og positiv semi-definite. \\
+	
+	Ligesom andre lærings algoritmer, kan vi også bruge regularization med SVM,. Denne defineres som
+	\begin{align*}
+	&\underset{\gamma,w,b}{\min} &&\dfrac{1}{2}||w||^2+C\sum_{i=1}^{m}\xi_i &&&\\
+	&\text{s.t.} && y^{(i)}(\mathbf{w}^T\mathbf{x}^{(i)}+b)\geq 1-\xi_i &&& i=1,...,m \\
+	& &&\xi_i \geq0 &&& i=1,...,m	
+	\end{align*}
+	Dermed kan vi have functionelle margins der er mindre end $1$ nu, og hvis vi har en functionmal margin $1-\xi_i$ (for $\xi>0$), ville vi betale med en stigning i objective funktionen svarende til $C\xi$. Dette betyder $C$ styrer den relative vægtning af målet om at lavet $||w||^2$ lille og forsøge at opnå en functional margin på mindst $1$. \\
+	
+	Vores dual problem vil da blive
+	\begin{align*}
+	& \underset{\alpha}{\max} && W(\alpha)=\sum_{i=1}^{m}\alpha_i-\dfrac{1}{2}\sum_{i,j=1}^{m}y^{(i)}y^{(j)}\alpha_i\alpha_j\langle\mathbf{x}^{(i)},\mathbf{x}^{(j)}\rangle &&& \\
+	& \text{s.t.} && 0\leq \alpha_i\leq C &&& i=1,...,m \\
+	& && \sum_{i=1}^{m}\alpha_iy^{(i)}=0 &&&
+	\end{align*}
+	
+	\newpage
+	
+	\section*{Neural Nets - Backpropagation}
+	
+	Et neural network, er en samling af neuroner, som er en beregnings enhed som tager, fx input $x_1,x_2,x_3$ og et $+1$ intercept term, også kaldet en bias unit, og som har output $h_{W,b}(\mathbf{x})=f(W^T\mathbf{x})=f(\sum_{i=1}^{3}W_ix_i+b)$, hvor $f:\mathbb{R}\mapsto\mathbb{R}$ kaldes for activation function. Denne function $f(\cdot)$ kan defineres som ønsker, fx som sigmoid funktionen
+	\begin{align*}
+	f(\mathbf{z})=\dfrac{1}{1+\exp(-\mathbf{z})}
+	\end{align*}
+	Et neural network, er så bygget op i flere lag af sådanne neuroner. Disse er ofte opdelt i et $L_1$ input layer, $\{L_2,...,L_{m-1}\}$  hidden layer og $L_m$ output layer. \\
+	
+	Vi benytter følger notation om activitions, output value $a^{(l)}_i$ for enhed $i$ i layer $l$. Lad $z_i^{(l)}$ være den total vægtede sum af input til enhed $i$ i layer $j$, fx $z^{(2)}_i=\sum_{j=1}^{n}W_{ij}^{(1)}x_j+b_i^{(1)}$, sådan at $a^{(l)}_i=f(z_i^{(l)})$. \\
+	
+	Til forskellige network kan vi vælge forskellige \textbf{artikture}, som har varierende antal hidden layer, input units, og outputs units. Vi definere et \textbf{feedforward} neural network, som en connectet graph uden direkte loops eller cykler. \\
+	
+	Lad os antage vi har et fixed training set $\{(\mathbf{x}^{(1)},y^{(1)}),...,(\mathbf{x}^{(m)},y^{(m)})\}$ af $m$ trænings exempler. Så kan vi træne et neural network ved brug af batch gradient descent. Så for et givent trænings example $(x,y)$, kan vi definere en cost function, nærmere bestemt en one-half squared-error cost function
+	\begin{align*}
+	J(W,b;w,y)=\dfrac{1}{2}||h_{W,b}(x)-y||^2
+	\end{align*}
+	Given et træningsset af $m$ exempler, kan vi definere the overall cost function som
+	\begin{align*}
+	J(W,b)&=\left[\dfrac{1}{m}\sum_{i=1}^{m}J(W,b;x^{(i)},y^{(i)})\right]+\dfrac{\lambda}{2}\sum_{l=1}^{n_l-1}\sum_{i=1}^{s_l}\sum_{j=1}^{s_l+1}\left(W_{jl}^{(l)}\right)^2 \\
+	&=\left[\dfrac{1}{m}\sum_{i=1}^{m}\left(\dfrac{1}{2}\left\|h_{W,b}(x^{(i)})-y^{(i)}|\right\|^2\right)\right]+\dfrac{\lambda}{2}\sum_{l=1}^{n_l-1}\sum_{i=1}^{s_l}\sum_{j=1}^{s_l+1}\left(W_{jl}^{(l)}\right)^2 \\
+	\end{align*}
+	hvor den først summand er vores average sum-of-squares error, og den anden summand er regularization term, også kendt som \textit{weight decay}, som hjælper imod overfitting. Sådan et netværk kan både bruges til classification og regressions problemer. \\
+	
+	Vores mål er at minimere $J(W,b)$, som en function af $W$ og $b$. Så for at træne netværket initialisere vi hvert parameter $W_{ij}^{(l)}$ og hvert $b_i^{l}$, med små tilfældige værdier, tæt på $0$, over fx en normal fordeling. Denne tilfældighed skal være \textit{symmetry breaking}. Her efter bruger vi en optimerings algoritmer, så som batch gradient descent. Siden  $J(W,b)$ ikke er convex, vil vi højst sandsynlig havne i et lokalt minimum, men dette virker i praksis, ganske fint. En iteration af gradient descent updatere $W,b$ parametrene som følger
+	\begin{align*}
+	W^{(l)}_{ij}&:=W^{(l)}_{ij}-\alpha\dfrac{\partial}{\partial W^{(l)}_{ij}}J(W,b) \\
+	b^{(l)}_i &:= b_i^{(l)}-\alpha\dfrac{\partial}{\partial b_i^{(l)}}J(W,b)
+	\end{align*}
+	
+	 \textbf{Backpropagation} er en algoritme til, effektivt at beregne gradient descent for et neural net.Intuitionen bag algoritmen er som følger. Given et træning exemple $(x,y)$, kører vi først et "forward pass" som beregner all activations igennem netværket, samt værdien for hypothese $h_{W,b}(\mathbf{x})$. For hver node $i$ i layer $l$, beregner vi et "error term" $\delta_i^{(l)}$, som måler hvor " ansvarlig" noden var for errors i vores output. Algoritmen er som følger
+	 \begin{enumerate}
+	 	\item Lav et feed forward pass, som beregner activation for layer $L_2,L_3,...,$ til output layer $L_{n_l}$
+	 	\item For hver output enhed $i$ i layer $n_l$, out layer, set
+	 	\begin{align*}
+	 	\delta^{(n_l)}_i)\dfrac{\partial}{\partial z_i^{(n_l)}}\dfrac{1}{2}\left\|y-h_{W,b}(\mathbf{x})\right\|^2=-(y_i-a_l^{(n_l)})\cdot f'(z^{n_l}_i)
+	 	\end{align*}
+	 	\item For $l=n_l-1,n_l-2,...,2$
+	 	\begin{enumerate}
+	 		\item For hver node $i$ i layer $l$, set \begin{align*}
+	 		\delta^{(l)}_i=\left(\sum_{j=1}^{s_l+1}W_{ji}^{(l)}\delta_j^{(l+1)}\right)f'(z_i^{(l)})
+	 		\end{align*}
+	 	\end{enumerate}
+	 	\item Beregn det ønskede partielle differentiale, som er givet som
+	 	\begin{align*}
+	 	\dfrac{\partial}{\partial W_{ij}^{(l)}}J(W,b;x,y)&=a^{(l)}_j \delta^{(l+1)}_i \\
+	 	\dfrac{\partial}{\partial b_i^{(l)}}J(W,b;x,y)&=\delta^{(l+1)}_i
+	 	\end{align*}
+	 \end{enumerate}
+	 
+	\newpage
+	
+	\section*{Neural Nets - Deep Nets}
+	
+	Deep nets og basicly det vi bruger til deep learning. Deep learning forsøger at modelere en høj form af abstraktion i dataen. Vi kan tænke på et simpelt deep net bestående af to set neuroner, et set der modtager inputtet og sender en modificeret version videre til det næste set. I deep nets kan der være mange af sådanne layers imellem input og output layered. Disse layers består ikke af neuroner, men det kan dog hjælpe at tænkte lidt på det, på den måde. Disser layers hjælpe deep net algoritmer til at lave mange beregnings lag bestående af både linear og ikke linear transformationer. \\
+	
+	Et sådan deep net er fx convolution neural networks, CNN. Vi bruger convolution networks, siden de syntes at kunne løse problemer, fx linear classification learning algorithms har haft problemer, fx strecthing, scaling eller rotation af vores input, hvis det fx er et 2d billede. CNN er generelt gode til beregne på data, som har en grid-like-topology. Ordet convolution i CNN, antyder blot at i et af vores layers vil der blive brugt convolution i stedet for matrix multiplikation fx. Convulution som vi bruger den er defineret som
+	\begin{align*}
+	s(t)=\int x(a)w(t-a)da=(a\ast w)(t)
+	\end{align*}
+	hvor $x(a)$ er en måling/input med alder a $a$ og $w(t-a)$ er weight/kernel i tid $t -$ alder. Outputtet $s(t)$ kaldes for vores feature map. Hvis input og kernel har flere dimensioner, kaldes de for tensors. Dette hjælper os fx med at analysere billede hvor der er flere axer, hvor vi får
+	\begin{align*}
+	S(i,j)=(I\ast K)(i,j)=\sum_m \sum_n I(m,n)K(i-m,j-n) 
+	\end{align*}
+	Hvor vi kan se at convolutions i flere dimensioner er kommutativ. 
+	\begin{align*}
+	S(j,i)=(K\ast i)(j,i)=\sum_m \sum_n I(i-m,j-n)K(m,n) 
+	\end{align*}
+	Denne egenskab kommer da vi har \textit{flipped} kernel'en ift inputtet. Vi bruger normalt, den sidste formel, fordi der er mindre variation i mængden af valide værdier for $m$ og $n$. Vi gør opmærksom på at, visse libraries implementere en ligende function kaldet \textit{cross-correlation}
+	\begin{align*}
+	S(i,j)=(I\ast K)(i,j)=\sum_m \sum_n I(i+m,j+n)K(m,n)
+	\end{align*}
+	Convolution udnytter tre vigtige idéer.
+	\begin{enumerate}
+		\item Sparse interactions / sparse connectivity
+		\begin{itemize}
+			\item Dettte opnås ved at gøre Kernel mindre end inputtet. Dette betyder for et input $m$ og ouput $n$, ed kørsel $O(m\times n)$, begrænser vi antallet af connections ved hvert output til $k$ og får $O(k\times n)$
+		\end{itemize}
+		\item Parameter sharing / tied weights
+		\begin{itemize}
+			\item " ... the value of the weight applied to one input is tied to the value of a  weight applied elsewhere.
+			\item reducere storage requirements a modellen til $k$ parameter
+		\end{itemize}
+		\item Equivariant representation
+		\begin{itemize}
+			\item equivariant betyder basicly $f(g(x))=g(f(x))$
+			\item hvis vi leder efter noget i et billede, og vi ville finde det, og derefter flytte, ville man fx også kunne flytte det først området det er i først, også finde det
+		\end{itemize}
+	\end{enumerate}
+	Et typisk later i et CNN består af tre faser. 
+	\begin{enumerate}
+		\item Lav convolutions i parallel for at producere en mængde af linear activations
+		\item Hver linear activation kommer igennem en ikkelinear activation function, som fx rectified linear activation function $f(x)=\max(0,x)$. Dette kaldes også for detector stage.
+		\item pooling function, som modificere outputtet for layered. Fx max pooling rapportere det maximale output for alle naboer indenfor et rektangle af en given størrelse, $4\times4$, fx.
+	\end{enumerate}
+	Pooling hjælper os med at gøre repræsentationen approximativt \textit{invariant} til små translations af inputtet. Dette kan hjælpe og med at sige, at en egenskab er tilstede, men ikke nødvendigvis hvor den her. Pooling enheden der pooler over flere features som bliver lært med forskellige parametre, akn blive invariant overfor transformation, fx rotation af et tag.
+	
+	\newpage
+	
+	\section*{Neural Nets - Autoencoder}
+	
+	Sparse autoencoder, er en learning algorithm, til at automatisk at lære features for unlabeled data.
+	
+	\newpage
+	
+	\section*{Decision Trees and Ensemble Methods - Bagging}
+	I kurset har vi beskæftiget os med to former for trees. Regressions trees, og classification trees. \\
+	
+	Vores algoritme for, at opbygge regressions trees skal automatisk kunne afgøre splitting variables og split points, samt hvilken topologi vores tree skal have. Antag at vi en partition i $M$ regioner, $R_1,...,R_M$ og vi modellere svaret som en konstant $c_m$ i hver region
+	\begin{align*}
+	f(x)=\sum_{m=1}^{M}c_mI(x\in R_m)
+	\end{align*}
+	Hvis vi antager, at vores minimerings kritere er sum of squares, $\sum(y_i-f(x_i))^2$, så ser vi hurtigt at det bedste $\hat{c}_m$ blot er gennemsnittet for $y_i$ i region $R_m$.
+	\begin{align*}
+	\hat{c}_m=\text{ave}(y_i|x_i\in R_m)
+	\end{align*}
+	det bedste binære partitions ift minimering af sum of squares, kan generelt ikke beregnes. Så vi må bruge en grædig algoritme. Vi ser på en splitting varibale $j$ og et split point $s$, og definere et par af half-planes
+	\begin{align*}
+	R_(j,s)=\{X|X_j\leq s\} \hspace{1cm} \text{og} \hspace{1cm} R_2(j,s)=\{X|X_j>s\}
+	\end{align*}
+	Så søger vi splitting variablen $j$ og split punkt $s$ som løser
+	\begin{align*}
+	\underset{j,s}{\min}\left[\underset{c_1}{\min}\sum_{x_i\in R_(j,s)}(y_i-c_1)^2+\underset{c_2}{\min}\sum_{x_1\in R_2(j,s)}(y_i-c_2)^2\right]
+	\end{align*}
+	For hvilken som helst valg af $j$ og $s$ kan den indre minimerinsg løses ved 
+	\begin{align*}
+	\hat{c}_1=\text{avg}(y_i|x_i\in R_1(j,s))\hspace{1cm}\text{og}\hspace{1cm}\hat{c}_2=\text{avg}(y_i|x_i\in R_2(j,s))
+	\end{align*}
+	Dette kan gøres ved at skanne igennem alle inputs og afgøre det bedte $(j,s)$ par, der er muligt. Når vi har fundet det bedste split, partitionere vi dataen i to region, og gentager splitting for begge regioner. \\
+	
+	Men hvor store skal vores trees blive? Til dette bruger vi \textit{cost-complexity pruning}. Lad $T\subset T_0$ være et vilkårligt træ, som kan fås ved at prune $T_0$, dvs at, komlapse et antal interne, ikke terminerende nodes. Lad
+	\begin{align*}
+	N_m&=\#\{x_i\in R_m\} \\
+	\hat{c}_m&=\dfrac{1}{N_m}\sum_{x_1\in R_m}y_i \\
+	Q_m(T)&=\dfrac{1}{N_m}\sum_{x_i\in R_m}(y_i-\hat{c}_m)^2 \\
+	C_\alpha(T)&=\sum_{m=1}^{|T|}N_mQ_m(T)+\alpha|T|
+	\end{align*}
+	Hvor $C_\alpha(T)$ er vores cost complixity criterion og $\alpha\geq0$ som skal afspejle tradeoff imellem tree size og den evne til at fitte data. Store $\alpha$ giver små træer, og små $\alpha$ giver store træer. \\
+	
+	Ønskes classicfication tree, skal impurity measure $Q_m(T)$ blot udskiftes, med fx
+	\begin{align*}
+	&\text{Misclassification error} &&\dfrac{1}{N_m}\sum_{i\in R_m}I(y_i\not=k(m))=1-\hat{p}_{mk}\\
+	&\text{Gini index} &&\sum_{k\not=k'}\hat{p}_{mk}\hat{p}_{mk'}=\sum^K_ {k=1}\hat{p}_{mk}(1-\hat{p}_{mk}) \\
+	&\text{Cross-entropy eller deviance} &&-\sum_{k=1}^{K}\hat{p}_{mk}\log\hat{p}_{mk}
+	\end{align*}
+	hvor $\hat{p}_{mk}=\dfrac{1}{N_m}\sum_{x_i\in R_m}I(y_i=k)$, for en klasse $k$ observation i node $m$. Vi lader klassifikationen i en node være $k(m)=\arg\max_k\hat{p}_{mk}$ \\
+	
+	Bagging er også kendt som boostrap aggregation. Bootstrap er blot en metode, hvorved vi vælger flere set fra træningsdataen, og bruger den til at estimere forskellige ting. Fx estimering af prediction error
+	\begin{align*}
+	\widehat{Err}_{boot}=\dfrac{1}{B}\dfrac{1}{N}\sum_{b=1}^{B}\sum_{i=1}^{N}L(y_i,\hat{f}^{*b}(x_i))
+	\end{align*}
+	Vi kan bruge en ligende ide til bootstrap for bagging average prediction over en samling a bootstrap samle, hvor med vi reducere variancen.
+	\begin{align*}
+	\hat{f}_{bag}(x)=\dfrac{1}{B}\sum_{b=1}^{B}\hat{f}^{*b}(x)
+	\end{align*}
+	Overstående er et Monte Carlo estimat hvor det glæder for en fordeling $\widehat{\mathcal{P}}$, med sandsynlighed $\dfrac{1}{N}$ for data punkter $(x_i,y_i)$, for $0\leq i\leq N-1$, som har en "\textit{true}" bagging estimat $E_{\hat{\mathcal{P}}}\hat{f}^*(x)$. Vi ser at $\hat{f}_{bag}(x)\rightarrow\hat{f}(x)$ imens $B\rightarrow \infty$. \\
+	
+	Dette kan også bruges i sammenhæng med en tree classifier $\hat{G}(x)$ for et K-class svar. Her vil vores bagged classifier vælge det svar med flest votes, og $\hat{G}_{bag}(x)=\arg\max_k\hat{f}_{bag}(x)$. Her er $\hat{f}_{bag}(x)=[p_1(x),p_2(x),...,p_K(x)]$, hvor hver $p_i(x)$ er 0, ud over den med flest votes, der er 1. \\
+	
+	Bagging fungere specielt godt med tree, som har høj varians, hvor bagging mindsker squared-error loss, og variance under at påvirker bias. Dog som vi sagde ovenfor, kan vi vise at, for $f_{ag}(x)$ som er bagging estimate
+	\begin{align*}
+	E_\mathcal{P}[Y-\hat{f}^*(x)]^2 &= E_\mathcal{P}[Y-f_{ag}(x)+f_{ag}(x)-\hat{f}^*(x)]^2 \\
+	& = E_\mathcal{P}[Y-f_{ag}(x)]^2+E_\mathcal{P}[\hat{f}^*(x)-f_{ag}(x)]^2 \\
+	&\geq E_\mathcal{P}[Y-f_{agg}(x)]^2
+	\end{align*}
+	Ovenstående holder dog ikke for classification under $0-1$, grundet nonadditivity for bias og variance. I det tilfælde vil det at bagge en dårlig classifier gøre den dårlige og en god classifier vil blive bedre. \\
+	
+	Det skal dog bemærkes at når vi bagger en model, vil dens strukture gå tabt. Så et bagged tree er ikke længere et tree, fx. 
+	
+	\newpage
+	
+	\section*{Hidden Markov Models - Basic algorithms and applications}
+	
+	Markov Models bruges til analyse at sekventiel data. Vi atnager altså en fordeling af observationer som defineres som
+	\begin{align*}
+	p(\mathbf{x}_1,...,\mathbf{x}_N)=p(\mathbf{x}_1)\prod^N_{n=2}p(\mathbf{x}_n|\mathbf{x}_{n-1})
+	\end{align*}
+	Dette betyder selfølgelig at den betingede sandsynlighed gives som
+	\begin{align*}
+	p(\mathbf{x}_n|\mathbf{x}_1,..,\mathbf{x}_{n-1})=p(\mathbf{x}_n|\mathbf{x}_{n-1})
+	\end{align*}
+	Hvis fordelingen for alle sådan betingede sandsynligheder er ens, kaldes modellen for en \textit{homogeneous} Markov Model. \\
+	
+	Det smart ved Markov Models er at, man kan antage at data'en er uafhængig på nær n- forgående observation. Fx vejret igår kan betyder noget for idag, men vejret fra et år siden, har måske ikke så meget med regning at gøre idag. Dette defineres for en 1st order Markov Model som
+	\begin{align*}
+	p(\mathbf{x}_1,...,\mathbf{x}_N)=p(\mathbf{x}_1)p(\mathbf{x}_2|\mathbf{x}_1)\prod_{n=3}^{N}p(\mathbf{x}_n|\mathbf{x}_{n-1},\mathbf{x}_{n-2})
+	\end{align*}
+	Men dette har en pris. Antag at der er $K$ parametre i for en observation, så vil $p(\mathbf{x}_n|\mathbf{x}_{n-1})$ være specificeret ved et set af $K-1$ parametre, for hver $K$ states i $\mathbf{x}_{n-1}$ hvilket giver $K(K-1)$ parametre. Dette skalerer så for en Mth markov model til $K^M(K-1)$ paramtre, altså bliver det tungt at beregne, virkelig hurtigt. \\
+	
+	Vi kan i stedet antage at der findes en underliggende model, hvor hvert datapunkt $\mathbf{x}_n$ afhænger en underliggende latent varibale $\mathbf{z}_n$ som kommer fra en underliggende state model. Dette medfører
+	\begin{align*}
+	p(\mathbf{x}_1,...,\mathbf{x}_n,\mathbf{z}_1,...,\mathbf{z}_n)=p(\mathbf{z}_1)\left[\prod_{n=2}^{N}p(\mathbf{z}_n|\mathbf{z}_{n-1})\right]\prod_{n=1}^{N}p(\mathbf{x}_n|\mathbf{z}_n)
+	\end{align*}
+	Såfremt vores $\mathbf{z}_i$ er diskrete er den ovenstående model en hidden markov model HMM. Fordi hver $\mathbf{z}_i$ er ansvarlig for genereringen af hver deres $\mathbf{x}_i$ definere vi dem ud fra en $1$-of-$K$ lang binær vektor, definere vi matrix med fordelingerne $p(\mathbf{z}_i|\mathbf{z}_{i-1})$ som vores transition matrix, hvor $A_jk\equiv p(\mathbf{z}_{nk}=1|\mathbf{z}_{n-1,j}=1)$ er vores transitions sandsynligheder, hvor det gælder at $\sum_k A_{jk}=1$, så $A$ har $K(K-1)$ uafhængige parametre. Vi hår således at
+	\begin{align*}
+	P(\mathbf{z}_n|\mathbf{z}_{n-1}, \mathbf{A})=\prod_{k=1}^{K}\prod_{j=1}^{K}A_{jk}^{z_{n-1},jz_{nk}}
+	\end{align*}
+	og den initial latent node $\mathbf{z}_1$ har $\pi_k\equiv p(z_{1k}=1)$, sådan at
+	\begin{align*}
+	p(\mathbf{z}_1|\pi)=\prod_{k=1}^{K}\pi_k^{z_{1k}}
+	\end{align*}
+	hvor $\sum_k \pi_k=1$. Tilsidst definere vi $\phi$ som værende et set parametre, som beskrive fordelingen af $\mathbf{x}_i$, \textit{emission probability}, hvor emission har formen
+	\begin{align*}
+	p(\mathbf{x}_n|\mathbf{z}_n,\phi)=\prod_{k=1}^{K}p(\mathbf{x}_n,\phi_k)^{z_{nk}}
+	\end{align*}
+	Det hele samles og vi har da
+	\begin{align*}
+	p(\mathbf{X},\mathbf{Z}|\mathbf{\theta})=p(\mathbf{x}_n|\mathbf{z}_n,\phi)=p(\mathbf{z}_1|\mathbf{\pi})\left[\prod_{n=2}^{N}p(\mathbf{z}_n|\mathbf{z}_{n-1},\mathbf{A})\right]\prod_{m=1}^{N}p(\mathbf{x}_m|\mathbf{z}_m,\phi)
+	\end{align*}
+	hvor $\mathbf{X}=\{\mathbf{x}_1,...,\mathbf{x}_N\}, \mathbf{Z}=\{\mathbf{z}_1,...,\mathbf{z}_N\}$ og $\mathbf{\theta}=\{\mathbf{\pi},\mathbf{A}, \mathbf{\phi}\}$.\\
+	
+	For at bruge en HMM skal vi bestemme \textit{likehood} for en sekvens af observationer. Dette kan gøres ved hjælp af vertibi decoding. Lad $\mathbf{Z}^*$ være den mest sandsynlige \textit{forklaring} på en række af $\mathbb{X}$, som er givet ved 
+	\begin{align*}
+	\mathbf{Z}^*=\arg\underset{\mathbf{Z}}{\max}p(\mathbf{X},\mathbf{Z}|\mathbf{\theta})
+	\end{align*}
+	Givet $\mathbf{X}$ og $\mathbf{Z}^*$, så kan vi
+	\begin{align*}
+	p(\mathbf{X},\mathbf{Z}^*)&= \underset{\mathbf{Z}}{\max}p(\mathbf{X},\mathbf{Z}^*)&&=\underset{\mathbf{\mathbf{z}_1,...,\mathbf{z}_N}}{\max}p(\mathbf{x}_1,...,\mathbf{x}_N,\mathbf{z}_1,...,\mathbf{z}_N) \\
+	& &&=\underset{\mathbf{z}_n}{\max}\underset{\mathbf{z}_1,...,\mathbf{z}_{N-1}}{\max}p(\mathbf{x}_1,...,\mathbf{x}_N,\mathbf{z}_1,...,\mathbf{z}_N) \\
+	& &&=\underset{\mathbf{z}_n}{\max}\omega(\mathbf{z}_N) \\
+	& \mathbf{z}^*_N&&=\arg\underset{\mathbf{z}_n}{\max}\omega(\mathbf{z}_N) 
+	\end{align*}
+	Vertibi algoritmen kører rekursivt, hvor vi definere dens backtracking sålede,
+	\begin{align*}
+	&\text{base caes:} && \omega(\mathbf{z}_1)=p(\mathbf{x}_1,\mathbf{z}_1) = p(\mathbf{z}_1)p(\mathbf{x}_1|\mathbf{z}_1) \\
+	& \text{recursio:} &&\omega(\mathbf{z}_n)=p(\mathbf{x}_n|\mathbf{z}_n)\underset{\mathbf{z}_{n-1}}{\max}\omega(\mathbf{z}_{n-1}p(\mathbf{z}_n|\mathbf{z}_{n-1}))
+	\end{align*}
+	og hvor algoritmen er defineret som
+	\begin{itemize}
+		\item $\omega[k][n]=0$
+		\item if $p(\mathbf{x}[n] |k) \not= 0$:
+		\begin{itemize}
+			\item for $j=1$ til $K$
+			\begin{itemize}
+				\item if $p(k|j) \not= 0$
+				\begin{itemize}
+					\item $\omega[k][n] =\max( \omega[k][n], \omega[j][n-1]\cdot p(x[n] | k) \cdot p(k | j))$
+				\end{itemize}
+			\end{itemize}
+		\end{itemize}
+	\end{itemize}
+	
+	\newpage
+	
+	\section*{Clustering and Outlier Detection - Representation Based}
+	
+	Given et d-dimensionel rum, $\mathbf{D}=\{\mathbf{x}_i\}^n_{i=1}$, og given et antal ønskede clustere $k$, er målet med representative-based clustering at dele datasættet i $k$ cluste $C=\{C_1,...,C_k\}$. For hver cluster $C_i$ findes der et repræsenterence punkt, kaldet en centroid $\mathbf{\mu}_i$, som er givet ved
+	\begin{align*}
+	\mathbf{\mu}_i=\dfrac{1}{n_i}\sum_{x_j\in C_i}\mathbf{x}_j
+	\end{align*}
+	Hvor $n_i=|C_i|$. En brute-force metode til dette problem er blot at checke alle clusters, som er givet ved \textit{Stirling numbers of the secound kind}
+	\begin{align*}
+	S(n,k)=\dfrac{1}{k!}\sum_{t=0}^{k}(-1)^t\left(\begin{matrix}k \\ t\end{matrix}\right)(k-t)^n
+	\end{align*}
+	Hvilket giver at vi har $O(\dfrac{k^n}{k!})$ clusterings af $n$ punkter i $k$ grupper. I stedet for bruteforce, kan vi bruge K-means algoritmen. Her giver vi en score til hvert cluster ud fra square mean error 
+	\begin{align*}
+		SSE(C)=\sum_{i=1}^{k}\sum_{\mathbf{x}_j\in C_j}||\mathbf{x}_j-\mathbf{\mu}_i||^2
+	\end{align*}
+	Hvor målet er at funde en clustering der minimere SSE
+	\begin{align*}
+	C^*=\arg\underset{C}{\min}\{SSE(C)\}
+	\end{align*}
+	Algoritmen forløber så ledes, først initialiseres $k$ tilfældige punkte som agere vores $\mathbf{\mu}_i$.Derefter tilskrives hvert punkt $\mathbf{x}_i$ til det cluster hvor afstand til dens centroid er minds. Når alle punkter er blevet assignet, udregner vi en ny centroid værdi for alle clusters, $\mathbf{\mu}_i^t=\dfrac{1}{|C_i|}\sum_{\mathbf{x}_j\in C_i}\mathbf{x}_j$. Dette gentages indtil de nye centroid værdier for alle clusters er mindre end et valgt $\epsilon$, altså $\sum_{i=1}^{k}||\mathbf{\mu}_i^t-\mathbf{\mu}^{t-1}_i||^2\leq\epsilon$. Fordelene ved K-means er at den er relativt hurtig $O(tkn)$, hvor $t$ er antal iterationer, $k$ er cluster og $n$ er data punkter. Normalt er $t,k<<n$, og den er nem at implementere. Men den har også en del ulemper. Den kan kun bruges hvis der er en måde at regne gennemsnittet ud på, vi skal på forhånd afgøre hvor mange klusters der er i datasettet, clusters fordeler alle punkter selvom det er støj eller outliers, og alle cluster bliver convexe. \\
+	
+	K-mean er et eksempel på en \textit{hard assignment clustering}, hvor hvert data point kun tilhører et cluster, lad os i stedet overveje en \textit{soft assignment clustering}, hvor hvert data punkt tilskreves en sandsynlighed for at tilhøre et cluster. En sådan tilgang bruges i maximum likelihood estimation, MLE. \\
+	
+	Givet et dataset $\mathbf{D}$, dfinere vi \textit{likelihood} for $\mathbf{\theta}$, som en betinget sandysnlighed over $\mathbf{D}$ og $\theta$
+	\begin{align*}
+	P(\mathbf{D}|\mathbf{\theta})=\prod_{j=1}^{n}f(\mathbf{x}_j)
+	\end{align*} 
+	Hvor $f(\mathbf{x})$ er givet ved en gaussian mixture model $f(\mathbf{x}|\mathbf{\mu}_i,\mathbf{\Sigma}_i)$. Vores mål med MLE er at vælge parametre $\mathbf{\theta}$, som maximere likelihood
+	\begin{align*}
+	\mathbf{\theta}^*=\arg\underset{\mathbf{\theta}}{\max}\{P(\mathbf{D}|\mathbf{\theta})\}
+	\end{align*}
+	Da sandsynlighederne kan blive meget små bruges der normalt en \textit{log-likelihood} function
+	\begin{align*}
+	\ln P(\mathbf{D}|\mathbf{\theta})=\sum_{j=1}^{n}\ln f(\mathbf{x}_j)=\sum_{j=1}^{n}\ln\left(\sum_{i=1}^{k}f(\mathbf{x}_j|\mathbf{\mu}_j,\mathbf{\Sigma}_i)P(C_i\right)
+	\end{align*}
+	At maximere direkte på log-likelihood over $\mathbf{\theta}$ er svært, istedet benytter vi \textit{expectation-maximization}(EM). Algortimen er delt ind i tre faser, 
+	\begin{enumerate}
+		\item \textbf{Initialization step}, hvor for hvert cluster $C_i$ vælger vi tilfædigt et mean $\mathbf{\mu}_i$, hvor værdien $\mu_{ia}$ sættes for hver dimension $X_a$. Vi initialisere en covariance $d\times d$ matrix, $\mathbf{\Sigma}_i=\mathbf{I}$, og sandsynligheden for at være i hvert cluster gives som $P(C_i)=\dfrac{1}{k}$.
+		\item \textbf{Expectation step}, hvor vi beregner sandsynligheden for et cluster $C_i$ givet et punkt $\mathbf{x}_j$, ved brug af
+		\begin{align*}
+		w_{ij}=P(C_i|\mathbf{x}_j)=\dfrac{f_i(\mathbf{x}_j)\cdot P(C_i)}{\sum_{a=1}^{k}f_a(\mathbf{x}_j)\cdot P(C_a)}
+		\end{align*}
+		som er væres wights.
+		\item \textbf{Maximization step}, given $w_{ij}$ estimere vi igen $\mathbf{\Sigma}_i,\mathbf{\mu}_i$ og $P(C_i)$, givet ved 
+		\begin{align*}
+		\mathbf{\mu}_i&=\dfrac{\sum_{j=1}^{n}w:{ij}\cdot \mathbf{x}_j}{\sum_{j=1}^{n}w_{ij}}=\dfrac{\mathbf{D}^T\mathbf{w}_i}{\mathbf{w}^T_i\mathbf{1}} \\
+		\mathbf{\Sigma}_i&=\dfrac{\sum_{j=1}^{n}w_{ij}\mathbf{z}_{ij}\mathbf{z}_{ij}^T}{\mathbf{w}^T_i\mathbf{1}}
+		\end{align*}
+		hvor $\mathbf{z}_{ij}=\mathbf{x}_j-\mathbf{\mu}_i\in\mathbb{R}^d$, og
+		\begin{align*}
+		P(C_i)=\dfrac{\sum_{j=1}^{n}w_{ij}}{n}=\dfrac{\mathbf{w}_i^T\mathbf{1}}{n}
+		\end{align*}
+	\end{enumerate}
+	De sidste to trin gentages intil $\sum_{i=1}^{k}||\mathbf{\mu}_i^t-\mathbf{\mu}_i^{t-1}||^2\leq\epsilon$.
+	 
+	\newpage
+	
+	\section*{Reinforcement Learning - Markov Decision Process}
+	
+	I reinforcement learning, arbejde vi med to instancer. Agenten og Environmented. Agenten agere, udfører en action $A_t\in\mathcal{A}(S_t)$ i environmentet, som han så får feedback på, igennem en reward $R_{t+1}\in\mathcal{R}\subset\mathbb{R}$, som også kan være negativ. Dette spil kører igennem en tidsperiode, som kan være endelig, uendelig eller episodel. Vi beskriver denne tid i timestepd $t=0,1,2,3,....$, som vi i dette kursus har holdt diskret, men der findes teori for continuel-time case. Vi definere vores mulige actions ud fra et state $S_t\in\mathcal{S}$ \\
+	
+	Målet med reinforcement learning er helt simplet, at \textit{maximere vores expected value for summen af modtaget reward}. Vi definere 
+	\begin{align*}
+	G_t\stackrel{\cdot}{=}R_{t+1}+R_{t+2}+...+R_{T}
+	\end{align*}
+	Hvor $T$ er det sidste time step. Vi har dog et problem med denne formulering ift, hvis vi aldrig terminere, og her bruge \textit{discountint}, 
+	\begin{align*}
+	G_t\stackrel{\cdot}{=}R_{t+1}+R_{t+2}+... =\sum_{k=0}^{\infty}\gamma^k R_{t+k+1}
+	\end{align*}
+	hvor $0\leq \gamma\leq1$ kaldes for discount rate. Hvis $\gamma=0$ er vi kun interesseret i at optimere den umildbare reward, og jo tættere $\gamma$ kommer på $1$, jo mere tager vi fremtidige belønninger med i vores overvejelser. Hvis rækken af states er uendelig skal $\gamma<1$ da vi ellers ville få $G_t\stackrel{\cdot}{=}\infty$. \\
+	
+	Vi definere at et state signal har \textit{Markov property}, hvis environmentets respons ved $t+1$ kun afhænger af state og actions repræsentationen ved $t$,
+	\begin{align*}
+	p(s',r|s,a)\stackrel{\cdot}{=}Pr\{S_{t+1}=s', R_{t+1}=r|S_t=s, A_t=a\} \hspace{1cm}\forall r,s',s,a
+	\end{align*}
+	En reinforcement learning task som opfylder Mrkov egenskaber siges at være en \textit{Markov decision process}, MDP. Vi definere MDP som en fem tuppel $MDP=\{S,A,\{P_{s,a}\},\gamma,R\}$, hvor 
+	\begin{itemize}
+		\item $S$ er mængden at states
+		\item $A$ er mængden af actions
+		\item  $\{P_{s,a}\}$ er state transitions probability som er givet ved $p(s'|s,a)\stackrel{\cdot}{=}Pr\{S_{t+1}=s'|S:t=s,A_t=a\}=\sum_{r\in R}p(s',r|s,a)$
+		\item $\gamma$ er discount factor
+		\item og $R$ er reward funktionen givet ved, $P_{s,a}:(S\times A)\rightarrow \mathbb{R}$
+	\end{itemize}
+	Til enhver reinforcement algoritme, skal vi give en strategi $\pi$, som mapper fra state til sandsynligheder over mulige actions. $\pi:S\rightarrow p(A)$, eller blot $\pi:S\rightarrow A$. Det vores strategi skal hjælpe os med, er at maximere vores reward function, over expected returns
+	\begin{align*}
+	R:S\rightarrow \mathbb{R} \hspace{1cm} \mathbb{E}\left[\sum_{i=0}\gamma^i R(s_i)\right]
+	\end{align*}
+	En måde vi bergener den på, er at følge vores strategi, og se hvad vi får ud af det. Dette definere vi som vores value function
+	\begin{align*}
+	V^\pi(s)=\mathbb{E}\left[\sum_{i=0}\gamma^i R(s_i)|s_0=s,\pi\right]
+	\end{align*}
+	Udregningen af denne foregår rekursivt ved hjælp af Bellman ligningen
+	\begin{align*}
+	V^\pi(s)&=\mathbb{E}\left[\sum_{i=0}\gamma^iR(s)|s_0=s,\pi\right] \\
+	&=\mathbb{E}\left[R(s)\right]+\sum_{s'\in S}P_{s,\pi(s)}(s')\mathbb{E}\left[\sum_{i=1}\gamma^iR(s')|s_1=s',\pi\right] \\
+	&=\mathbb{E}\left[R(s)\right]+\gamma\sum_{s'\in S}P_{s,\pi(s)}(s')V^\pi(s')
+	\end{align*}
+	Så det vi gerne vil finde er 
+	\begin{align*}
+	V^*(s)=\underset{\pi}{\max}V^\pi(s)=\mathbb{E}\left[R(s)\right]+\gamma\sum_{s'\in S}P_{s,a}(s')V^*(s')
+	\end{align*}
+	Hvor vi grådigt vælger den optimale strategi $\pi$
+	\begin{align*}
+	\pi^*(s)=\arg\underset{a}{\max}\sum_{s'\in S}P_{s,a}(s')V^*(s')
+	\end{align*}
+	Derefter itererer vi over vores strategi på to forskellige måde, improvement i, og evaluation e. Vi stopper den iteration når vores strategi kun blive improvet mindre end $\Delta$.
 	
 	\end{document}
