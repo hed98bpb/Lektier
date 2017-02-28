@@ -1,0 +1,80 @@
+\documentclass[paper=a4, fontsize=11pt]{scrartcl} % A4 paper and 11pt font size
+\usepackage[utf8]{inputenc}
+
+\usepackage[T1]{fontenc} % Use 8-bit encoding that has 256 glyphs
+\usepackage{fourier} % Use the Adobe Utopia font for the document - comment this line to return to the LaTeX default
+\usepackage[english]{babel} % English language/hyphenation
+\usepackage{amsmath,amsfonts,amsthm} % Math packages
+
+\usepackage{lipsum} % Used for inserting dummy 'Lorem ipsum' text into the template
+
+\usepackage{sectsty} % Allows customizing section commands
+\allsectionsfont{\centering \normalfont\scshape} % Make all sections centered, the default font and small caps
+
+\usepackage{fancyhdr} % Custom headers and footers
+\pagestyle{fancyplain} % Makes all pages in the document conform to the custom headers and footers
+\fancyhead{} % No page header - if you want one, create it in the same way as the footers below
+\fancyfoot[L]{} % Empty left footer
+\fancyfoot[C]{} % Empty center footer
+\fancyfoot[R]{\thepage} % Page numbering for right footer
+\renewcommand{\headrulewidth}{0pt} % Remove header underlines
+\renewcommand{\footrulewidth}{0pt} % Remove footer underlines
+\setlength{\headheight}{13.6pt} % Customize the height of the header
+
+\numberwithin{equation}{section} % Number equations within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+\numberwithin{figure}{section} % Number figures within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+\numberwithin{table}{section} % Number tables within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+
+\setlength\parindent{0pt} % Removes all indentation from paragraphs - comment this line for an assignment with lots of text
+
+%----------------------------------------------------------------------------------------
+%	TITLE SECTION
+%----------------------------------------------------------------------------------------
+
+\newcommand{\horrule}[1]{\rule{\linewidth}{#1}} % Create horizontal rule command with 1 argument of height
+
+\title{	
+	\normalfont \normalsize 
+	\textsc{Aarhus University - Computer Science} \\ [25pt] % Your university, school and/or department name(s)
+	\horrule{0.5pt} \\[0.4cm] % Thin top horizontal rule
+	\huge Protocol Theory - Handin 3 \\ % The assignment title
+	\horrule{2pt} \\[0.5cm] % Thick bottom horizontal rule
+}
+
+\author{Peter Burgaard -201209175} % Your name
+
+\date{\normalsize\today} % Today's date or a custom date
+
+\begin{document}
+	
+	\maketitle % Print the title
+	
+	\section*{Exercise 9}
+    
+    Prove the rewinding lemma. Does the results also hold for statistical and computational zero-knowledge.
+    
+    \paragraph{Lemma 3.1} \textit{The rewinding lemma: Let $(P,V)$ be a proof system for language $L$, and let $M$ be a perfect honest-verifier simulator for $(P,V)$. Assume that conversations have the form $(a,b,z)$, where $P$ sends a, $V$ responds with a random bit $b$, and $P$ replies with $z$. Then $(P,V)$ is perfect zero-knowledge.} \\
+	
+
+	We say that a prover $P$ and a Verifier $V$ for a language $L$ is \textbf{HVZK} if  there exists a polynomial time simulator $M$, which $\forall x\in L$ outputs a transcript $(a,b,z)$, which will have the same probability distrubtion as the honest $P, V$ on a input $x\in L$.  \\
+	
+	We define our simualtor $M$ as follows:
+	\begin{enumerate}
+		\item The verifier is given the input $x$, maybe some auxiliary input, and the random input bits
+		\item Simulation of a iteration is as follows
+		\begin{enumerate}
+			\item Draw a uniform random challenge $c$ and response $z$, and compute $a$ from these, and send the commitment to the verifier $V$
+			\item We receive challenge $b$ from $V$. If $c=b$ then it outputs $(a,b,z)$ and we exit the loop, else reset $V$ to the state right after step 1, and we'll start the simulation over from step $2.a$.
+		\end{enumerate}
+	\end{enumerate} 
+	
+	Assume we're given a malicious verifier $V^*$, we have to be able to perfectly simulate a conversation between $P$ and $V^*$ using our simulation as subroutine. This means we will prove \textbf{ZK}, since our $V^*$ is malicious. \\
+	
+	Since $V^*$ is malicious we have no idea how it will choose its challenge $b^*$. It might well, not be uniformly chosen and therefor dependent on maybe the initial message $a$. So we use our simulation $M$ to "guess" the $b^*$ in advance and chose $c$, and compute matching $a$ and $z$ for it. If we receive $b^*=c$, then $M$ finishes the transcript succefully, otherwise it restarts anew. \\
+	
+	We should be able to design our $M$ in such a fashion that, if $x\in L$, we choose $a$ such a way, we don't reveal any information about which answer we have prepared. This would mean $P(b=c)=\dfrac{1}{2}$, and $M$ should succed after expected 2 tries, (polynomial). This gives us a transcript in polynomial time which statistically close to that of $P$ and $V^*$, with the difference being the negligible, in the chance of M failling being $2^{-n}$ in $n$ tries, which is were $M$ "mis-guesses" all of its tries. 
+
+
+    
+\end{document}
+
