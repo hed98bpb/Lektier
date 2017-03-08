@@ -1,0 +1,89 @@
+\documentclass[paper=a4, fontsize=11pt]{scrartcl} % A4 paper and 11pt font size
+\usepackage[utf8]{inputenc}
+
+\usepackage[T1]{fontenc} % Use 8-bit encoding that has 256 glyphs
+\usepackage{fourier} % Use the Adobe Utopia font for the document - comment this line to return to the LaTeX default
+\usepackage[english]{babel} % English language/hyphenation
+\usepackage{amsmath,amsfonts,amsthm} % Math packages
+
+\usepackage{lipsum} % Used for inserting dummy 'Lorem ipsum' text into the template
+
+\usepackage{sectsty} % Allows customizing section commands
+\allsectionsfont{\centering \normalfont\scshape} % Make all sections centered, the default font and small caps
+
+\usepackage{fancyhdr} % Custom headers and footers
+\pagestyle{fancyplain} % Makes all pages in the document conform to the custom headers and footers
+\fancyhead{} % No page header - if you want one, create it in the same way as the footers below
+\fancyfoot[L]{} % Empty left footer
+\fancyfoot[C]{} % Empty center footer
+\fancyfoot[R]{\thepage} % Page numbering for right footer
+\renewcommand{\headrulewidth}{0pt} % Remove header underlines
+\renewcommand{\footrulewidth}{0pt} % Remove footer underlines
+\setlength{\headheight}{13.6pt} % Customize the height of the header
+
+\numberwithin{equation}{section} % Number equations within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+\numberwithin{figure}{section} % Number figures within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+\numberwithin{table}{section} % Number tables within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+
+\setlength\parindent{0pt} % Removes all indentation from paragraphs - comment this line for an assignment with lots of text
+
+%----------------------------------------------------------------------------------------
+%	TITLE SECTION
+%----------------------------------------------------------------------------------------
+
+\newcommand{\horrule}[1]{\rule{\linewidth}{#1}} % Create horizontal rule command with 1 argument of height
+
+\title{	
+	\normalfont \normalsize 
+	\textsc{Aarhus University, Computer Science} \\ [25pt] % Your university, school and/or department name(s)
+	\horrule{0.5pt} \\[0.4cm] % Thin top horizontal rule
+	\huge Protocol Theory - Handin 6 \\ % The assignment title
+	\horrule{2pt} \\[0.5cm] % Thick bottom horizontal rule
+}
+
+\author{JPeter Burgaard} % Your name
+
+\date{\normalsize\today} % Today's date or a custom date
+
+\begin{document}
+	
+	\maketitle % Print the title
+	
+	\section{Exercise 1}
+	
+	Let $p,q$ be chosen as in Schnorr's protocol, and let $g,\bar{g},h,\bar{h}\in\mathbb{Z}_p^*$ be of order $q$. Assume $P$ gets as input $w$ where $h=g^w\mod{p}$, $\bar{h}=\bar{g}^w\mod{p}$. Consider the following protocol:
+	
+	\begin{enumerate}
+		\item $P$ chooses $r$ at random in $Z_q$ and sends $a=g^r\mod{p}$, $\bar{a}=\bar{g}^r\mod{p}$ to $V$.
+		\item $V$ chooses a challenge $e$ at random in $\mathbb{Z}_{2^t}$ and sends it to $P$. Here, $t$ is fixed such that $2^t<q$. 
+		\item $P$ sends $z=r+ew\mod{q}$ to $V$, who checks that $g^z=ah^e\mod{p}$ and $\bar{g}^z=\bar{a}\bar{h}^e\mod{p}$, that $p,q$ are prime that $g,\bar{g},h,\bar{h}$ have order $q$ and accepts iff this is the case.
+	\end{enumerate}
+	
+	Prove that this is a $\Sigma$- protocol for equality of discrete logs, more precisely show that this is a $\Sigma$-protocol for the relation 
+	
+	$$\{(x,w)|x=(p,q,g,\bar{g},h,\bar{h}) \hspace{0.5cm} and \hspace{0.5cm} h=g^w, \bar{h}=\bar{g}^w\}$$
+	
+	- here it is understood that it should, also be satisfied that $p,q$ are prime, that $w\in\mathbb{Z}_q$, and that $g,h,\bar{g},\bar{h}\in\mathbb{Z}_p^*$ have order $q$. \\
+	
+	\subsection*{Completeness}
+	
+	We see that the protocol have the 3-move form, and it trivially holds, if $P,V$ follows the protocol, since $g^{r+ew}=g^z=ah^e=g^r(g^{w})^e=g^{r+ew}$, and symmetricly for the $\bar{g}, \bar{h}$ and $\bar{a}$ version.
+	
+	\subsection*{Special Soundness}
+	
+	 $(\bar{a},a,e,z),(\bar{a},a,e',z')$ which gives us 4 equations
+	 
+	 $$g^z=ah^e, g^{z'}=ah^{e'}, \bar{g}^z=\bar{a}\bar{h}^e, \bar{g}^{z'}=\bar{a}\bar{h}^{e'}$$
+	 
+	 \begin{align*}
+	 g^{z-z'}=\dfrac{g^z}{g^{z'}}=\dfrac{ah^e}{ah^{e'}}= h^(e-e')\\
+	 \bar{g}^{z-z'}=\dfrac{\bar{g}^z}{\bar{g}^{z'}}=\dfrac{\bar{a}\bar{h}^e}{\bar{a}\bar{h}^{e'}}=\bar{h}^(e-e')
+	 \end{align*}
+	 
+	 choose $w=(z-z')(e-e')^{-1}$ then it solves both equations
+	
+	\subsection*{Special honest-verifier zero-knowledge}
+	
+	To simulate we choose at random $z\in\mathbb{Z}_p^*$ and $e\in\mathbb{Z}_q$ and compute both $a=g^zh^{-e}$ and $\bar{a}=\bar{g}^z\bar{h}^{-e}$, then the conversation $((a,\bar{a}),e,z)$ has the same distribution as a real conversation between a honest prover and a honest verifier.
+
+\end{document}

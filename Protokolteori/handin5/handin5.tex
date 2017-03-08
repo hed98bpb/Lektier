@@ -1,0 +1,78 @@
+\documentclass[paper=a4, fontsize=11pt]{scrartcl} % A4 paper and 11pt font size
+\usepackage[utf8]{inputenc}
+
+\usepackage[T1]{fontenc} % Use 8-bit encoding that has 256 glyphs
+\usepackage{fourier} % Use the Adobe Utopia font for the document - comment this line to return to the LaTeX default
+\usepackage[english]{babel} % English language/hyphenation
+\usepackage{amsmath,amsfonts,amsthm} % Math packages
+
+\usepackage{lipsum} % Used for inserting dummy 'Lorem ipsum' text into the template
+
+\usepackage{sectsty} % Allows customizing section commands
+\allsectionsfont{\centering \normalfont\scshape} % Make all sections centered, the default font and small caps
+
+\usepackage{fancyhdr} % Custom headers and footers
+\pagestyle{fancyplain} % Makes all pages in the document conform to the custom headers and footers
+\fancyhead{} % No page header - if you want one, create it in the same way as the footers below
+\fancyfoot[L]{} % Empty left footer
+\fancyfoot[C]{} % Empty center footer
+\fancyfoot[R]{\thepage} % Page numbering for right footer
+\renewcommand{\headrulewidth}{0pt} % Remove header underlines
+\renewcommand{\footrulewidth}{0pt} % Remove footer underlines
+\setlength{\headheight}{13.6pt} % Customize the height of the header
+
+\numberwithin{equation}{section} % Number equations within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+\numberwithin{figure}{section} % Number figures within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+\numberwithin{table}{section} % Number tables within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+
+\setlength\parindent{0pt} % Removes all indentation from paragraphs - comment this line for an assignment with lots of text
+
+%----------------------------------------------------------------------------------------
+%	TITLE SECTION
+%----------------------------------------------------------------------------------------
+
+\newcommand{\horrule}[1]{\rule{\linewidth}{#1}} % Create horizontal rule command with 1 argument of height
+
+\title{	
+	\normalfont \normalsize 
+	\textsc{Aarhus University - Computer Science} \\ [25pt] % Your university, school and/or department name(s)
+	\horrule{0.5pt} \\[0.4cm] % Thin top horizontal rule
+	\huge Protocol Theory - Handin 5 \\ % The assignment title
+	\horrule{2pt} \\[0.5cm] % Thick bottom horizontal rule
+}
+
+\author{Peter Burgaard -201209175} % Your name
+
+\date{\normalsize\today} % Today's date or a custom date
+
+\begin{document}
+	
+	\maketitle % Print the title
+	
+	\section*{Exercise 5}
+
+	Assume $P$ commits to two strings $b_1,\dots,b_t,b_1',\dots,b_t'$ using commitments $c_1,\dots,c_t,c_1',\dots,c_t'$ as in exercise 4. He claims that the strings are different, and want to convince $V$ that this is the case while revealing no extra information. Note that he cannot point to an index $j$ where $b_j\not= b_j'$ and use the above method on $c_j,c_j'$. This would reveal \textit{where} the strings are different. Instead consider the following protocol:
+	\begin{enumerate}
+		\item $P$ chooses a random permutation $\pi$ on the set of indices ${1,\dots ,t}$. He computes, for $i=1,\dots t$ a commitment $d_i=commit_{pk}(s_i',b_{\pi(i)}')$. In other words, permute both strings randomly and commit bit by bit to the resulting strings. Send $d_1,\dots,d_t,d_1',\dots,d_t'$ to $V$.
+		\item $V$ chooses a random bit $b$, sends it to $P$
+		\item If $b=0$, $P$ reveals $\pi$ and uses the above method to convince $V$ for all $i$ that $c_{\pi(i)}$ contains the same bit as $d_i$. Similarly for $c_{\pi(i)}'$ and $d_i'$. If $b=1$, $P$ finds a position $i$, where $b_{\pi(i)}'\not=b_{\pi(i)}'$ and uses the above method to convince $V$ that $d_i,d_i'$ contain different bits.
+	\end{enumerate}
+	
+	\begin{itemize}
+		\item Completeness - Ague that an honest prover can always convinces the verifier.
+		
+		This is trivial. We can go through each case a see it holds. Since i follows the protocol then we know how the scheme can be used. 
+		
+		\item Soundness - Assume the prover cannot solve discrete log, but he knows how to open the
+		commitments $c_1,\dots,c_t,c_1', \dots, c_t'$. Show that if $P$ can, for some set of commitments $d_1, \dots, d_t,d_1',\dots,d_t'$ answer $V$ correctly both for $b = 0$ and $b = 1$, then there is at least one $j$, where $P$ can open $c_j,c_j'$ to reveal different bits. Note this implies that a cheating prover could make $V$ accept $t$ iterations of the protocol with probability at most $2^{-t}$.
+		
+		Assume $P$ can convince $V$ for both $b=1$ and $b=0$. We look at what we get from each case for both $b=0$ and $b=1$. If $b=0$ then for some $i$ where $d_i$, and $d_i'$ commits to different bits, then $c_i$ and $c_i'$ will commit to different bits. Else for $b=1$, then $d_i$ and $c_i$ commits to same bit and $b_i$ and $b_i$' commit to different bits. The strings are different in both cases, so it's a sound protocol.
+		
+		\item Zero-Knowledge: Sketch a simulator for this protocol. Hint: given commitment $c$, if you set $d=cg^s\mod(p)$, then $cd^{-1}=g^s\mod(p)$. This means that even if the simulator does not know how to open $c$, it can create $d$ and fake a proof that $d$ contains the same bit as $c$. You do not have to formally prove that you simulator works. 
+		
+		We construct a simulator to show zero-knowledge. We pick $b$ randomly, and we do something different depending on whether it is $0$ or $1$. If $b=0$, then we pick $x_i$ abitrarely, and let $d_i=c_{\pi(i)}g^{-x_i}$, then we send it over to $V$, and we get a bit back. If the bit matches our $b$, then we are good, else we rewind. If it matches, then we need to provide $s$, which is $x_i$. In the other caes $b=1$, we pick $r_i$ and let $d_i=y\cdot g^{r_1}$ and $d_i'=g^{r_2}$, and send all of them over. If we get a bit $0$ back, we rewind, else if the bit is $1$ then we show they commit to different bit, and send over $r1+r2$.
+	
+	\end{itemize}
+    
+\end{document}
+
